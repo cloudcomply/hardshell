@@ -1,23 +1,35 @@
-[pkgmgr]
-amzn.installed = ['dnf', 'list', '--installed']
-amzn.uninstall = ['dnf', 'remove']
-debian.installed = ['dpkg', '--list']
-debian.uninstall = ['apt', 'remove']
-fedora.installed = ['dnf', 'list', '--installed']
-fedora.uninstall = ['dnf', 'remove']
-kali.installed = ['dpkg', '--list']
-kali.uninstall = ['apt', 'remove']
-ubuntu.installed = ['dpkg', '--list']
-ubuntu.uninstall = ['apt', 'remove']
-# rhel.installed = []
-# rhel.uninstall = []
-# sles.installed = []
-# sles.uninstall = []
+[global]
 
-[ssh]
-config = "/etc/ssh/ssh_config"
-path = "/etc/ssh/ssh_config.d"
+[global.amzn]
+package_install = ["install"]
+package_remove = ["remove"]
+package_search = ["rpm", "-q"]
 
-[sshd]
-config = "/etc/ssh/sshd_config"
-path = "/etc/ssh/sshd_config.d"
+[global.debian]
+package_install = ["install"]
+package_remove = ["remove"]
+package_search = ["search"]
+
+[global.kali]
+package_install = ["install"]
+package_remove = ["remove"]
+package_search = ["search"]
+
+[global.ubuntu]
+package_install = ["install"]
+package_remove = ["remove"]
+package_search = ["dpkg-query", "-s"]
+
+logging_service = "rsyslog"
+time_service = "chrony"
+
+# Old code
+
+# amzn.installed = ['dnf', 'list', '--installed']
+# amzn.uninstall = ['dnf', 'remove']
+# debian.installed = ['dpkg', '--list']
+# debian.uninstall = ['apt', 'remove']
+# kali.installed = ['dpkg', '--list']
+# kali.uninstall = ['apt', 'remove']
+# ubuntu.installed = ['dpkg', '--list']
+# ubuntu.uninstall = ['apt', 'remove']

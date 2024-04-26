@@ -1,997 +1,674 @@
-[modules]
-
-[modules.cramfs]
-check = true
-name = "cramfs"
-
-[modules.dccp]
-check = true
-name = "dccp"
-
-[modules.freevxfs]
-check = true
-name = "freevxfs"
-
-[modules.hfs]
-check = true
-name = "hfs"
-
-[modules.hfsplus]
-check = true
-name = "hfsplus"
-
-[modules.jffs2]
-check = true
-name = "jffs2"
-
-[modules.rds]
-check = true
-name = "rds"
-
-[modules.sctp]
-check = true
-name = "sctp"
-
-[modules.squashfs]
-check = true
-name = "squashfs"
-
-[modules.tipc]
-check = true
-name = "tipc"
-
-[modules.udf]
-check = true
-name = "udf"
-
-[modules.usbstorage]
-check = true
-name = "usb_storage"
-
-[packages]
-### Authentication ###
-[packages.authselect]
-check = true
-install = true
-name = "authselect"
-os = ["amzn"]
-
-[packages.libpampwquality]
-check = true
-install = true
-name = "libpam-pwquality"
-os = []
-
-[packages.libpwquality]
-check = true
-install = true
-name = "libpwquality"
-os = ["amzn"]
-
-[packages.sudo]
-check = true
-install = true
-name = "sudo"
-os = ["amzn"]
-
-### Firewalls ###
-[packages.nftables]
-check = true
-install = true
-name = "nftables"
-os = ["amzn"]
-
-### Logging ###
-[packages.audit]
-check = true
-install = true
-name = "audit"
-os = ["amzn"]
-
-[packages.rsyslog]
-check = true
-install = true
-name = "rsyslog"
-os = ["amzn"]
-
-[packages.systemdjournalremote]
-check = true
-install = true
-name = "systemd-journal-remote"
-os = ["amzn"]
-
-### Mail ###
-[packages.cyrusimapd]
-check = true
-install = false
-name = "cyrus-imapd"
-os = []              # Not in AL2023 package list
-
-[packages.dovecot]
-check = true
-install = false
-name = "dovecot"
-os = ["amzn"]
-
-[packages.dovecot-pop3d]
-check = true
-install = false
-name = "dovecot-pop3d"
-os = []
-
-### Networking ###
-[packages.avahi]
-check = true
-install = false
-name = "avahi"
-os = ["amzn"]
-
-[packages.avahidaemon]
-check = true
-install = false
-name = "avahi-daemon"
-os = []
-
-[packages.dnsmasq]
-check = true
-install = false
-name = "dnsmasq"
-os = ["amzn"]
-
-[packages.netsnmp]
-check = true
-install = false
-name = "net-snmp"
-os = ["amzn"]
-
-[packages.snmp]
-check = true
-install = false
-name = "snmp"
-os = []
-
-### Printing ###
-[packages.cups]
-check = true
-install = false
-name = "cups"
-os = ["amzn"]
-
-### Schedulers ###
-[packages.at]
-check = true
-install = true
-name = "at"
-os = ["amzn"]
-
-[packages.cron]
-check = true
-install = true
-name = "cron"
-os = []
-
-[packages.cronie]
-check = true
-install = true
-name = "cronie"
-os = []
-
-[packages.rpmcron]
-check = true
-install = true
-name = "rpm-cron"
-os = ["amzn"]
-
-### Security ###
-[packages.aide]
-check = true
-install = true
-name = "aide"
-os = ["amzn"]
-
-[packages.cryptopolicies]
-check = true
-install = true
-name = "crypto-policies"
-os = ["amzn"]
-
-[packages.mcstrans]
-check = true
-install = false
-name = "mcstrans"
-os = ["amzn"]
-
-[packages.setroubleshoot]
-check = true
-install = false
-name = "setroubleshoot"
-os = []
-
-### Security Models ###
-[packages.apparmor]
-check = true
-install = true
-name = "apparmor"
-os = ["ubuntu"]
-
-[packages.libselinux]
-check = true
-install = true
-name = "libselinux"
-os = ["amzn"]
-
-### Services ###
-[packages.dhcpserver]
-check = true
-install = false
-name = "dhcp-server"
-os = []              # Not in AL2023 package list
-
-[packages.bind]
-check = true
-install = false
-name = "bind"
-os = ["amzn"]
-
-[packages.bind9]
-check = true
-install = false
-name = "bind9"
-os = []
-
-[packages.ftp]
-check = true
-install = false
-name = "ftp"
-os = []
-
-[packages.nfsserver]
-check = true
-install = false
-name = "nfs-server"
-os = []             # Not in AL2023 package list
-
-[packages.opensshserver]
-check = true
-install = true
-name = "openssh-server"
-os = ["amzn"]
-
-[packages.rpcbind]
-check = true
-install = false
-name = "rpcbind"
-os = ["amzn"]
-
-[packages.samba]
-check = true
-install = false
-name = "samba"
-os = ["amzn"]
-
-[packages.telnetserver]
-check = true
-install = false
-name = "telnet-server"
-os = ["amzn"]
-
-[packages.tftpserver]
-check = true
-install = false
-name = "tftp-server"
-os = []              # Not in AL2023 package list
-
-[packages.vsftpd]
-check = true
-install = false
-name = "vsftpd"
-os = ["amzn"]
-
-### Time ###
-[packages.chrony]
-check = true
-install = true
-name = "chrony"
-os = ["amzn"]
-
-### Utilities ###
-[packages.cupsclient]
-check = true
-install = false
-name = "cups-client"
-os = ["amzn"]
-
-[packages.dnsmasqutils]
-check = true
-install = false
-name = "dnsmasq-utils"
-os = ["amzn"]
-
-[packages.ldaputils]
-check = true
-install = false
-name = "ldap-utils"
-os = []
-
-[packages.nfsutils]
-check = true
-install = false
-name = "nfs-utils"
-os = ["amzn"]
-
-[packages.openldapclients]
-check = true
-install = false
-name = "openldap-clients"
-os = ["amzn"]
-
-[packages.rsync]
-check = true
-install = false
-name = "rsync"
-os = ["amzn"]
-
-[packages.rsyncdaemon]
-check = true
-install = false
-name = "rsync-daemon"
-os = ["amzn"]
-
-[packages.telnet]
-check = true
-install = false
-name = "telnet"
-os = ["amzn"]
-
-### Web Servers ###
-[packages.apache2]
-check = true
-install = false
-name = "apache2"
-os = []
-
-[packages.httpd]
-check = true
-install = false
-name = "httpd"
-os = ["amzn"]
-
-[packages.nginx]
-check = true
-install = false
-name = "nginx"
-os = ["amzn"]
-
-[packages.nginxcore]
-check = true
-install = false
-name = "nginx-core"
-os = ["amzn"]
-
-[packages.squid]
-check = true
-install = false
-name = "squid"
-os = ["amzn"]
-
-### X11 ###
-[packages.xorgx11servercommon]
-check = true
-install = false
-name = "xorg-x11-server-common"
-os = ["amzn"]
-
-### TESTING ###
-[packages.wget]
-check = true
-install = true
-name = "wget"
-os = ["amzn", "debian", "kali", "ubuntu"]
-
-[pam]
-
-[pam.pwqualityconfigsys]
-check = true
-name = "System pam_pwquality Config"
-# path = "/etc/pam.d/system-auth"
-path = "/home/tom/.hardshelltest/system-auth"
-pattern = "^password\\s+requisite\\s+pam_pwquality\\.so\\s+try_first_pass\\s+local_users_only\\s+enforce_for_root\\s+retry=3$"
-setting = "password    requisite     pam_pwquality.so try_first_pass local_users_only enforce_for_root retry=3"
-
-[pam.pwqualityconfigpass]
-check = true
-name = "Password pam_pwquality Config"
-# path = "/etc/pam.d/password-auth"
-path = "/home/tom/.hardshelltest/password-auth"
-pattern = "^password\\s+requisite\\s+pam_pwquality\\.so\\s+try_first_pass\\s+local_users_only\\s+enforce_for_root\\s+retry=3$"
-setting = "password    requisite     pam_pwquality.so try_first_pass local_users_only enforce_for_root retry=3"
-
-[pam.pwqualitylength]
-check = true
-name = "Password Length"
-# path = "/etc/security/pwquality.conf"
-path = "/home/tom/.hardshelltest/pwquality.conf"
-pattern = "^minlen\\s*=\\s*(1[4-9]|[2-9][0-9]+|[1-9][0-9]{2,})"
-setting = "minlen = 14"
-
-[pam.pwqualityclass]
-check = true
-name = "Password Class"
-# path = "/etc/security/pwquality.conf"
-path = "/home/tom/.hardshelltest/pwquality.conf"
-pattern = "^minclass\\s*=\\s*4$"
-setting = "minclass = 4"
-
-[pam.passwordlockout]
-check = true
-name = "Password Lockout Tries"
-path = "/etc/security/faillock.conf"
-pattern = "^\\s*deny\\s*=\\s*([1-5])\\s*$"
-setting = "deny = 5"
-
-[pam.passwordunlocktime]
-check = true
-name = "Password Unlock Time"
-path = "/etc/security/faillock.conf"
-pattern = "^\\s*unlock_time\\s*=\\s*(0|[9-9][0-9]{2,}|[1-9][0-9]{3,})\\s*$"
-setting = "unlock_time = 900"
-
-[pam.passwordhashinguserconfig]
-check = true
-name = "Password Hashing User Config"
-# path = "/etc/libuser.conf"
-path = "/home/tom/.hardshelltest/libuser.conf"
-pattern = "^\\s*crypt_style\\s*=\\s*(sha512|yescrypt)\\s*$"
-setting = "crypt_style = sha512"                            # yescrypt | sha512
-
-[pam.passwordhashinglogin]
-check = true
-name = "Password Hashing Login Config"
-path = "/etc/login.defs"
-pattern = "^\\s*ENCRYPT_METHOD\\s+(SHA512|YESCRYPT)\\s*$"
-setting = "ENCRYPT_METHOD SHA512"                         # YESCRYPT | SHA512
-
-[parameters]
-### General ###
-[parameters.ptracescope]
-check = false
-name = "ptrace"
-setting = "kernel.yama.ptrace_scope = 1"
-
-[parameters.randomvaspace]
-check = true
-name = "aslr"
-setting = "kernel.randomize_va_space = 2"
-
-### Network ###
-[parameters.ipv4forward]
-check = true
-name = "IPv4 IP Forward"
-setting = "net.ipv4.ip_forward = 0"
-
-[parameters.ipv4sendredirectsall]
-check = true
-name = "IPv4 Send Redirects (All)"
-setting = "net.ipv4.conf.all.send_redirects = 0"
-
-[parameters.ipv4sendredirectsdefault]
-check = true
-name = "IPv4 Send Redirects (Default)"
-setting = "net.ipv4.conf.default.send_redirects = 0"
-
-[parameters.ipv4acceptsourcerouteall]
-check = true
-name = "IPv4 Accept Source Route (All)"
-setting = "net.ipv4.conf.all.accept_source_route = 0"
-
-[parameters.ipv4acceptsourceroutedefault]
-check = true
-name = "IPv4 Accept Source Route (Default)"
-setting = "net.ipv4.conf.default.accept_source_route = 0"
-
-[parameters.ipv4acceptredirectsall]
-check = true
-name = "IPv4 Accept Redirects (All)"
-setting = "net.ipv4.conf.all.accept_redirects = 0"
-
-[parameters.ipv4acceptredirectsdefault]
-check = true
-name = "IPv4 Accept Redirects (Default)"
-setting = "net.ipv4.conf.default.accept_redirects = 0"
-
-[parameters.ipv4secureredirectsall]
-check = true
-name = "IPv4 Secure Redirects (All)"
-setting = "net.ipv4.conf.all.secure_redirects = 0"
-
-[parameters.ipv4secureredirectsdefault]
-check = true
-name = "IPv4 Secure Redirects (Default)"
-setting = "net.ipv4.conf.default.secure_redirects = 0"
-
-[parameters.ipv4logmartiansall]
-check = true
-name = "IPv4 Log Martians (All)"
-setting = "net.ipv4.conf.all.log_martians = 1"
-
-[parameters.ipv4logmartiansdefault]
-check = true
-name = "IPv4 Log Martians (Default)"
-setting = "net.ipv4.conf.default.log_martians = 1"
-
-[parameters.ipv4icmpignorebroadcasts]
-check = true
-name = "IPv4 ICMP Ignore Broadcasts"
-setting = "net.ipv4.icmp_echo_ignore_broadcasts = 1"
-
-[parameters.ipv4ignorebogusresponses]
-check = true
-name = "IPv4 Ignore Bogue Responses"
-setting = "net.ipv4.icmp_ignore_bogus_error_responses = 1"
-
-[parameters.ipv4reversepathfilerall]
-check = true
-name = "IPv4 Reverse Path Filter (All)"
-setting = "net.ipv4.conf.all.rp_filter = 1"
-
-[parameters.ipv4reversepathfilerdefault]
-check = true
-name = "IPv4 Reverse Path Filter (Default)"
-setting = "net.ipv4.conf.default.rp_filter = 1"
-
-[parameters.ipv4tcpsyncookies]
-check = true
-name = "IPv4 TCP Syn Cookies"
-setting = "net.ipv4.tcp_syncookies = 1"
-
-[parameters.ipv6forwardingall]
-check = true
-name = "IPv6 Forwarding (All)"
-setting = "net.ipv6.conf.all.forwarding = 0"
-
-[parameters.ipv6acceptsourcerouteall]
-check = true
-name = "IPv6 Accept Source Route (All)"
-setting = "net.ipv6.conf.all.accept_source_route = 0"
-
-[parameters.ipv6acceptsourceroutedefault]
-check = true
-name = "IPv6 Accept Source Route (Default)"
-setting = "net.ipv6.conf.default.accept_source_route = 0"
-
-[parameters.ipv6acceptredirectsall]
-check = true
-name = "IPv6 Accept Redirects (All)"
-setting = "net.ipv6.conf.all.accept_redirects = 0"
-
-[parameters.ipv6acceptredirectsdefault]
-check = true
-name = "IPv6 Accept Redirects (Default)"
-setting = "net.ipv6.conf.default.accept_redirects = 0"
-
-[parameters.ipv6acceptrouteradvertisementsall]
-check = true
-name = "IPv6 Accept Router Avertisements (All)"
-setting = "net.ipv6.conf.all.accept_ra = 0"
-
-[parameters.ipv6acceptrouteradvertisementsdefault]
-check = true
-name = "IPv6 Accept Router Avertisements (Default)"
-setting = "net.ipv6.conf.default.accept_ra = 0"
-
-[permissions]
-### Boot Loaders ###
-[permissions.biosbootloader]
-check = true
-name = "BIOS Bootloader"
-path = "/boot/grub2/*"
-perms = "600"
-owner_group = "0"
-owner_user = "0"
-
-[permissions.uefibootloader]
-check = true
-name = "UEFI Bootloader"
-path = "/boot/efi/EFI/*"
-perms = "700"
-owner_group = "0"
-owner_user = "0"
-
-### Banners ###
-[permissions.issue]
-check = true
-name = "issue"
-path = "/etc/issue"
-perms = "644"
-owner_group = "0"
-owner_user = "0"
-
-[permissions.issuenet]
-check = true
-name = "issue.net"
-path = "/etc/issue.net"
-perms = "644"
-owner_group = "0"
-owner_user = "0"
-
-[permissions.motd]
-check = true
-name = "motd"
-path = "/etc/motd"
-perms = "644"
-owner_group = "0"
-owner_user = "0"
-
-### Logs ###
-[permissions.varlog] # TODO
-check = false
-name = "/var/log"
-path = "/var/log"
-perms = "644"
-owner_group = "0"
-owner_user = "0"
-
-### PAM ###
-[permissions.passwd]
-check = true
-name = "passwd"
-path = "/etc/passwd"
-perms = "644"
-owner_group = "0"
-owner_user = "0"
-
-[permissions.passwd-]
-check = true
-name = "passwd-"
-path = "/etc/passwd-"
-perms = "644"
-owner_group = "0"
-owner_user = "0"
-
-[permissions.group]
-check = true
-name = "group"
-path = "/etc/group"
-perms = "644"
-owner_group = "0"
-owner_user = "0"
-
-[permissions.group-]
-check = true
-name = "group-"
-path = "/etc/group-"
-perms = "644"
-owner_group = "0"
-owner_user = "0"
-
-[permissions.shadow]
-check = true
-name = "shadow"
-path = "/etc/shadow"
-perms = "0"
-owner_group = "0"
-owner_user = "0"
-
-[permissions.shadow-]
-check = true
-name = "shadow-"
-path = "/etc/shadow-"
-perms = "0"
-owner_group = "0"
-owner_user = "0"
-
-[permissions.gshadow]
-check = true
-name = "gshadow"
-path = "/etc/gshadow"
-perms = "0"
-owner_group = "0"
-owner_user = "0"
-
-[permissions.gshadow-]
-check = true
-name = "gshadow-"
-path = "/etc/gshadow-"
-perms = "0"
-owner_group = "0"
-owner_user = "0"
-
-### Schedulers ###
-[permissions.crontab]
-check = true
-name = "crontab"
-path = "/etc/crontab"
-perms = "644"
-owner_group = "0"
-owner_user = "0"
-
-[permissions.cronhourly]
-check = true
-name = "cron.hourly"
-path = "/etc/cron.hourly"
-perms = "700"
-owner_group = "0"
-owner_user = "0"
-
-[permissions.crondaily]
-check = true
-name = "cron.daily"
-path = "/etc/cron.daily"
-perms = "700"
-owner_group = "0"
-owner_user = "0"
-
-[permissions.cronweekly]
-check = true
-name = "cron.weekly"
-path = "/etc/cron.weekly"
-perms = "700"
-owner_group = "0"
-owner_user = "0"
-
-[permissions.cronmonthly]
-check = true
-name = "cron.monthly"
-path = "/etc/cron.monthly"
-perms = "700"
-owner_group = "0"
-owner_user = "0"
-
-[permissions.crond]
-check = true
-name = "cron.d"
-path = "/etc/cron.d"
-perms = "700"
-owner_group = "0"
-owner_user = "0"
-
-[permissions.cronallow]
-check = false
-name = "cron.allow"
-path = "/etc/cron.allow"
-perms = "700"
-owner_group = "0"
-owner_user = "0"
-
-[permissions.crondeny]
-check = true
-name = "cron.deny"
-path = "/etc/cron.deny"
-perms = "700"
-owner_group = "0"
-owner_user = "0"
-
-[permissions.atallow]
-check = true
-name = "at.allow"
-path = "/etc/at.allow"
-perms = "700"
-owner_group = "0"
-owner_user = "0"
-
-[permissions.atdeny]
-check = true
-name = "at.deny"
-path = "/etc/at.deny"
-perms = "700"
-owner_group = "0"
-owner_user = "0"
-
-### SSH ###
-[permissions.sshdconfig]
-check = true
-name = "sshd_config"
-path = "/etc/ssh/sshd_config"
-perms = "600"
-owner_group = "0"
-owner_user = "0"
-
-[services]
-
-[services.nfsserver]
-check = true
-name = "nfs-server"
-os = ["amzn"]
-
-[services.rpcbind]
-check = true
-name = "rpcbind"
-os = ["amzn"]
-
-[services.rpcbindservice]
-check = true
-name = "rpcbind.service"
-os = ["amzn"]
-
-[services.rpcbindsocket]
-check = true
-name = "rpcbind.socket"
-os = ["amzn"]
-
-[services.rsyncd]
-check = true
-name = "rsyncd"
-os = ["amzn"]
-
-[services.systemdjournalremotesocket]
-check = true
-name = "systemd-journal-remote.socket"
-os = ["amzn"]
-
-[ssh] # TODO
-
-[sshd]
-
-[sshd.cryptopolicy] # TODO
-check = false
-name = "Crypto Policy Override"
-pattern = "^\\s*CRYPTO_POLICY=.*"
-setting = ""
-
-[sshd.strongciphers] # TODO
-check = false
-name = "Strong Ciphers"
-setting = ""
-
-[sshd.strongmac] # TODO
-check = false
-name = "Strong MAC Algorithms"
-setting = ""
-
-[sshd.strongkex] # TODO
-check = false
-name = "Strong Key Exchange Algorithms"
-setting = ""
-
-[sshd.limitaccess] # TODO
-check = false
-name = "Limit Access"
-pattern = "^(?i:AllowUsers|AllowGroups|DenyUsers|DenyGroups)\\s+\\S+$"
-# setting = "AllowUsers <userlist>"
-# setting = "AllowGroups <grouplist>"
-# setting = "DenyUsers <userlist>"
-# setting = "DenyGroups <grouplist>"
-
-[sshd.allowtcpforwarding]
-check = true
-name = "AllowTcpForwarding"
-pattern = "^\\s*(?i:AllowTcpForwarding)\\s+no\\b"
-setting = "AllowTcpForwarding no"
-
-[sshd.banner]
-check = true
-name = "Banner"
-pattern = "^\\s*(?i:Banner)\\s+/etc/issue\\.net\\b"
-setting = "Banner /etc/issue.net"
-
-[sshd.clientalivemax]
-check = true
-name = "ClientAliveCountMax"
-pattern = "^\\s*(?i:ClientAliveCountMax)\\s+[1-9][0-9]*\\b"
-setting = "ClientAliveCountMax 3"
-
-[sshd.clientaliveinterval]
-check = true
-name = "ClientAliveInterval"
-pattern = "^\\s*(?i:ClientAliveInterval)\\s+[1-9][0-9]*\\b"
-setting = "ClientAliveInterval 15"
-
-[sshd.hostbasedauth]
-check = true
-name = "HostbasedAuthentication"
-pattern = "^\\s*(?i:HostbasedAuthentication)\\s+no\\b"
-setting = "HostbasedAuthentication no"
-
-[sshd.ignorerhosts]
-check = true
-name = "IgnoreRhosts"
-pattern = "^\\s*(?i:IgnoreRhosts)\\s+yes\\b"
-setting = "IgnoreRhosts yes"
-
-[sshd.logingracetime]
-check = true
-name = "LoginGraceTime"
-pattern = "^(?i:LoginGraceTime)\\s+([1-9]|[1-5][0-9]|60)\\b"
-setting = "LoginGraceTime 60"
-
-[sshd.loglevel]
-check = true
-name = "LogLevel"
-pattern = "^\\s*(?i:LogLevel)\\s+(VERBOSE|INFO)\\b"
-setting = "LogLevel INFO"
-
-[sshd.maxauthtries]
-check = true
-name = "MaxAuthTries"
-pattern = "^(?i:MaxAuthTries)\\s+([1-4])\\b"
-setting = "MaxAuthTries 4"
-
-[sshd.maxsessions]
-check = true
-name = "MaxSessions"
-pattern = "^(?i:MaxSessions)\\s+([1-9]|10)\\b"
-setting = "MaxSessions 10"
-
-[sshd.maxstartups]
-check = true
-name = "MaxStartups"
-pattern = "^(?i:MaxStartups)\\s+([0-9]|10):([1-2]?[0-9]|30):([1-5]?[0-9]|60)\\b"
-setting = "MaxStartups 10:30:60"
-
-[sshd.permitemptypasswords]
-check = true
-name = "PermitEmptyPasswords"
-pattern = "^\\s*(?i:PermitEmptyPasswords)\\s+no\\b"
-setting = "PermitEmptyPasswords no"
-
-[sshd.permitrootlogin]
-check = true
-name = "PermitRootLogin"
-pattern = "^\\s*(?i:PermitRootLogin)\\s+no\\b"
-setting = "PermitRootLogin no"
-
-[sshd.permituserenv]
-check = true
-name = "PermitUserEnvironment"
-pattern = "^\\s*(?i:PermitUserEnvironment)\\s+no\\b"
-setting = "PermitUserEnvironment no"
-
-[sshd.usepam]
-check = true
-name = "UsePAM"
-pattern = "^\\s*(?i:UsePAM)\\s+yes\\b"
-setting = "UsePAM yes"
-
-[sshd.x11forwarding]
-check = true
-name = "X11Forwarding"
-pattern = "^\\s*(?i:X11Forwarding)\\s+no\\b"
-setting = "X11Forwarding no"
-
-[sshkeys]
-
-[sshkeys.private]
-check = true
-file_type = "private key"
-name = "Private Host key files"
-path = "/etc/ssh"
-permissions = "600"
-owner = "0"
-group = "0"
-
-[sshkeys.public]
-check = true
-file_type = "public key"
-name = "Public Host key files"
-path = "/etc/ssh"
-permissions = "644"
-owner = "0"
-group = "0"
+[accounts]
+[accounts.0001a]
+check_name = "/etc/passwd permissions configured"
+check_type = "permissions"
+check_path = "/etc/passwd"
+expected_gid = 0
+expected_permissions = 644
+expected_uid = 0
+valid_os = ["amzn-2023", "debian-12", "kali-2024.1", "ubuntu-22.04"]
+
+[accounts.0002a]
+check_name = "/etc/passwd- permissions configured"
+check_type = "permissions"
+check_path = "/etc/passwd-"
+expected_gid = 0
+expected_permissions = 644
+expected_uid = 0
+valid_os = ["amzn-2023", "debian-12", "kali-2024.1", "ubuntu-22.04"]
+
+[accounts.0003a]
+check_name = "/etc/group permissions configured"
+check_type = "permissions"
+check_path = "/etc/group"
+expected_gid = 0
+expected_permissions = 644
+expected_uid = 0
+valid_os = ["amzn-2023", "debian-12", "kali-2024.1", "ubuntu-22.04"]
+
+[accounts.0004a]
+check_name = "/etc/group- permissions configured"
+check_type = "permissions"
+check_path = "/etc/group-"
+expected_gid = 0
+expected_permissions = 644
+expected_uid = 0
+valid_os = ["amzn-2023", "debian-12", "kali-2024.1", "ubuntu-22.04"]
+
+[accounts.0005a]
+check_name = "/etc/shadow permissions configured"
+check_type = "permissions"
+check_path = "/etc/shadow"
+expected_gid = 0
+expected_permissions = 0
+expected_uid = 0
+valid_os = ["amzn-2023"]
+
+[accounts.0005b]
+check_name = "/etc/shadow permissions configured"
+check_type = "permissions"
+check_path = "/etc/shadow"
+expected_gid = 42
+expected_permissions = 640
+expected_uid = 0
+valid_os = ["debian-12", "kali-2024.1", "ubuntu-22.04"]
+
+[accounts.0006a]
+check_name = "/etc/shadow- permissions configured"
+check_type = "permissions"
+check_path = "/etc/shadow-"
+expected_gid = 0
+expected_permissions = 0
+expected_uid = 0
+valid_os = ["amzn-2023"]
+
+[accounts.0006b]
+check_name = "/etc/shadow- permissions configured"
+check_type = "permissions"
+check_path = "/etc/shadow-"
+expected_gid = 42
+expected_permissions = 640
+expected_uid = 0
+valid_os = ["debian-12", "kali-2024.1", "ubuntu-22.04"]
+
+[accounts.0007a]
+check_name = "/etc/gshadow permissions configured"
+check_type = "permissions"
+check_path = "/etc/gshadow"
+expected_gid = 0
+expected_permissions = 0
+expected_uid = 0
+valid_os = ["amzn-2023"]
+
+[accounts.0007b]
+check_name = "/etc/gshadow permissions configured"
+check_type = "permissions"
+check_path = "/etc/gshadow"
+expected_gid = 42
+expected_permissions = 640
+expected_uid = 0
+valid_os = ["debian-12", "kali-2024.1", "ubuntu-22.04"]
+
+[accounts.0008a]
+check_name = "/etc/gshadow- permissions configured"
+check_type = "permissions"
+check_path = "/etc/gshadow-"
+expected_gid = 0
+expected_permissions = 0
+expected_uid = 0
+valid_os = ["amzn-2023"]
+
+[accounts.0008b]
+check_name = "/etc/gshadow- permissions configured"
+check_type = "permissions"
+check_path = "/etc/gshadow-"
+expected_gid = 42
+expected_permissions = 640
+expected_uid = 0
+valid_os = ["debian-12", "kali-2024.1", "ubuntu-22.04"]
+
+[aide]
+[aide.0001a]
+check_name = "aide"
+check_type = "package"
+package_name = "aide"
+package_status = "install"
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[audit]
+[audit.0001a]
+check_name = "audit"
+check_type = "package"
+package_name = "audit"
+package_status = "install"
+valid_os = ["amzn-2023"]
+
+[audit.0001b]
+check_name = "auditd"
+check_type = "package"
+package_name = "auditd"
+package_status = "install"
+valid_os = ["ubuntu-22.04"]
+
+[banners]
+[banners.0001a]
+check_name = "/etc/motd permissions configured"
+check_type = "permissions"
+check_path = "/etc/motd"
+expected_gid = 0
+expected_permissions = 644
+expected_uid = 0
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[banners.0002a]
+check_name = "/etc/issue permissions configured"
+check_type = "permissions"
+check_path = "/etc/issue"
+expected_gid = 0
+expected_permissions = 644
+expected_uid = 0
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[banners.0003a]
+check_name = "/etc/issue.net permissions configured"
+check_type = "permissions"
+check_path = "/etc/issue.net"
+expected_gid = 0
+expected_permissions = 644
+expected_uid = 0
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+
+[filesystem]
+[filesystem.mounts]
+[filesystem.mounts.0001a]
+check_name = "/tmp separate partition"
+check_type = "mount-point"
+check_path = "/tmp"
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[filesystem.mounts.0001b]
+check_name = "/tmp mount options not set"
+check_type = "mount-options"
+check_path = "/tmp"
+mount_options = ["nodev", "noexec", "nosuid"]
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[filesystem.mounts.0002a]
+check_name = "/var separate partition"
+check_type = "mount-point"
+check_path = "/var"
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[filesystem.mounts.0002b]
+check_name = "/var mount options not set"
+check_type = "mount-options"
+check_path = "/var"
+mount_options = ["nodev", "nosuid"]
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[filesystem.mounts.0003a]
+check_name = "/var/tmp separate partition"
+check_type = "mount-point"
+check_path = "/var/tmp"
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[filesystem.mounts.0003b]
+check_name = "/var/tmp mount options not set"
+check_type = "mount-options"
+check_path = "/var/tmp"
+mount_options = ["nodev", "noexec", "nosuid"]
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[filesystem.mounts.0004a]
+check_name = "/var/log separate partition"
+check_type = "mount-point"
+check_path = "/var/log"
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[filesystem.mounts.0004b]
+check_name = "/var/log mount options not set"
+check_type = "mount-options"
+check_path = "/var/log"
+mount_options = ["nodev", "noexec", "nosuid"]
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[filesystem.mounts.0005a]
+check_name = "/var/log/audit separate partition"
+check_type = "mount-point"
+check_path = "/var/log/audit"
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[filesystem.mounts.0005b]
+check_name = "/var/log/audit mount options not set"
+check_type = "mount-options"
+check_path = "/var/log/audit"
+mount_options = ["nodev", "noexec", "nosuid"]
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[filesystem.mounts.0006a]
+check_name = "/home separate partition"
+check_type = "mount-point"
+check_path = "/home"
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[filesystem.mounts.0006b]
+check_name = "/home mount options not set"
+check_type = "mount-options"
+check_path = "/home"
+mount_options = ["nodev", "nosuid"]
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[filesystem.mounts.0007a]
+check_name = "/dev/shm separate partition"
+check_type = "mount-point"
+check_path = "/dev/shm"
+mount_options = ["nodev", "noexec", "nosuid"]
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[filesystem.mounts.0007b]
+check_name = "/dev/shm mount options not set"
+check_type = "mount-options"
+check_path = "/dev/shm"
+mount_options = ["nodev", "noexec", "nosuid"]
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+
+[kernel]
+
+[kernel.modules]
+[kernel.modules.0001a]
+check_name = "cramfs"
+check_type = "kernel-module"
+module_name = "cramfs"
+module_type = "filesystem"
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[kernel.modules.0002a]
+check_name = "dccp"
+check_type = "kernel-module"
+module_name = "dccp"
+module_type = "network"
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[kernel.modules.0003a]
+check_name = "freevxfs"
+check_type = "kernel-module"
+module_name = "freevxfs"
+module_type = "filesystem"
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[kernel.modules.0004a]
+check_name = "hfs"
+check_type = "kernel-module"
+module_name = "hfs"
+module_type = "filesystem"
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[kernel.modules.0005a]
+check_name = "hfsplus"
+check_type = "kernel-module"
+module_name = "hfsplus"
+module_type = "filesystem"
+valid_os = ["ubuntu-22.04"]
+
+[kernel.modules.0006a]
+check_name = "jffs2"
+check_type = "kernel-module"
+module_name = "jffs2"
+module_type = "filesystem"
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[kernel.modules.0007a]
+check_name = "rds"
+check_type = "kernel-module"
+module_name = "rds"
+module_type = "network"
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[kernel.modules.0008a]
+check_name = "sctp"
+check_type = "kernel-module"
+module_name = "sctp"
+module_type = "network"
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[kernel.modules.0009a]
+check_name = "squashfs"
+check_type = "kernel-module"
+module_name = "squashfs"
+module_type = "filesystem"
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[kernel.modules.0010a]
+check_name = "tipc"
+check_type = "kernel-module"
+module_name = "tipc"
+module_type = "network"
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[kernel.modules.0011a]
+check_name = "udf"
+check_type = "kernel-module"
+module_name = "udf"
+module_type = "filesystem"
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[kernel.modules.0012a]
+check_name = "usb-storage"
+check_type = "kernel-module"
+module_name = "usb-storage"
+module_type = "storage"
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[kernel.parameters]
+[kernel.parameters.0001a]
+check_name = "testing-param1"
+check_type = "kernel-parameter"
+check_path = ""
+instance_type = ""
+parameter_type = ""
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[logging]
+[logging.rsyslog]
+[logging.rsyslog.0001a]
+check_name = "rsyslog"
+check_type = "package"
+package_name = "rsyslog"
+package_status = "install"
+valid_os = ["amzn-2023"]
+
+
+[restricted]
+
+[restricted.packages]
+[restricted.packages.0001a]
+check_name = "avahi"
+check_type = "package"
+package_name = "avahi"
+package_status = "remove"
+valid_os = ["amzn-2023"]
+
+[restricted.packages.0001b]
+check_name = "avahi-daemon"
+check_type = "package"
+package_name = "avahi-daemon"
+package_status = "remove"
+valid_os = ["ubuntu-22.04"]
+
+[restricted.packages.0002a]
+check_name = "bind"
+check_type = "package"
+package_name = "bind"
+package_status = "remove"
+valid_os = ["amzn-2023"]
+
+[restricted.packages.0002b]
+check_name = "bind9"
+check_type = "package"
+package_name = "bind9"
+package_status = "remove"
+valid_os = ["ubuntu-22.04"]
+
+[restricted.packages.0003a]
+check_name = "cups"
+check_type = "package"
+package_name = "cups"
+package_status = "remove"
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[restricted.packages.0004a]
+check_name = "dnsmasq"
+check_type = "package"
+package_name = "dnsmasq"
+package_status = "remove"
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[restricted.packages.0005a]
+check_name = "dovecot"
+check_type = "package"
+package_name = "dovecot"
+package_status = "remove"
+valid_os = ["amzn-2023"]
+
+[restricted.packages.0006a]
+check_name = "httpd"
+check_type = "package"
+package_name = "httpd"
+package_status = "remove"
+valid_os = ["amzn-2023"]
+
+[restricted.packages.0007a]
+check_name = "net-snmp"
+check_type = "package"
+package_name = "net-snmp"
+package_status = "remove"
+valid_os = ["amzn-2023"]
+
+[restricted.packages.0008a]
+check_name = "nfs-utils"
+check_type = "package"
+package_name = "nfs-utils"
+package_status = "remove"
+valid_os = ["amzn-2023"]
+
+[restricted.packages.0009a]
+check_name = "nginx"
+check_type = "package"
+package_name = "nginx"
+package_status = "remove"
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[restricted.packages.0010a]
+check_name = "openldap-clients"
+check_type = "package"
+package_name = "openldap-clients"
+package_status = "remove"
+valid_os = ["amzn-2023"]
+
+[restricted.packages.0011a]
+check_name = "rpcbind"
+check_type = "package"
+package_name = "rpcbind"
+package_status = "remove"
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[restricted.packages.0012a]
+check_name = "rsync-daemon"
+check_type = "package"
+package_name = "rsync-daemon"
+package_status = "remove"
+valid_os = ["amzn-2023"]
+
+[restricted.packages.0013a]
+check_name = "samba"
+check_type = "package"
+package_name = "samba"
+package_status = "remove"
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[restricted.packages.0014a]
+check_name = "squid"
+check_type = "package"
+package_name = "squid"
+package_status = "remove"
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[restricted.packages.0015a]
+check_name = "telnet"
+check_type = "package"
+package_name = "telnet"
+package_status = "remove"
+valid_os = ["amzn-2023"]
+
+[restricted.packages.0016a]
+check_name = "telnet-server"
+check_type = "package"
+package_name = "telnet-server"
+package_status = "remove"
+valid_os = ["amzn-2023"]
+
+[restricted.packages.0017a]
+check_name = "vsftpd"
+check_type = "package"
+package_name = "vsftpd"
+package_status = "remove"
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[restricted.packages.0018a]
+check_name = "xorg-x11-server-common"
+check_type = "package"
+package_name = "xorg-x11-server-common"
+package_status = "remove"
+valid_os = ["amzn-2023"]
+
+# Testing package
+[restricted.packages.000001a]
+check_name = "xauth"
+check_type = "package"
+package_name = "xauth"
+package_status = "remove"
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+
+[restricted.services]
+[restricted.services.00000001a]
+check_name = "avahi-daemon.service"
+check_type = "service"
+service_name = "avahi-daemon.service"
+service_status = "masked"                # enabled | disabled | masked
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[schedulers]
+[schedulers.at]
+[schedulers.at.0001a]
+check_name = "at"
+check_type = "package"
+package_name = "at"
+package_status = "install"
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[schedulers.at.0002a]
+check_name = "atd.service"
+check_type = "service"
+service_name = "atd.service"
+service_status = "enabled"
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[schedulers.at.0003a]
+check_name = "/etc/at.allow exists"
+check_type = "file-exists"
+check_path = "/etc/at.allow"
+file_exists = true
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[schedulers.at.0004a]
+check_name = "/etc/at.deny exists"
+check_type = "file-exists"
+check_path = "/etc/at.deny"
+file_exists = false
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[schedulers.cron]
+[schedulers.cron.0001a]
+check_name = "cronie"
+check_type = "package"
+package_name = "cronie"
+package_status = "install"
+valid_os = ["amzn-2023"]
+
+[schedulers.cron.0001b]
+check_name = "cron"
+check_type = "package"
+package_name = "cron"
+package_status = "install"
+valid_os = ["ubuntu-22.04"]
+
+[schedulers.cron.0002a]
+check_name = "cron.service"
+check_type = "service"
+service_name = "cron.service"
+service_status = "enabled"
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[schedulers.cron.0003a]
+check_name = "/etc/cron.allow exists"
+check_type = "file-exists"
+check_path = "/etc/cron.allow"
+file_exists = true
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[schedulers.cron.0004a]
+check_name = "/etc/cron.deny exists"
+check_type = "file-exists"
+check_path = "/etc/cron.deny"
+file_exists = false
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[schedulers.cron.0005a]
+check_name = "/etc/crontab permissions configured"
+check_type = "permissions"
+check_path = "/etc/crontab"
+expected_gid = 0
+expected_permissions = 600
+expected_uid = 0
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[schedulers.cron.0006a]
+check_name = "/etc/cron.hourly permissions configured"
+check_type = "permissions"
+check_path = "/etc/cron.hourly"
+expected_gid = 0
+expected_permissions = 700
+expected_uid = 0
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[schedulers.cron.0007a]
+check_name = "/etc/cron.daily permissions configured"
+check_type = "permissions"
+check_path = "/etc/cron.daily"
+expected_gid = 0
+expected_permissions = 700
+expected_uid = 0
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[schedulers.cron.0008a]
+check_name = "/etc/cron.weekly permissions configured"
+check_type = "permissions"
+check_path = "/etc/cron.weekly"
+expected_gid = 0
+expected_permissions = 700
+expected_uid = 0
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[schedulers.cron.0009a]
+check_name = "/etc/cron.monthly permissions configured"
+check_type = "permissions"
+check_path = "/etc/cron.monthly"
+expected_gid = 0
+expected_permissions = 700
+expected_uid = 0
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[schedulers.cron.0010a]
+check_name = "/etc/cron.d permissions configured"
+check_type = "permissions"
+check_path = "/etc/cron.d"
+expected_gid = 0
+expected_permissions = 700
+expected_uid = 0
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[selinux]
+[selinux.0001a]
+check_name = "libselinux"
+check_type = "package"
+package_name = "libselinux"
+package_status = "install"
+valid_os = ["amzn-2023"]
 
 [sudo]
-# config = "/etc/sudo.conf"
-# path = "/etc/sudoers.d"
+[sudo.0001a]
+check_name = "sudo"
+check_type = "package"
+package_name = "sudo"
+package_status = "install"
+valid_os = ["amzn-2023", "ubuntu-22.04"]
 
-[sudo.authtimeout]
-check = true
-name = "Defaults timestamp_timeout"
-pattern = "^(?<!#)Defaults\\b.*\\btimestamp_timeout=15\\b"
-setting = "Defaults timestamp_timeout=15"
+[time]
+[time.chrony]
+[time.chrony.0001a]
+check_name = "chrony"
+check_type = "package"
+package_name = "chrony"
+package_status = "install"
+valid_os = ["amzn-2023", "ubuntu-22.04"]
 
-[sudo.sudolog]
-check = true
-name = "Defaults logfile"
-pattern = "^(?i:Defaults)\\s+logfile=['\"].*?['\"]$"
-setting = "Defaults logfile='/var/log/sudo.log'"
-
-[sudo.usepty]
-check = true
-name = "Defaults use_pty"
-pattern = "^(?i:Defaults)\\s+use_pty$"
-setting = "Defaults use_pty"
-
-[sudo.reauthglobal] # TODO
-check = false
-name = "Re-Auth Global"
-pattern = "^[^#].*\\!authenticate"
-setting = ""
+[time.systemd-timesyncd]
+[time.systemd-timesyncd.0001a]
+check_name = "systemd-timesyncd"
+check_type = "package"
+package_name = "systemd-timesyncd"
+package_status = "install"
+valid_os = ["ubuntu-22.04"]

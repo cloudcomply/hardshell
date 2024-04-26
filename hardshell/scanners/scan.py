@@ -1,8 +1,8 @@
 #########################################################################################
 # Imports
 #########################################################################################
-from hardshell.utils.common import detect_os, load_config
-from hardshell.scanners.linux import scan_linux
+from hardshell.utils.common import checks, detect_os, load_config
+from hardshell.scanners.linux import audit_linux
 
 
 def start_scanner():
@@ -18,11 +18,23 @@ def start_scanner():
     detected_os = detect_os()
 
     if detected_os["type"] == "linux":
-        scan_linux(
-            detected_os=detected_os["id"],
+        audit_linux(
+            detected_os=detected_os,
             global_config=global_config,
             linux_config=linux_config,
         )
     else:
         print("Unsupported OS")
         exit(1)
+
+    # print(checks)
+    for check in checks:
+        print(
+            f"Category: {check}"
+            + " " * 5
+            + f"Total Checks {checks[check]['total']}"
+            + " " * 5
+            + f"Passed Checks {checks[check]['passed']}"
+            + " " * 5
+            + f"Failed Checks {checks[check]['failed']}"
+        )

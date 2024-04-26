@@ -1,6 +1,7 @@
 import ctypes
 import os
 import platform
+import re
 import toml
 from pathlib import Path
 from typing import Callable, Dict, Union
@@ -101,6 +102,14 @@ def load_config(config_file):
     return config
 
 
+def path_exists(path):
+    return os.path.exists(path)
+
+
+def shutdown_banner():
+    pass
+
+
 def startup_banner():
     """
     Gets the startup banner.
@@ -131,5 +140,55 @@ def startup_banner():
     return banner
 
 
-def shutdown_banner():
-    pass
+def strip_non_alphabetical(s):
+    """Remove all non-alphabetical characters from the string."""
+    # Replace non-alphabetical characters with an empty string
+    return re.sub(r"[^a-zA-Z]", "", s)
+
+
+def update_counts(category, passed_checks, failed_checks):
+    """
+    Update the counts for a specific category.
+
+    Parameters:
+    - counts (dict): The dictionary holding all count data.
+    - category (str): The category under which to update the counts.
+    - passed (int): The number of newly passed tests to add.
+    - failed (int): The number of newly failed tests to add.
+    """
+    if category not in checks:
+        # Initialize the category if it doesn't exist
+        checks[category] = {"total": 0, "passed": 0, "failed": 0}
+
+    # Update the counts for the specified category
+    checks[category]["passed"] += passed_checks
+    checks[category]["failed"] += failed_checks
+    checks[category]["total"] += passed_checks + failed_checks
+
+
+checks = {
+    "Accounts": {"total": 0, "passed": 0, "failed": 0},
+    "Aide": {"total": 0, "passed": 0, "failed": 0},
+    "Audit": {"total": 0, "passed": 0, "failed": 0},
+    "Banners": {"total": 0, "passed": 0, "failed": 0},
+    "Filesystem-Mounts": {"total": 0, "passed": 0, "failed": 0},
+    "Kernel-Modules": {"total": 0, "passed": 0, "failed": 0},
+    "Kernel-Parameters": {"total": 0, "passed": 0, "failed": 0},
+    "Logging-Rsyslog": {"total": 0, "passed": 0, "failed": 0},
+    "Restricted-Packages": {"total": 0, "passed": 0, "failed": 0},
+    "Restricted-Services": {"total": 0, "passed": 0, "failed": 0},
+    "Schedulers-At": {"total": 0, "passed": 0, "failed": 0},
+    "Schedulers-Cron": {"total": 0, "passed": 0, "failed": 0},
+    "SELinux": {"total": 0, "passed": 0, "failed": 0},
+    "Sudo": {"total": 0, "passed": 0, "failed": 0},
+    "Time-Chrony": {"total": 0, "passed": 0, "failed": 0},
+    "Time-Timesyncd": {"total": 0, "passed": 0, "failed": 0},
+}
+
+
+# Old code
+# def path_exists(path):
+#     if os.path.exists(path):
+#         return True
+#     else:
+#         return False
