@@ -173,6 +173,24 @@ def check_module(module):
         ):
             print(f"Module: {module['module_name']} is not denied.")
             return False
+        elif (
+            f"install {module_name} /bin/false" not in modprobe
+            or f"install {module_name} /bin/true" not in modprobe
+            and f"blacklist {module['module_name']}" not in modprobe
+            and module["module_status"] == "allow"
+        ):
+            print(f"Module: {module['module_name']} is not denied.")
+
+            command = ["lsmod", "|", "grep", module["module_name"]]
+            loaded = execute_command(command, expect_output=True)
+
+            print(loaded)
+
+            if loaded:
+                print(f"Module: {module['module_name']} is loaded.")
+                return True
+
+            # return False
     else:
         print(f"Module: {module['module_name']} is not denied.")
         return False
