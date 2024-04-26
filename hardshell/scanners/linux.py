@@ -173,6 +173,9 @@ def check_module(module):
         ):
             print(f"Module: {module['module_name']} is not denied.")
             return False
+    else:
+        print(f"Module: {module['module_name']} is not denied.")
+        return False
 
     # return False
 
