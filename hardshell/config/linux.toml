@@ -353,6 +353,14 @@ module_status = "deny"
 module_type = "storage"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
+[kernel.modules.0000001a]
+check_name = "cifs"
+check_type = "kernel-module"
+module_name = "cifs"
+module_status = "allow"
+module_type = "storage"
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
 [kernel.parameters]
 [kernel.parameters.0001a]
 check_name = "testing-param1"
