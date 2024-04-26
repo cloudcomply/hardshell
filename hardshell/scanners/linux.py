@@ -94,11 +94,11 @@ def execute_command(command, expect_output=True):
             check=True,
         )
 
-        print(f"result: {result}")
+        # print(f"result: {result}")
 
         output = result.stdout.strip()
 
-        print(f"output: {output}")
+        # print(f"output: {output}")
 
         if expect_output:
             return output
@@ -171,7 +171,7 @@ def check_package(current_os, global_config, package):
 
     result = execute_command(command)
 
-    print(f"Package Result: {result}")
+    # print(f"Package Result: {result}")
 
     if not result:
         print(f"Package {package_name} is not installed.")
@@ -181,12 +181,12 @@ def check_package(current_os, global_config, package):
         return package.get("package_status") == "remove"
 
     # Result is valid, checking installation status
-    is_installed = "installed" in result
+    is_installed = "installed" in result.lower()
     expected_status = package.get("package_status")
 
     if is_installed:
         if expected_status == "install":
-            print(f"Package {package_name} is correctly installed.")
+            print(f"Package {package_name} is installed.")
             return True
         elif expected_status == "remove":
             print(f"Package {package_name} is installed but should be removed.")
