@@ -3,7 +3,8 @@
 [global.amzn]
 package_install = ["install"]
 package_remove = ["remove"]
-package_search = ["rpm", "-q"]
+# package_search = ["rpm", "-q"]
+package_search = ["dnf", "list", "installed"]
 
 [global.debian]
 package_install = ["install"]
