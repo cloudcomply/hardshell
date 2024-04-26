@@ -43,13 +43,16 @@ def audit_linux(detected_os, global_config, linux_config):
 
 def audit_checks(global_config, category, current_os, checks):
     check_handlers = {
-        # "file-exists": ("file", check_file_exists),
-        "kernel-module": ("module", check_module),
+        # "file-exists": ("file", check_file_exists), # Good
+        "kernel-module": (
+            "module",
+            check_module,
+        ),  # Loadable only # TODO - Add loaded and deny
         # "kernel-parameter": ("parameter", check_parameter),
-        # "mount-options": ("mount", check_mount),
-        # "package": ("package", check_package),
-        # "permissions": ("permissions", check_permissions),
-        # "service": ("service", check_service),
+        # "mount-options": ("mount", check_mount),  # Good
+        # "package": ("package", check_package), # Good
+        # "permissions": ("permissions", check_permissions),  # Good
+        # "service": ("service", check_service),  # Good
     }
 
     failed_checks = 0
@@ -84,6 +87,7 @@ def audit_checks(global_config, category, current_os, checks):
 
 
 def execute_command(command, expect_output=True):
+    # print(f"executing commmand: {command}")
     try:
         result = subprocess.run(
             command,
@@ -92,7 +96,13 @@ def execute_command(command, expect_output=True):
             text=True,
             check=True,
         )
+
+        # print(f"result: {result}")
+
         output = result.stdout.strip()
+
+        # print(f"output: {output}")
+
         if expect_output:
             return output
         return output != ""
@@ -100,524 +110,181 @@ def execute_command(command, expect_output=True):
         return False
 
 
-def check_module(module):
-    # print(module)
-    loaded = execute_command(
-        ["lsmod", "|", "grep", module["module_name"]],
-        expect_output=True,
+def execute_grep_command(command, module):
+    module_process = subprocess.Popen(
+        command, stderr=subprocess.DEVNULL, stdout=subprocess.PIPE, text=True
     )
-    print(f"Loaded: {loaded}")
+
+    grep_process = subprocess.Popen(
+        ["grep", module],
+        stdin=module_process.stdout,
+        stdout=subprocess.PIPE,
+        text=True,
+    )
+
+    module_process.stdout.close()
+    output = grep_process.communicate()[0]
+
+    return output
 
 
-# def check_module(current_os, module):
-#     loaded = execute_command(["lsmod"], expect_output=True)
-#     return module["module_name"] in loaded and not module.get("deny", False)
+def check_file_exists(file):
+    if file["file_exists"] == True and path_exists(file["check_path"]) == True:
+        return True
+    return False
+
+
+def check_module(module):
+    print(f"Checking module: {module['module_name']}")
+
+    module_name = module["module_name"]
+
+    # command = ["modprobe", "-n", "-v", module["module_name"]]
+    # modprobe = execute_command(command, expect_output=True)
+
+    command = ["modprobe", "--showconfig"]
+    modprobe = execute_grep_command(command, module["module_name"])
+
+    if modprobe:
+        print(modprobe)
+        if (
+            f"install {module_name} /bin/false" in modprobe
+            or f"install {module_name} /bin/true" in modprobe
+            and f"blacklist {module['module_name']}" in modprobe
+            and module["module_status"] == "deny"
+        ):
+            print(f"Module: {module['module_name']} is denied.")
+            return True
+
+        elif (
+            f"install {module_name} /bin/false" in modprobe
+            or f"install {module_name} /bin/true" in modprobe
+            and f"blacklist {module['module_name']}" in modprobe
+            and module["module_status"] == "allow"
+        ):
+            print(f"Module: {module['module_name']} is denied, but allowed.")
+            return False
+
+    # return False
+
+    # command = ["lsmod", "|", "grep", module["module_name"]]
+    # loaded = execute_command(command, expect_output=True)
+
+    # if loaded and module["module_status"] == "allow":
+    #     print(f"Module: {module['module_name']} is loaded and allowed.")
+    #     return True
+    # elif loaded and module["module_status"] == "deny":
+    #     print(f"Module: {module['module_name']} is loaded and denied.")
+    #     return False
+    # else:
+    #     print(f"Module: {module['module_name']} is not loaded and denied.")
+    #     return True
+
+
+def check_mount(global_config, mount):
+    # Execute the command to get the mount options
+    command = ["findmnt", "-no", "OPTIONS", mount["check_path"]]
+    mount_options_str = execute_command(command)
+
+    # Check if the mount point exists by evaluating the output of the command
+    if mount_options_str:
+        print(f"Mount point found for {mount['check_name']} at {mount['check_path']}")
+        mount_options = set(mount_options_str.split(","))
+        all_options_present = True
+
+        for option in mount["mount_options"]:
+            if option in mount_options:
+                print(f"Option: {option} is set at Mount Point: {mount['check_path']}")
+            else:
+                print(
+                    f"Option: {option} is NOT set at Mount Point: {mount['check_path']}"
+                )
+                all_options_present = False  # Once set to False, it remains False
+
+        return all_options_present
+    else:
+        print(
+            f"No mount point found for {mount['check_path']}. Assuming default check status as True."
+        )
+        return True  # Return True if the mount point does not exist
+
+
+def check_package(current_os, global_config, package):
+    package_name = package["package_name"]
+    distro = current_os.split("-")[0]
+
+    command_template = (
+        global_config.get("global", {}).get(distro, {}).get("package_search", [])
+    )
+    command = command_template + [package_name]
+
+    result = execute_command(command)
+
+    if not result:
+        print(f"Package {package_name} is not installed.")
+        if package.get("package_status") == "install":
+            print(f"{package_name} should be installed.")
+            return False
+        return package.get("package_status") == "remove"
+
+    # Result is valid, checking installation status
+    is_installed = "installed" in result
+    expected_status = package.get("package_status")
+
+    if is_installed:
+        if expected_status == "install":
+            print(f"Package {package_name} is correctly installed.")
+            return True
+        elif expected_status == "remove":
+            print(f"Package {package_name} is installed but should be removed.")
+            return False
+    else:
+        print(f"Package {package_name} is not installed.")
+        if expected_status == "install":
+            print(f"{package_name} should be installed.")
+            return True
+        return False
+
+
+def check_permissions(permissions):
+    if os.path.exists(permissions["check_path"]):
+        file_stats = os.stat(permissions["check_path"])
+        current_permissions = (
+            file_stats.st_uid,
+            file_stats.st_gid,
+            int(oct(file_stats.st_mode)[-3:]),
+        )
+        expected_permissions = (
+            permissions.get("expected_uid"),
+            permissions.get("expected_gid"),
+            permissions.get("expected_permissions"),
+        )
+        return current_permissions == expected_permissions
+    return False
+
+
+def check_service(service):
+    service_name = service["service_name"]
+    service_required_status = service["service_status"]
+
+    # Check if the service is enabled
+    is_enabled = execute_command(["systemctl", "is-enabled", service_name])
+    is_active = execute_command(["systemctl", "is-active", service_name])
+
+    # Print service status information
+    print(
+        f"Service {service_name} is {'enabled' if is_enabled else 'disabled'}, {'active' if is_active else 'inactive'}."
+    )
+
+    # Return True if the service is both enabled and active as required
+    if service_required_status == "enabled":
+        # print(is_enabled)
+        # print(is_active)
+        return is_enabled and is_active
+    else:
+        # For different logic on service_required_status other than 'enabled', handle accordingly
+        print(not is_enabled and not is_active)
+        return not is_enabled and not is_active
 
 
 # Old code
-
-
-# def audit_linux(detected_os, global_config, linux_config):
-#     accounts = linux_config.get("accounts")
-#     aide = linux_config.get("aide")
-#     audit = linux_config.get("audit")
-#     banners = linux_config.get("banners")
-#     filesystem_mounts = linux_config.get("filesystem").get("mounts")
-#     logging_rsyslog = linux_config.get("logging").get("rsyslog")
-#     modules = linux_config.get("kernel").get("modules")
-#     parameters = linux_config.get("kernel").get("parameters")
-#     restricted_packages = linux_config.get("restricted").get("packages")
-#     restricted_services = linux_config.get("restricted").get("services")
-#     schedulers_at = linux_config.get("schedulers").get("at")
-#     schedulers_cron = linux_config.get("schedulers").get("cron")
-#     selinux = linux_config.get("selinux")
-#     sudo = linux_config.get("sudo")
-#     time_chrony = linux_config.get("time").get("chrony")
-#     time_timesyncd = linux_config.get("time").get("systemd-timesyncd")
-
-#     current_os = f"{detected_os['id']}-{detected_os['version_id']}"
-
-#     if accounts:
-#         audit_checks(
-#             global_config=global_config,
-#             category="Accounts",
-#             current_os=current_os,
-#             checks=accounts,
-#         )
-
-#     if aide:
-#         audit_checks(
-#             global_config=global_config,
-#             category="Aide",
-#             current_os=current_os,
-#             checks=aide,
-#         )
-
-#     if audit:
-#         audit_checks(
-#             global_config=global_config,
-#             category="Audit",
-#             current_os=current_os,
-#             checks=audit,
-#         )
-
-#     if banners:
-#         audit_checks(
-#             global_config=global_config,
-#             category="Banners",
-#             current_os=current_os,
-#             checks=banners,
-#         )
-
-#     if filesystem_mounts:
-#         audit_checks(
-#             global_config=global_config,
-#             category="Filesystem-Mounts",
-#             current_os=current_os,
-#             checks=filesystem_mounts,
-#         )
-
-#     if logging_rsyslog:
-#         audit_checks(
-#             global_config=global_config,
-#             category="Logging-Rsyslog",
-#             current_os=current_os,
-#             checks=logging_rsyslog,
-#         )
-
-#     if modules:
-#         audit_checks(
-#             global_config=global_config,
-#             category="Kernel-Modules",
-#             current_os=current_os,
-#             checks=modules,
-#         )
-
-#     if parameters:
-#         audit_checks(
-#             global_config=global_config,
-#             category="Kernel-Parameters",
-#             current_os=current_os,
-#             checks=parameters,
-#         )
-
-#     if restricted_packages:
-#         audit_checks(
-#             global_config=global_config,
-#             category="Restricted-Packages",
-#             current_os=current_os,
-#             checks=restricted_packages,
-#         )
-
-#     if restricted_services:
-#         audit_checks(
-#             global_config=global_config,
-#             category="Restricted-Services",
-#             current_os=current_os,
-#             checks=restricted_services,
-#         )
-
-#     if schedulers_at:
-#         audit_checks(
-#             global_config=global_config,
-#             category="Schedulers-At",
-#             current_os=current_os,
-#             checks=schedulers_at,
-#         )
-
-#     if schedulers_cron:
-#         audit_checks(
-#             global_config=global_config,
-#             category="Schedulers-Cron",
-#             current_os=current_os,
-#             checks=schedulers_cron,
-#         )
-
-#     if selinux:
-#         audit_checks(
-#             global_config=global_config,
-#             category="SELinux",
-#             current_os=current_os,
-#             checks=selinux,
-#         )
-
-#     if sudo:
-#         audit_checks(
-#             global_config=global_config,
-#             category="Sudo",
-#             current_os=current_os,
-#             checks=sudo,
-#         )
-
-#     if time_chrony:
-#         audit_checks(
-#             global_config=global_config,
-#             category="Time-Chrony",
-#             current_os=current_os,
-#             checks=time_chrony,
-#         )
-
-#     if time_timesyncd:
-#         audit_checks(
-#             global_config=global_config,
-#             category="Time-Timesyncd",
-#             current_os=current_os,
-#             checks=time_timesyncd,
-#         )
-
-
-# def audit_checks(
-#     global_config,
-#     category,
-#     current_os,
-#     checks,
-# ):
-#     failed_checks = 0
-#     passed_checks = 0
-
-#     for check in checks:
-#         if current_os in checks[check]["valid_os"]:
-#             if checks[check]["check_type"] == "file-exists":
-#                 output = check_file_exists(
-#                     current_os=current_os,
-#                     file=checks[check],
-#                 )
-#                 if output:
-#                     passed_checks += 1
-#                 else:
-#                     failed_checks += 1
-#             elif checks[check]["check_type"] == "kernel-module":
-#                 output = check_module(
-#                     current_os=current_os,
-#                     module=checks[check],
-#                 )
-#                 if output:
-#                     passed_checks += 1
-#                 else:
-#                     failed_checks += 1
-#             elif checks[check]["check_type"] == "kernel-parameter":
-#                 output = check_parameter(
-#                     current_os=current_os,
-#                     parameter=checks[check],
-#                 )
-#                 if output:
-#                     passed_checks += 1
-#                 else:
-#                     failed_checks += 1
-#             elif checks[check]["check_type"] == "mount-options":
-#                 output = check_mount(
-#                     current_os=current_os,
-#                     global_config=global_config,
-#                     mount=checks[check],
-#                 )
-
-#                 if output:
-#                     passed_checks += 1
-#                 else:
-#                     failed_checks += 1
-#             elif checks[check]["check_type"] == "package":
-#                 output = check_package(
-#                     current_os=current_os,
-#                     global_config=global_config,
-#                     package=checks[check],
-#                 )
-#                 if output:
-#                     passed_checks += 1
-#                 else:
-#                     failed_checks += 1
-#             elif checks[check]["check_type"] == "permissions":
-#                 output = check_permissions(
-#                     current_os=current_os,
-#                     permissions=checks[check],
-#                 )
-#                 if output:
-#                     passed_checks += 1
-#                 else:
-#                     failed_checks += 1
-#             elif checks[check]["check_type"] == "service":
-#                 output = check_service(
-#                     current_os=current_os,
-#                     service=checks[check],
-#                 )
-#                 if output:
-#                     passed_checks += 1
-#                 else:
-#                     failed_checks += 1
-
-#     update_counts(
-#         category=category,
-#         passed_checks=passed_checks,
-#         failed_checks=failed_checks,
-#     )
-
-
-# def path_exists(path):
-#     if os.path.exists(path):
-#         return True
-#     else:
-#         return False
-
-
-# def check_file_exists(current_os, file):
-#     check_status = False
-
-#     output = verify_command(
-#         [
-#             "file",
-#             file["check_path"],
-#         ]
-#     )
-
-#     if len(output.stdout) > 0 and file["check_path"] == True:
-#         check_status = True
-#     else:
-#         check_status = False
-
-#     return check_status
-
-
-# def check_module(current_os, module):
-#     """
-#     Scan kernel modules for loaded, loadable, and deny listed
-#     :param current_os: The current operating system
-#     :param modules: The list of kernel modules to scan
-#     """
-#     check_status = False
-#     module_name = module["module_name"]
-
-#     # Check for Loadable
-#     loadable = False
-
-#     if loadable:
-#         check_status = False
-#     else:
-#         check_status = True
-
-#     # Check for Loaded
-#     loaded = verify_lsmod(module_name)
-
-#     if loaded:
-#         check_status = False
-#     else:
-#         check_status = True
-
-#     # Check for deny listed
-#     denied = False
-
-#     if denied:
-#         check_status = False
-#     else:
-#         check_status = True
-
-#     return check_status
-
-
-# def check_mount(current_os, global_config, mount):
-#     check_status = False
-
-#     output = verify_command(
-#         [
-#             "findmnt",
-#             mount["check_path"],
-#         ]
-#     )
-
-#     for option in mount["mount_options"]:
-#         if len(output.stdout) > 0:
-#             if option in output.stdout:
-#                 # print(f"{option} not on {mount['check_path']}")
-#                 check_status = True
-#             else:
-#                 # print(f"{option} on {mount['check_path']}")
-#                 check_status = False
-#         else:
-#             check_status = True
-
-#     return check_status
-
-
-# def check_package(current_os, global_config, package):
-#     check_status = False
-
-#     # print(package)
-
-#     distro = current_os.split("-")[0]
-#     # cmd_install = global_config.get("global").get(distro).get("package_install")
-#     # cmd_remove = global_config.get("global").get(distro).get("package_remove")
-#     cmd_search = global_config.get("global").get(distro).get("package_search")
-#     package_name = package["package_name"]
-
-#     # Check Package Status
-#     status = verify_package(pkgmgr=cmd_search, package=package_name)
-
-#     if status and package["package_status"] == "install":
-#         check_status = True
-#     elif status and package["package_status"] == "remove":
-#         check_status = False
-#     elif status and package["package_status"] == "required":
-#         check_status = True
-#     elif not status and package["package_status"] == "install":
-#         check_status = False
-#     elif not status and package["package_status"] == "remove":
-#         check_status = True
-#     elif not status and package["package_status"] == "required":
-#         check_status = False
-
-#     return check_status
-
-
-# def check_parameter(current_os, parameter):
-#     # print(parameter)
-#     check_status = False
-#     return check_status
-
-
-# def check_permissions(current_os, permissions):
-#     # print(permissions)
-#     check_status = False
-
-#     if path_exists(permissions["check_path"]):
-#         uid, gid, perms = get_permissions(permissions["check_path"])
-#         if (
-#             uid == permissions.get("expected_uid")
-#             and gid == permissions.get("expected_gid")
-#             and int(perms) == permissions.get("expected_permissions")
-#         ):
-#             # print("PASS")
-#             check_status = True
-#         else:
-#             # print("FAIL")
-#             # # print(f"uid: {uid}")
-#             # # print(f"gid: {gid}")
-#             # # print(f"permissions: {permissions}")
-#             check_status = False
-
-#     return check_status
-
-
-# def check_service(current_os, service):
-#     check_status = False
-#     service_name = service["service_name"]
-
-#     cmd_active = ["systemctl", "is-active", f"{service_name}"]
-#     cmd_enabled = ["systemctl", "is-enabled", f"{service_name}"]
-
-#     check_enabled = verify_service(cmd_enabled)
-
-#     if (
-#         len(check_enabled.stdout) > 0
-#         and "enabled" in check_enabled.stdout
-#         and "enabled" == service["service_status"]
-#     ):
-#         # print(strip_non_alphabetical(check_enabled.stdout))
-#         print(f"Service {service_name} is enabled.")
-#         check_status = True
-
-#         if check_status:
-#             check_active = verify_service(cmd_active)
-
-#             if len(check_active.stdout) > 0 and "active" in check_active.stdout:
-#                 print(f"Service {service_name} is active.")
-#                 check_status = True
-#             else:
-#                 print(f"Service {service_name} is not active.")
-#                 check_status = False
-#     elif (
-#         len(check_enabled.stdout) > 0
-#         and "masked" in check_enabled.stdout
-#         and "masked" == service["service_status"]
-#     ):
-#         # print(f"Service {service_name} is masked.")
-#         check_status = True
-#     else:
-#         # print(f"Service {service_name} is disabled.")
-#         check_status = False
-
-#     return check_status
-
-
-# def get_permissions(path):
-#     try:
-#         st = os.stat(path)
-#         permissions = oct(st.st_mode & 0o777)
-#         return st.st_uid, st.st_gid, permissions[-3:]
-#     except FileNotFoundError as error:
-#         return error.output
-#     except Exception as error:
-#         return error.output
-
-
-# def list_directory(path, extension=None):
-#     if path_exists(path) == True:
-#         files = os.listdir(path)
-#         if extension:
-#             filtered_files = [
-#                 file
-#                 for file in files
-#                 if file.endswith(extension) and os.path.isfile(os.path.join(path, file))
-#             ]
-#             return filtered_files
-#         else:
-#             directory_files = [
-#                 file for file in files if os.path.isfile(os.path.join(path, file))
-#             ]
-#             return directory_files
-#     else:
-#         return []
-
-
-# def verify_command(command, grep=False):
-#     try:
-#         output = subprocess.run(
-#             command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True
-#         )
-#         return output
-#     except Exception as e:
-#         pass
-
-
-# def verify_lsmod(module):
-#     """
-#     Checks if a kernel module is loaded.
-#     :param module: The name of the module to check.
-#     :return: True if the module is loaded, False otherwise.
-#     """
-#     lsmod_process = subprocess.Popen(["lsmod"], stdout=subprocess.PIPE, text=True)
-#     grep_process = subprocess.Popen(
-#         ["grep", module], stdin=lsmod_process.stdout, stdout=subprocess.PIPE, text=True
-#     )
-#     lsmod_process.stdout.close()
-#     output = grep_process.communicate()[0]
-#     return True if len(output) > 0 else False
-
-
-# def verify_package(pkgmgr, package):
-#     pkgmgr.append(package)
-#     package_process = subprocess.Popen(
-#         pkgmgr, stderr=subprocess.DEVNULL, stdout=subprocess.PIPE, text=True
-#     )
-#     grep_process = subprocess.Popen(
-#         ["grep", package],
-#         stdin=package_process.stdout,
-#         stdout=subprocess.PIPE,
-#         text=True,
-#     )
-#     package_process.stdout.close()
-#     output = grep_process.communicate()[0]
-
-#     if "installed" in output or len(output) > 0:
-#         print(f"Package {package} installed")
-#         return True
-#     elif "not installed" in output or len(output) == 0:
-#         print(f"Package {package} not installed")
-#         return False
-
-
-# def verify_service(cmd):
-#     try:
-#         output = subprocess.run(
-#             cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True
-#         )
-#         return output
-#     except Exception as e:
-#         pass

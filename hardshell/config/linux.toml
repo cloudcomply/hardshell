@@ -261,6 +261,7 @@ valid_os = ["amzn-2023", "ubuntu-22.04"]
 check_name = "cramfs"
 check_type = "kernel-module"
 module_name = "cramfs"
+module_status = "allow"
 module_type = "filesystem"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
@@ -268,6 +269,7 @@ valid_os = ["amzn-2023", "ubuntu-22.04"]
 check_name = "dccp"
 check_type = "kernel-module"
 module_name = "dccp"
+module_status = "allow"
 module_type = "network"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
@@ -275,6 +277,7 @@ valid_os = ["amzn-2023", "ubuntu-22.04"]
 check_name = "freevxfs"
 check_type = "kernel-module"
 module_name = "freevxfs"
+module_status = "allow"
 module_type = "filesystem"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
@@ -282,6 +285,7 @@ valid_os = ["amzn-2023", "ubuntu-22.04"]
 check_name = "hfs"
 check_type = "kernel-module"
 module_name = "hfs"
+module_status = "allow"
 module_type = "filesystem"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
@@ -289,6 +293,7 @@ valid_os = ["amzn-2023", "ubuntu-22.04"]
 check_name = "hfsplus"
 check_type = "kernel-module"
 module_name = "hfsplus"
+module_status = "allow"
 module_type = "filesystem"
 valid_os = ["ubuntu-22.04"]
 
@@ -296,6 +301,7 @@ valid_os = ["ubuntu-22.04"]
 check_name = "jffs2"
 check_type = "kernel-module"
 module_name = "jffs2"
+module_status = "allow"
 module_type = "filesystem"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
@@ -303,6 +309,7 @@ valid_os = ["amzn-2023", "ubuntu-22.04"]
 check_name = "rds"
 check_type = "kernel-module"
 module_name = "rds"
+module_status = "allow"
 module_type = "network"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
@@ -310,6 +317,7 @@ valid_os = ["amzn-2023", "ubuntu-22.04"]
 check_name = "sctp"
 check_type = "kernel-module"
 module_name = "sctp"
+module_status = "allow"
 module_type = "network"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
@@ -317,6 +325,7 @@ valid_os = ["amzn-2023", "ubuntu-22.04"]
 check_name = "squashfs"
 check_type = "kernel-module"
 module_name = "squashfs"
+module_status = "allow"
 module_type = "filesystem"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
@@ -324,6 +333,7 @@ valid_os = ["amzn-2023", "ubuntu-22.04"]
 check_name = "tipc"
 check_type = "kernel-module"
 module_name = "tipc"
+module_status = "allow"
 module_type = "network"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
@@ -331,6 +341,7 @@ valid_os = ["amzn-2023", "ubuntu-22.04"]
 check_name = "udf"
 check_type = "kernel-module"
 module_name = "udf"
+module_status = "allow"
 module_type = "filesystem"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
@@ -338,6 +349,7 @@ valid_os = ["amzn-2023", "ubuntu-22.04"]
 check_name = "usb-storage"
 check_type = "kernel-module"
 module_name = "usb-storage"
+module_status = "deny"
 module_type = "storage"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
@@ -361,7 +373,6 @@ valid_os = ["amzn-2023"]
 
 
 [restricted]
-
 [restricted.packages]
 [restricted.packages.0001a]
 check_name = "avahi"
@@ -504,12 +515,12 @@ package_status = "remove"
 valid_os = ["amzn-2023"]
 
 # Testing package
-[restricted.packages.000001a]
-check_name = "xauth"
-check_type = "package"
-package_name = "xauth"
-package_status = "remove"
-valid_os = ["amzn-2023", "ubuntu-22.04"]
+# [restricted.packages.000001a]
+# check_name = "xauth"
+# check_type = "package"
+# package_name = "xauth"
+# package_status = "remove"
+# valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 
 [restricted.services]
