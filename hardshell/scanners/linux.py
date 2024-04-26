@@ -146,7 +146,7 @@ def check_module(module):
     modprobe = execute_grep_command(command, module["module_name"])
 
     if modprobe:
-        print(modprobe)
+        # print(modprobe)
         if (
             f"install {module_name} /bin/false" in modprobe
             or f"install {module_name} /bin/true" in modprobe
