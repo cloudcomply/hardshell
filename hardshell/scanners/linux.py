@@ -43,16 +43,13 @@ def audit_linux(detected_os, global_config, linux_config):
 
 def audit_checks(global_config, category, current_os, checks):
     check_handlers = {
-        # "file-exists": ("file", check_file_exists), # Good
-        "kernel-module": (
-            "module",
-            check_module,
-        ),  # Loadable only # TODO - Add loaded and deny
+        "file-exists": ("file", check_file_exists),  # Good
+        # "kernel-module": ("module", check_module),
         # "kernel-parameter": ("parameter", check_parameter),
-        # "mount-options": ("mount", check_mount),  # Good
-        # "package": ("package", check_package), # Good
-        # "permissions": ("permissions", check_permissions),  # Good
-        # "service": ("service", check_service),  # Good
+        "mount-options": ("mount", check_mount),  # Good
+        "package": ("package", check_package),  # Good
+        "permissions": ("permissions", check_permissions),  # Good
+        "service": ("service", check_service),  # Good
     }
 
     failed_checks = 0
@@ -132,83 +129,6 @@ def check_file_exists(file):
     if file["file_exists"] == True and path_exists(file["check_path"]) == True:
         return True
     return False
-
-
-def check_module(module):
-    print(f"Checking module: {module['module_name']}")
-
-    module_name = module["module_name"]
-
-    # command = ["modprobe", "-n", "-v", module["module_name"]]
-    # modprobe = execute_command(command, expect_output=True)
-
-    command = ["modprobe", "--showconfig"]
-    modprobe = execute_grep_command(command, module["module_name"])
-
-    if modprobe:
-        # print(modprobe)
-        if (
-            f"install {module_name} /bin/false" in modprobe
-            or f"install {module_name} /bin/true" in modprobe
-            and f"blacklist {module['module_name']}" in modprobe
-            and module["module_status"] == "deny"
-        ):
-            print(f"Module: {module['module_name']} is denied.")
-            return True
-
-        elif (
-            f"install {module_name} /bin/false" in modprobe
-            or f"install {module_name} /bin/true" in modprobe
-            and f"blacklist {module['module_name']}" in modprobe
-            and module["module_status"] == "allow"
-        ):
-            print(f"Module: {module['module_name']} is denied, but allowed.")
-            return False
-
-        elif (
-            f"install {module_name} /bin/false" not in modprobe
-            or f"install {module_name} /bin/true" not in modprobe
-            and f"blacklist {module['module_name']}" not in modprobe
-            and module["module_status"] == "deny"
-        ):
-            print(f"Module: {module['module_name']} is not denied.")
-            return False
-        elif (
-            f"install {module_name} /bin/false" not in modprobe
-            or f"install {module_name} /bin/true" not in modprobe
-            and f"blacklist {module['module_name']}" not in modprobe
-            and module["module_status"] == "allow"
-        ):
-            print(f"Module: {module['module_name']} is not denied.")
-
-            command = ["lsmod", "|", "grep", module["module_name"]]
-            loaded = execute_command(command, expect_output=True)
-
-            print(loaded)
-
-            if loaded:
-                print(f"Module: {module['module_name']} is loaded.")
-                return True
-
-            # return False
-    else:
-        print(f"Module: {module['module_name']} is not denied.")
-        return False
-
-    # return False
-
-    # command = ["lsmod", "|", "grep", module["module_name"]]
-    # loaded = execute_command(command, expect_output=True)
-
-    # if loaded and module["module_status"] == "allow":
-    #     print(f"Module: {module['module_name']} is loaded and allowed.")
-    #     return True
-    # elif loaded and module["module_status"] == "deny":
-    #     print(f"Module: {module['module_name']} is loaded and denied.")
-    #     return False
-    # else:
-    #     print(f"Module: {module['module_name']} is not loaded and denied.")
-    #     return True
 
 
 def check_mount(global_config, mount):
@@ -315,6 +235,84 @@ def check_service(service):
         # For different logic on service_required_status other than 'enabled', handle accordingly
         print(not is_enabled and not is_active)
         return not is_enabled and not is_active
+
+
+# TODO fix this
+def check_module(module):
+    print(f"Checking module: {module['module_name']}")
+
+    module_name = module["module_name"]
+
+    # command = ["modprobe", "-n", "-v", module["module_name"]]
+    # modprobe = execute_command(command, expect_output=True)
+
+    command = ["modprobe", "--showconfig"]
+    modprobe = execute_grep_command(command, module["module_name"])
+
+    if modprobe:
+        # print(modprobe)
+        if (
+            f"install {module_name} /bin/false" in modprobe
+            or f"install {module_name} /bin/true" in modprobe
+            and f"blacklist {module['module_name']}" in modprobe
+            and module["module_status"] == "deny"
+        ):
+            print(f"Module: {module['module_name']} is denied.")
+            return True
+
+        elif (
+            f"install {module_name} /bin/false" in modprobe
+            or f"install {module_name} /bin/true" in modprobe
+            and f"blacklist {module['module_name']}" in modprobe
+            and module["module_status"] == "allow"
+        ):
+            print(f"Module: {module['module_name']} is denied, but allowed.")
+            return False
+
+        elif (
+            f"install {module_name} /bin/false" not in modprobe
+            or f"install {module_name} /bin/true" not in modprobe
+            and f"blacklist {module['module_name']}" not in modprobe
+            and module["module_status"] == "deny"
+        ):
+            print(f"Module: {module['module_name']} is not denied.")
+            return False
+        elif (
+            f"install {module_name} /bin/false" not in modprobe
+            or f"install {module_name} /bin/true" not in modprobe
+            and f"blacklist {module['module_name']}" not in modprobe
+            and module["module_status"] == "allow"
+        ):
+            print(f"Module: {module['module_name']} is not denied.")
+
+            command = ["lsmod", "|", "grep", module["module_name"]]
+            loaded = execute_command(command, expect_output=True)
+
+            print(loaded)
+
+            if loaded:
+                print(f"Module: {module['module_name']} is loaded.")
+                return True
+
+            # return False
+    else:
+        print(f"Module: {module['module_name']} is not denied.")
+        return False
+
+    # return False
+
+    # command = ["lsmod", "|", "grep", module["module_name"]]
+    # loaded = execute_command(command, expect_output=True)
+
+    # if loaded and module["module_status"] == "allow":
+    #     print(f"Module: {module['module_name']} is loaded and allowed.")
+    #     return True
+    # elif loaded and module["module_status"] == "deny":
+    #     print(f"Module: {module['module_name']} is loaded and denied.")
+    #     return False
+    # else:
+    #     print(f"Module: {module['module_name']} is not loaded and denied.")
+    #     return True
 
 
 # Old code
