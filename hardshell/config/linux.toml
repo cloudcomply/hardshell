@@ -255,7 +255,6 @@ valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 
 [kernel]
-
 [kernel.modules]
 [kernel.modules.0001a]
 check_name = "cramfs"

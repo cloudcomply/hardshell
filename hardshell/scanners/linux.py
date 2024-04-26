@@ -43,13 +43,13 @@ def audit_linux(detected_os, global_config, linux_config):
 
 def audit_checks(global_config, category, current_os, checks):
     check_handlers = {
-        "file-exists": ("file", check_file_exists),  # Good
+        # "file-exists": ("file", check_file_exists),  # Good
         # "kernel-module": ("module", check_module),
         # "kernel-parameter": ("parameter", check_parameter),
-        "mount-options": ("mount", check_mount),  # Good
-        "package": ("package", check_package),  # Good
-        "permissions": ("permissions", check_permissions),  # Good
-        "service": ("service", check_service),  # Good
+        # "mount-options": ("mount", check_mount),  # Good
+        "package": ("package", check_package),  # Not Good...
+        # "permissions": ("permissions", check_permissions),  # Good
+        # "service": ("service", check_service),  # Good
     }
 
     failed_checks = 0
@@ -94,11 +94,11 @@ def execute_command(command, expect_output=True):
             check=True,
         )
 
-        # print(f"result: {result}")
+        print(f"result: {result}")
 
         output = result.stdout.strip()
 
-        # print(f"output: {output}")
+        print(f"output: {output}")
 
         if expect_output:
             return output
@@ -159,6 +159,7 @@ def check_mount(global_config, mount):
         return True  # Return True if the mount point does not exist
 
 
+# TODO Fix this
 def check_package(current_os, global_config, package):
     package_name = package["package_name"]
     distro = current_os.split("-")[0]
@@ -169,6 +170,8 @@ def check_package(current_os, global_config, package):
     command = command_template + [package_name]
 
     result = execute_command(command)
+
+    print(f"Package Result: {result}")
 
     if not result:
         print(f"Package {package_name} is not installed.")
