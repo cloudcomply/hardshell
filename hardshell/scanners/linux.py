@@ -47,7 +47,7 @@ def audit_checks(global_config, category, current_os, checks):
         # "kernel-module": ("module", check_module),
         # "kernel-parameter": ("parameter", check_parameter),
         # "mount-options": ("mount", check_mount),  # Good
-        "package": ("package", check_package),  # Not Good...
+        "package": ("package", check_package),  # Good now...
         # "permissions": ("permissions", check_permissions),  # Good
         # "service": ("service", check_service),  # Good
     }
@@ -159,7 +159,6 @@ def check_mount(global_config, mount):
         return True  # Return True if the mount point does not exist
 
 
-# TODO Fix this
 def check_package(current_os, global_config, package):
     package_name = package["package_name"]
     distro = current_os.split("-")[0]
