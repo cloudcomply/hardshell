@@ -2,10 +2,9 @@ import ctypes
 import os
 import platform
 import re
-import toml
 from pathlib import Path
 from typing import Callable, Dict, Union
-from hardshell import __name__, __version__
+from src.hardshell import __name__, __version__
 
 
 def detect_admin() -> bool:
@@ -94,12 +93,6 @@ def detect_os() -> Dict[str, Union[str, Dict[str, str]]]:
     system = platform.system()
 
     return os_detectors.get(system, lambda: {"Error": "Unsupported OS..."})()
-
-
-def load_config(config_file):
-    with open(config_file, "r") as f:
-        config = toml.load(f)
-    return config
 
 
 def path_exists(path):

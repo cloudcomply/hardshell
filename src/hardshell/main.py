@@ -2,8 +2,8 @@
 # Imports
 #########################################################################################
 import click
-from hardshell import __version__
-from hardshell.scanners.scan import start_scanner
+from src.hardshell import __version__
+from src.hardshell.scanners.scan import start_scanner
 
 
 # Package Version

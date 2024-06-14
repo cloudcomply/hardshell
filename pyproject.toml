@@ -16,7 +16,7 @@ classifiers = [
 keywords = ["hardshell", "harden", "os", "security"]
 
 [tool.poetry.scripts]
-hardshell = "hardshell.__main__:main"
+hardshell = "src.hardshell.main:main"
 
 [tool.poetry.dependencies]
 python = "^3.8"

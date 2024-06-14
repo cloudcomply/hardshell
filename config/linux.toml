@@ -1,110 +1,122 @@
 [accounts]
 [accounts.0001a]
-check_name = "/etc/passwd permissions configured"
-check_type = "permissions"
+check_name = "/etc/passwd"
+check_type = "path"
 check_path = "/etc/passwd"
 expected_gid = 0
 expected_permissions = 644
 expected_uid = 0
+path_exists = true
 valid_os = ["amzn-2023", "debian-12", "kali-2024.1", "ubuntu-22.04"]
 
 [accounts.0002a]
-check_name = "/etc/passwd- permissions configured"
-check_type = "permissions"
+check_name = "/etc/passwd-"
+check_type = "path"
 check_path = "/etc/passwd-"
 expected_gid = 0
 expected_permissions = 644
 expected_uid = 0
+path_exists = true
 valid_os = ["amzn-2023", "debian-12", "kali-2024.1", "ubuntu-22.04"]
 
 [accounts.0003a]
-check_name = "/etc/group permissions configured"
-check_type = "permissions"
+check_name = "/etc/group"
+check_type = "path"
 check_path = "/etc/group"
 expected_gid = 0
 expected_permissions = 644
 expected_uid = 0
+path_exists = true
 valid_os = ["amzn-2023", "debian-12", "kali-2024.1", "ubuntu-22.04"]
 
 [accounts.0004a]
-check_name = "/etc/group- permissions configured"
-check_type = "permissions"
+check_name = "/etc/group-"
+check_type = "path"
 check_path = "/etc/group-"
 expected_gid = 0
 expected_permissions = 644
 expected_uid = 0
+path_exists = true
 valid_os = ["amzn-2023", "debian-12", "kali-2024.1", "ubuntu-22.04"]
 
 [accounts.0005a]
-check_name = "/etc/shadow permissions configured"
-check_type = "permissions"
+check_name = "/etc/shadow"
+check_type = "path"
 check_path = "/etc/shadow"
 expected_gid = 0
 expected_permissions = 0
 expected_uid = 0
+path_exists = true
 valid_os = ["amzn-2023"]
 
 [accounts.0005b]
-check_name = "/etc/shadow permissions configured"
-check_type = "permissions"
+check_name = "/etc/shadow"
+check_type = "path"
 check_path = "/etc/shadow"
 expected_gid = 42
 expected_permissions = 640
 expected_uid = 0
+path_exists = true
 valid_os = ["debian-12", "kali-2024.1", "ubuntu-22.04"]
 
 [accounts.0006a]
-check_name = "/etc/shadow- permissions configured"
-check_type = "permissions"
+check_name = "/etc/shadow-"
+check_type = "path"
 check_path = "/etc/shadow-"
 expected_gid = 0
 expected_permissions = 0
 expected_uid = 0
+path_exists = true
 valid_os = ["amzn-2023"]
 
 [accounts.0006b]
-check_name = "/etc/shadow- permissions configured"
-check_type = "permissions"
+check_name = "/etc/shadow-"
+check_type = "path"
 check_path = "/etc/shadow-"
 expected_gid = 42
 expected_permissions = 640
 expected_uid = 0
+path_exists = true
 valid_os = ["debian-12", "kali-2024.1", "ubuntu-22.04"]
 
 [accounts.0007a]
-check_name = "/etc/gshadow permissions configured"
-check_type = "permissions"
+check_name = "/etc/gshadow"
+check_type = "path"
 check_path = "/etc/gshadow"
 expected_gid = 0
 expected_permissions = 0
 expected_uid = 0
+path_exists = true
 valid_os = ["amzn-2023"]
 
 [accounts.0007b]
-check_name = "/etc/gshadow permissions configured"
-check_type = "permissions"
+check_name = "/etc/gshadow"
+check_type = "path"
 check_path = "/etc/gshadow"
 expected_gid = 42
 expected_permissions = 640
 expected_uid = 0
+path_exists = true
 valid_os = ["debian-12", "kali-2024.1", "ubuntu-22.04"]
 
 [accounts.0008a]
-check_name = "/etc/gshadow- permissions configured"
-check_type = "permissions"
+check_name = "/etc/gshadow-"
+check_type = "path"
 check_path = "/etc/gshadow-"
 expected_gid = 0
 expected_permissions = 0
 expected_uid = 0
+path_exists = true
 valid_os = ["amzn-2023"]
 
 [accounts.0008b]
-check_name = "/etc/gshadow- permissions configured"
-check_type = "permissions"
+check_name = "/etc/gshadow-"
+check_type = "path"
 check_path = "/etc/gshadow-"
 expected_gid = 42
 expected_permissions = 640
 expected_uid = 0
+path_exists = true
 valid_os = ["debian-12", "kali-2024.1", "ubuntu-22.04"]
 
 [aide]
@@ -132,121 +144,123 @@ valid_os = ["ubuntu-22.04"]
 
 [banners]
 [banners.0001a]
-check_name = "/etc/motd permissions configured"
-check_type = "permissions"
+check_name = "/etc/motd"
+check_type = "path"
 check_path = "/etc/motd"
 expected_gid = 0
 expected_permissions = 644
 expected_uid = 0
+path_exists = true
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [banners.0002a]
-check_name = "/etc/issue permissions configured"
-check_type = "permissions"
+check_name = "/etc/issue"
+check_type = "path"
 check_path = "/etc/issue"
 expected_gid = 0
 expected_permissions = 644
 expected_uid = 0
+path_exists = true
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [banners.0003a]
-check_name = "/etc/issue.net permissions configured"
-check_type = "permissions"
+check_name = "/etc/issue.net"
+check_type = "path"
 check_path = "/etc/issue.net"
 expected_gid = 0
 expected_permissions = 644
 expected_uid = 0
+path_exists = true
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 
-[filesystem]
-[filesystem.mounts]
-[filesystem.mounts.0001a]
+[mounts]
+[mounts.0001a]
 check_name = "/tmp separate partition"
 check_type = "mount-point"
 check_path = "/tmp"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
-[filesystem.mounts.0001b]
+[mounts.0001b]
 check_name = "/tmp mount options not set"
 check_type = "mount-options"
 check_path = "/tmp"
 mount_options = ["nodev", "noexec", "nosuid"]
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
-[filesystem.mounts.0002a]
+[mounts.0002a]
 check_name = "/var separate partition"
 check_type = "mount-point"
 check_path = "/var"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
-[filesystem.mounts.0002b]
+[mounts.0002b]
 check_name = "/var mount options not set"
 check_type = "mount-options"
 check_path = "/var"
 mount_options = ["nodev", "nosuid"]
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
-[filesystem.mounts.0003a]
+[mounts.0003a]
 check_name = "/var/tmp separate partition"
 check_type = "mount-point"
 check_path = "/var/tmp"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
-[filesystem.mounts.0003b]
+[mounts.0003b]
 check_name = "/var/tmp mount options not set"
 check_type = "mount-options"
 check_path = "/var/tmp"
 mount_options = ["nodev", "noexec", "nosuid"]
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
-[filesystem.mounts.0004a]
+[mounts.0004a]
 check_name = "/var/log separate partition"
 check_type = "mount-point"
 check_path = "/var/log"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
-[filesystem.mounts.0004b]
+[mounts.0004b]
 check_name = "/var/log mount options not set"
 check_type = "mount-options"
 check_path = "/var/log"
 mount_options = ["nodev", "noexec", "nosuid"]
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
-[filesystem.mounts.0005a]
+[mounts.0005a]
 check_name = "/var/log/audit separate partition"
 check_type = "mount-point"
 check_path = "/var/log/audit"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
-[filesystem.mounts.0005b]
+[mounts.0005b]
 check_name = "/var/log/audit mount options not set"
 check_type = "mount-options"
 check_path = "/var/log/audit"
 mount_options = ["nodev", "noexec", "nosuid"]
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
-[filesystem.mounts.0006a]
+[mounts.0006a]
 check_name = "/home separate partition"
 check_type = "mount-point"
 check_path = "/home"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
-[filesystem.mounts.0006b]
+[mounts.0006b]
 check_name = "/home mount options not set"
 check_type = "mount-options"
 check_path = "/home"
 mount_options = ["nodev", "nosuid"]
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
-[filesystem.mounts.0007a]
+[mounts.0007a]
 check_name = "/dev/shm separate partition"
 check_type = "mount-point"
 check_path = "/dev/shm"
 mount_options = ["nodev", "noexec", "nosuid"]
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
-[filesystem.mounts.0007b]
+[mounts.0007b]
 check_name = "/dev/shm mount options not set"
 check_type = "mount-options"
 check_path = "/dev/shm"
@@ -254,124 +268,161 @@ mount_options = ["nodev", "noexec", "nosuid"]
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 
-[kernel]
-[kernel.modules]
-[kernel.modules.0001a]
+[kernel_module]
+[kernel_module.0001a]
 check_name = "cramfs"
-check_type = "kernel-module"
+check_type = "module"
 module_name = "cramfs"
-module_status = "deny"
 module_type = "filesystem"
+module_blacklisted = true
+module_denied = true
+module_loadable = false
+module_loaded = false
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
-[kernel.modules.0002a]
+[kernel_module.0002a]
 check_name = "dccp"
-check_type = "kernel-module"
+check_type = "module"
 module_name = "dccp"
-module_status = "deny"
 module_type = "network"
+module_blacklisted = true
+module_denied = true
+module_loadable = false
+module_loaded = false
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
-[kernel.modules.0003a]
+[kernel_module.0003a]
 check_name = "freevxfs"
-check_type = "kernel-module"
+check_type = "module"
 module_name = "freevxfs"
-module_status = "deny"
 module_type = "filesystem"
+module_blacklisted = true
+module_denied = true
+module_loadable = false
+module_loaded = false
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
-[kernel.modules.0004a]
+[kernel_module.0004a]
 check_name = "hfs"
-check_type = "kernel-module"
+check_type = "module"
 module_name = "hfs"
-module_status = "deny"
 module_type = "filesystem"
+module_blacklisted = true
+module_denied = true
+module_loadable = false
+module_loaded = false
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
-[kernel.modules.0005a]
+[kernel_module.0005a]
 check_name = "hfsplus"
-check_type = "kernel-module"
+check_type = "module"
 module_name = "hfsplus"
-module_status = "deny"
 module_type = "filesystem"
+module_blacklisted = true
+module_denied = true
+module_loadable = false
+module_loaded = false
 valid_os = ["ubuntu-22.04"]
 
-[kernel.modules.0006a]
+[kernel_module.0006a]
 check_name = "jffs2"
-check_type = "kernel-module"
+check_type = "module"
 module_name = "jffs2"
-module_status = "deny"
 module_type = "filesystem"
+module_blacklisted = true
+module_denied = true
+module_loadable = false
+module_loaded = false
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
-[kernel.modules.0007a]
+[kernel_module.0007a]
 check_name = "rds"
-check_type = "kernel-module"
+check_type = "module"
 module_name = "rds"
-module_status = "deny"
 module_type = "network"
+module_blacklisted = true
+module_denied = true
+module_loadable = false
+module_loaded = false
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
-[kernel.modules.0008a]
+[kernel_module.0008a]
 check_name = "sctp"
-check_type = "kernel-module"
+check_type = "module"
 module_name = "sctp"
-module_status = "deny"
 module_type = "network"
+module_blacklisted = true
+module_denied = true
+module_loadable = false
+module_loaded = false
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
-[kernel.modules.0009a]
+[kernel_module.0009a]
 check_name = "squashfs"
-check_type = "kernel-module"
+check_type = "module"
 module_name = "squashfs"
-module_status = "deny"
 module_type = "filesystem"
+module_blacklisted = true
+module_denied = true
+module_loadable = false
+module_loaded = false
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
-[kernel.modules.0010a]
+[kernel_module.0010a]
 check_name = "tipc"
-check_type = "kernel-module"
+check_type = "module"
 module_name = "tipc"
-module_status = "deny"
 module_type = "network"
+module_blacklisted = true
+module_denied = true
+module_loadable = false
+module_loaded = false
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
-[kernel.modules.0011a]
+[kernel_module.0011a]
 check_name = "udf"
-check_type = "kernel-module"
+check_type = "module"
 module_name = "udf"
-module_status = "deny"
 module_type = "filesystem"
+module_blacklisted = true
+module_denied = true
+module_loadable = false
+module_loaded = false
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
-[kernel.modules.0012a]
+[kernel_module.0012a]
 check_name = "usb-storage"
-check_type = "kernel-module"
+check_type = "module"
 module_name = "usb-storage"
-module_status = "deny"
 module_type = "storage"
+module_blacklisted = true
+module_denied = true
+module_loadable = false
+module_loaded = false
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
-[kernel.modules.0000001a]
+[kernel_module.0000001a]
 check_name = "falcon_lsm_serviceable"
-check_type = "kernel-module"
+check_type = "module"
 module_name = "falcon_lsm_serviceable"
-module_status = "allow"
 module_type = "storage"
+module_blacklisted = false
+module_denied = false
+module_loadable = true
+module_loaded = true
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
-[kernel.parameters]
-[kernel.parameters.0001a]
+[kernel_parameters]
+[kernel_parameters.0001a]
 check_name = "testing-param1"
-check_type = "kernel-parameter"
+check_type = "parameter"
 check_path = ""
 instance_type = ""
 parameter_type = ""
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
-[logging]
-[logging.rsyslog]
-[logging.rsyslog.0001a]
+[rsyslog]
+[rsyslog.0001a]
 check_name = "rsyslog"
 check_type = "package"
 package_name = "rsyslog"
@@ -379,142 +430,141 @@ package_status = "install"
 valid_os = ["amzn-2023"]
 
 
-[restricted]
-[restricted.packages]
-[restricted.packages.0001a]
+[packages]
+[packages.0001a]
 check_name = "avahi"
 check_type = "package"
 package_name = "avahi"
 package_status = "remove"
 valid_os = ["amzn-2023"]
 
-[restricted.packages.0001b]
+[packages.0001b]
 check_name = "avahi-daemon"
 check_type = "package"
 package_name = "avahi-daemon"
 package_status = "remove"
 valid_os = ["ubuntu-22.04"]
 
-[restricted.packages.0002a]
+[packages.0002a]
 check_name = "bind"
 check_type = "package"
 package_name = "bind"
 package_status = "remove"
 valid_os = ["amzn-2023"]
 
-[restricted.packages.0002b]
+[packages.0002b]
 check_name = "bind9"
 check_type = "package"
 package_name = "bind9"
 package_status = "remove"
 valid_os = ["ubuntu-22.04"]
 
-[restricted.packages.0003a]
+[packages.0003a]
 check_name = "cups"
 check_type = "package"
 package_name = "cups"
 package_status = "remove"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
-[restricted.packages.0004a]
+[packages.0004a]
 check_name = "dnsmasq"
 check_type = "package"
 package_name = "dnsmasq"
 package_status = "remove"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
-[restricted.packages.0005a]
+[packages.0005a]
 check_name = "dovecot"
 check_type = "package"
 package_name = "dovecot"
 package_status = "remove"
 valid_os = ["amzn-2023"]
 
-[restricted.packages.0006a]
+[packages.0006a]
 check_name = "httpd"
 check_type = "package"
 package_name = "httpd"
 package_status = "remove"
 valid_os = ["amzn-2023"]
 
-[restricted.packages.0007a]
+[packages.0007a]
 check_name = "net-snmp"
 check_type = "package"
 package_name = "net-snmp"
 package_status = "remove"
 valid_os = ["amzn-2023"]
 
-[restricted.packages.0008a]
+[packages.0008a]
 check_name = "nfs-utils"
 check_type = "package"
 package_name = "nfs-utils"
 package_status = "remove"
 valid_os = ["amzn-2023"]
 
-[restricted.packages.0009a]
+[packages.0009a]
 check_name = "nginx"
 check_type = "package"
 package_name = "nginx"
 package_status = "remove"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
-[restricted.packages.0010a]
+[packages.0010a]
 check_name = "openldap-clients"
 check_type = "package"
 package_name = "openldap-clients"
 package_status = "remove"
 valid_os = ["amzn-2023"]
 
-[restricted.packages.0011a]
+[packages.0011a]
 check_name = "rpcbind"
 check_type = "package"
 package_name = "rpcbind"
 package_status = "remove"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
-[restricted.packages.0012a]
+[packages.0012a]
 check_name = "rsync-daemon"
 check_type = "package"
 package_name = "rsync-daemon"
 package_status = "remove"
 valid_os = ["amzn-2023"]
 
-[restricted.packages.0013a]
+[packages.0013a]
 check_name = "samba"
 check_type = "package"
 package_name = "samba"
 package_status = "remove"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
-[restricted.packages.0014a]
+[packages.0014a]
 check_name = "squid"
 check_type = "package"
 package_name = "squid"
 package_status = "remove"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
-[restricted.packages.0015a]
+[packages.0015a]
 check_name = "telnet"
 check_type = "package"
 package_name = "telnet"
 package_status = "remove"
 valid_os = ["amzn-2023"]
 
-[restricted.packages.0016a]
+[packages.0016a]
 check_name = "telnet-server"
 check_type = "package"
 package_name = "telnet-server"
 package_status = "remove"
 valid_os = ["amzn-2023"]
 
-[restricted.packages.0017a]
+[packages.0017a]
 check_name = "vsftpd"
 check_type = "package"
 package_name = "vsftpd"
 package_status = "remove"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
-[restricted.packages.0018a]
+[packages.0018a]
 check_name = "xorg-x11-server-common"
 check_type = "package"
 package_name = "xorg-x11-server-common"
@@ -522,7 +572,7 @@ package_status = "remove"
 valid_os = ["amzn-2023"]
 
 # Testing package
-# [restricted.packages.000001a]
+# [packages.000001a]
 # check_name = "xauth"
 # check_type = "package"
 # package_name = "xauth"
@@ -530,133 +580,167 @@ valid_os = ["amzn-2023"]
 # valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 
-[restricted.services]
-[restricted.services.00000001a]
+[services]
+[services.00000001a]
 check_name = "avahi-daemon.service"
 check_type = "service"
 service_name = "avahi-daemon.service"
-service_status = "masked"                # enabled | disabled | masked
+service_active = false
+service_enabled = false
+service_masked = true
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
-[schedulers]
-[schedulers.at]
-[schedulers.at.0001a]
+[at]
+[at.0001a]
 check_name = "at"
 check_type = "package"
 package_name = "at"
 package_status = "install"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
-[schedulers.at.0002a]
+[at.0002a]
 check_name = "atd.service"
 check_type = "service"
 service_name = "atd.service"
 service_status = "enabled"
+service_active = true
+service_enabled = true
+service_masked = false
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
-[schedulers.at.0003a]
-check_name = "/etc/at.allow exists"
-check_type = "file-exists"
+[at.0003a]
+check_name = "/etc/at.allow"
+check_type = "path"
 check_path = "/etc/at.allow"
-file_exists = true
+expected_gid = 0
+expected_permissions = 700
+expected_uid = 0
+path_exists = true
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
-[schedulers.at.0004a]
-check_name = "/etc/at.deny exists"
+[at.0004a]
+check_name = "/etc/at.deny"
 check_type = "file-exists"
 check_path = "/etc/at.deny"
-file_exists = false
+expected_gid = 0
+expected_permissions = 700
+expected_uid = 0
+path_exists = false
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
-[schedulers.cron]
-[schedulers.cron.0001a]
+[cron]
+[cron.0001a]
 check_name = "cronie"
 check_type = "package"
 package_name = "cronie"
 package_status = "install"
 valid_os = ["amzn-2023"]
 
-[schedulers.cron.0001b]
+[cron.0001b]
 check_name = "cron"
 check_type = "package"
 package_name = "cron"
 package_status = "install"
 valid_os = ["ubuntu-22.04"]
 
-[schedulers.cron.0002a]
+[cron.0002a]
 check_name = "cron.service"
 check_type = "service"
 service_name = "cron.service"
-service_status = "enabled"
+service_active = true
+service_enabled = true
+service_masked = false
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
-[schedulers.cron.0003a]
-check_name = "/etc/cron.allow exists"
-check_type = "file-exists"
+[cron.0000000001a]
+check_name = "cron2.service"
+check_type = "service"
+service_name = "cron2.service"
+service_active = false
+service_enabled = false
+service_masked = true
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[cron.0003a]
+check_name = "/etc/cron.allow"
+check_type = "path"
 check_path = "/etc/cron.allow"
-file_exists = true
+expected_gid = 0
+expected_permissions = 700
+expected_uid = 0
+path_exists = true
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
-[schedulers.cron.0004a]
-check_name = "/etc/cron.deny exists"
-check_type = "file-exists"
+[cron.0004a]
+check_name = "/etc/cron.deny"
+check_type = "path"
 check_path = "/etc/cron.deny"
-file_exists = false
+expected_gid = 0
+expected_permissions = 700
+expected_uid = 0
+path_exists = false
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
-[schedulers.cron.0005a]
-check_name = "/etc/crontab permissions configured"
-check_type = "permissions"
+[cron.0005a]
+check_name = "/etc/crontab"
+check_type = "path"
 check_path = "/etc/crontab"
 expected_gid = 0
 expected_permissions = 600
 expected_uid = 0
+path_exists = true
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
-[schedulers.cron.0006a]
-check_name = "/etc/cron.hourly permissions configured"
-check_type = "permissions"
+[cron.0006a]
+check_name = "/etc/cron.hourly"
+check_type = "path"
 check_path = "/etc/cron.hourly"
 expected_gid = 0
 expected_permissions = 700
 expected_uid = 0
+path_exists = true
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
-[schedulers.cron.0007a]
-check_name = "/etc/cron.daily permissions configured"
-check_type = "permissions"
+[cron.0007a]
+check_name = "/etc/cron.daily"
+check_type = "path"
 check_path = "/etc/cron.daily"
 expected_gid = 0
 expected_permissions = 700
 expected_uid = 0
+path_exists = true
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
-[schedulers.cron.0008a]
-check_name = "/etc/cron.weekly permissions configured"
-check_type = "permissions"
+[cron.0008a]
+check_name = "/etc/cron.weekly"
+check_type = "path"
 check_path = "/etc/cron.weekly"
 expected_gid = 0
 expected_permissions = 700
 expected_uid = 0
+path_exists = true
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
-[schedulers.cron.0009a]
-check_name = "/etc/cron.monthly permissions configured"
-check_type = "permissions"
+[cron.0009a]
+check_name = "/etc/cron.monthly"
+check_type = "path"
 check_path = "/etc/cron.monthly"
 expected_gid = 0
 expected_permissions = 700
 expected_uid = 0
+path_exists = true
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
-[schedulers.cron.0010a]
-check_name = "/etc/cron.d permissions configured"
-check_type = "permissions"
+[cron.0010a]
+check_name = "/etc/cron.d"
+check_type = "path"
 check_path = "/etc/cron.d"
 expected_gid = 0
 expected_permissions = 700
 expected_uid = 0
+path_exists = true
 valid_os = ["amzn-2023", "ubuntu-22.04"]
+
 
 [selinux]
 [selinux.0001a]
@@ -674,19 +758,40 @@ package_name = "sudo"
 package_status = "install"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
-[time]
-[time.chrony]
-[time.chrony.0001a]
+[chrony]
+[chrony.0001a]
 check_name = "chrony"
 check_type = "package"
 package_name = "chrony"
 package_status = "install"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
-[time.systemd-timesyncd]
-[time.systemd-timesyncd.0001a]
+[systemd-timesyncd]
+[systemd-timesyncd.0001a]
 check_name = "systemd-timesyncd"
 check_type = "package"
 package_name = "systemd-timesyncd"
 package_status = "install"
 valid_os = ["ubuntu-22.04"]
+
+# Old Checks
+
+# [cron.000000001a]
+# check_name = "/etc/cron.allow"
+# check_type = "file"
+# check_path = "/etc/cron.allow"
+# expected_gid = 0
+# expected_permissions = 600
+# expected_uid = 0
+# file_exists = true
+# valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+# [cron.000000002a]
+# check_name = "/etc/crontab"
+# check_type = "file"
+# check_path = "/etc/crontab"
+# expected_gid = 0
+# expected_permissions = 600
+# expected_uid = 0
+# file_exists = true
+# valid_os = ["amzn-2023", "ubuntu-22.04"]

@@ -24,6 +24,9 @@ package_search = ["dpkg-query", "-s"]
 logging_service = "rsyslog"
 time_service = "chrony"
 
+svc_cmd = ""
+
+
 # Old code
 
 # amzn.installed = ['dnf', 'list', '--installed']

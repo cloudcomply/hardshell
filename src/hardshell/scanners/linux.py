@@ -3,7 +3,7 @@
 #########################################################################################
 import os
 import subprocess
-from hardshell.utils.common import path_exists, update_counts
+from src.hardshell.utils.common import path_exists, update_counts
 
 
 def audit_linux(detected_os, global_config, linux_config):
@@ -44,7 +44,7 @@ def audit_linux(detected_os, global_config, linux_config):
 def audit_checks(global_config, category, current_os, checks):
     check_handlers = {
         # "file-exists": ("file", check_file_exists),  # Good
-        # "kernel-module": ("module", check_module),
+        # "module": ("module", check_module),
         # "kernel-parameter": ("parameter", check_parameter),
         # "mount-options": ("mount", check_mount),  # Good
         "package": ("package", check_package),  # Good now...
