@@ -1,5 +1,6 @@
 from src.hardshell.linux import (
     check_module,
+    check_mount,
     # check_mount_options,
     # check_mount_point,
     # check_package,
@@ -15,7 +16,6 @@ class SystemCheck:
         check_id=None,
         check_name=None,
         check_type=None,
-        check_path=None,
         expected_gid=None,
         expected_permissions=None,
         expected_uid=None,
@@ -27,9 +27,15 @@ class SystemCheck:
         module_denied=None,
         module_loadable=None,
         module_loaded=None,
+        mount_exists=None,
+        nodev=None,
+        noexec=None,
+        nosuid=None,
         package_name=None,
         package_status=None,
         parameter_type=None,
+        path=None,
+        separate_partition=None,
         service_name=None,
         service_active=None,
         service_enabled=None,
@@ -38,7 +44,6 @@ class SystemCheck:
     ):
         self.check_id = check_id
         self.check_name = check_name
-        self.check_path = check_path
         self.check_result = None
         self.check_results = []
         self.check_type = check_type
@@ -53,9 +58,15 @@ class SystemCheck:
         self.module_denied = module_denied
         self.module_loadable = module_loadable
         self.module_loaded = module_loaded
+        mount_exists = mount_exists
+        self.nodev = nodev
+        self.noexec = noexec
+        self.nosuid = nosuid
         self.package_name = package_name
         self.package_status = package_status
         self.parameter_type = parameter_type
+        self.path = path
+        self.separate_partition = separate_partition
         self.service_name = service_name
         self.service_active = service_active
         self.service_enabled = service_enabled
@@ -67,29 +78,28 @@ class SystemCheck:
         if self.valid_os != None and os_version in self.valid_os:
             if current_os["type"] == "linux":
                 # print(self.check_name)
-                if self.check_type == "path":
+                if self.check_type == "module":
                     # FINISHED
-                    # check_path(self)
-                    pass
-                elif self.check_type == "module":
                     check_module(self)
                     # pass
-                elif self.check_type == "mount-options":
-                    # check_mount_options(self)
-                    pass
-                elif self.check_type == "mount-point":
-                    # check_mount_point(self)
-                    pass
+                elif self.check_type == "mount":
+                    # FINISHED
+                    check_mount(self)
+                    # pass
                 elif self.check_type == "package":
                     # check_package(self)
                     pass
                 elif self.check_type == "parameter":
                     # check_parameter(self)
                     pass
+                elif self.check_type == "path":
+                    # FINISHED
+                    check_path(self)
+                    # pass
                 elif self.check_type == "service":
                     # FINISHED
-                    # check_service(self)
-                    pass
+                    check_service(self)
+                    # pass
             else:
                 print("Check Not Supported")
         else:

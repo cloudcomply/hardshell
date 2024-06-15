@@ -2,31 +2,40 @@ import os
 import subprocess
 
 
+# TODO Check logic
 def check_module(check):
-    def set_module_result(check, check_name, actual, expected, check_type):
-        result = "PASS" if actual == expected else "FAIL"
-        check.set_result({"name": check_name, "check": check_type, "result": result})
-
     blacklisted_check = check_module_blacklisted(check.check_name)
     denied_check = check_module_denied(check.check_name)
     loadable_check = check_module_loadable(check.check_name)
     loaded_check = check_module_loaded(check.check_name)
 
-    set_module_result(
-        check,
-        check.check_name,
-        blacklisted_check,
-        check.module_blacklisted,
-        "Module Blacklisted",
+    set_result(
+        check=check,
+        name=check.check_name,
+        check_type="Module Blacklisted",
+        actual=blacklisted_check,
+        expected=check.module_blacklisted,
     )
-    set_module_result(
-        check, check.check_name, denied_check, check.module_denied, "Module Denied"
+    set_result(
+        check=check,
+        name=check.check_name,
+        check_type="Module Denied",
+        actual=denied_check,
+        expected=check.module_denied,
     )
-    set_module_result(
-        check, check.check_name, loadable_check, check.module_loadable, "Module Loadable"
+    set_result(
+        check=check,
+        name=check.check_name,
+        check_type="Module Loadable",
+        actual=loadable_check,
+        expected=check.module_loadable,
     )
-    set_module_result(
-        check, check.check_name, loaded_check, check.module_loaded, "Module Loaded"
+    set_result(
+        check=check,
+        name=check.check_name,
+        check_type="Module Loaded",
+        actual=loaded_check,
+        expected=check.module_loaded,
     )
 
 
@@ -85,6 +94,120 @@ def check_module_loaded(module_name):
         return False
 
 
+def check_mount(check):
+    # Check if mount exists
+    mount_exists = check_mount_point(check.path)
+    set_result(
+        check=check,
+        name=check.check_name,
+        check_type="Mount Exists",
+        actual=mount_exists,
+        expected=True,
+    )
+
+    if mount_exists:
+        # Check if separate partition
+        seppart_result = check_mount_point_separate_partition(check.path)
+        set_result(
+            check=check,
+            name=check.check_name,
+            check_type="Separate Partition",
+            actual=seppart_result,
+            expected=check.separate_partition,
+        )
+
+        # Check if mounted
+        mounted_result = check_mount_point_status(check.path)
+
+        if mounted_result:
+            options_result = get_mount_point_options(check.path)
+
+            # Check nodev option
+            set_result(
+                check=check,
+                name=check.check_name,
+                check_type="nodev",
+                actual="nodev" in options_result,
+                expected=check.nodev,
+            )
+
+            # Check noexec option
+            set_result(
+                check=check,
+                name=check.check_name,
+                check_type="noexec",
+                actual="noexec" in options_result,
+                expected=check.noexec,
+            )
+
+            # Check nosuid option
+            set_result(
+                check=check,
+                name=check.check_name,
+                check_type="nosuid",
+                actual="nosuid" in options_result,
+                expected=check.nosuid,
+            )
+
+
+def check_mount_point(path):
+    """Check if the path is a mount point, including bind mounts."""
+    try:
+        result = subprocess.run(
+            ["findmnt", "--target", path, "--output", "TARGET", "--noheadings"],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+            check=True,
+        )
+        return path in result.stdout.strip().splitlines()
+    except subprocess.CalledProcessError:
+        return False
+
+
+def check_mount_point_bind_mount(path):
+    """Check if the mount point is a bind mount."""
+    try:
+        result = subprocess.run(
+            [
+                "findmnt",
+                "--target",
+                path,
+                "--output",
+                "PROPAGATION,OPTIONS",
+                "--noheadings",
+            ],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+            check=True,
+        )
+        return "bind" in result.stdout
+    except subprocess.CalledProcessError:
+        return False
+
+
+def check_mount_point_separate_partition(path):
+    """Check if the mount point is a separate partition from the root."""
+    mount_device = get_mount_point_device(path)
+    root_device = get_mount_point_device("/")
+    return mount_device is not None and mount_device == root_device
+
+
+def check_mount_point_status(path):
+    """Check if the path is mounted."""
+    try:
+        result = subprocess.run(
+            ["findmnt", "--target", path],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+        )
+        return result.returncode == 0
+    except subprocess.CalledProcessError:
+        return False
+
+
 def check_path(check):
     """
     Checks the existance and permissions of a file or directory.
@@ -92,43 +215,20 @@ def check_path(check):
     Args:
         check (Check): The check object.
     """
-    path_exists = os.path.exists(check.check_path)
+    path_exists = os.path.exists(check.path)
     expected_exists = check.path_exists
 
-    # Path existence check
-    if path_exists == expected_exists:
-        result = "PASS"
-    else:
-        result = "FAIL"
-
-    check.set_result({"name": check.check_name, "check": "Path Exists", "result": result})
+    set_result(
+        check=check,
+        name=check.check_name,
+        check_type="Path Exists",
+        actual=path_exists,
+        expected=expected_exists,
+    )
 
     # Permissions check if path exists and is expected to exist
     if path_exists and expected_exists:
-        perms_result = check_permissions(check)
-        perms_result_text = "PASS" if perms_result else "FAIL"
-
-        check.set_result(
-            {
-                "name": check.check_name,
-                "check": "Path Permissions",
-                "result": perms_result_text,
-            }
-        )
-
-
-def check_permissions(check):
-    """
-    Checks the permissions of a file or directory.
-
-    Args:
-        check (Check): The check object.
-
-    Returns:
-        bool: True if the permissions match, False otherwise.
-    """
-    if os.path.exists(check.check_path):
-        file_stats = os.stat(check.check_path)
+        file_stats = os.stat(check.path)
         current_permissions = (
             file_stats.st_uid,
             file_stats.st_gid,
@@ -139,8 +239,14 @@ def check_permissions(check):
             check.expected_gid,
             check.expected_permissions,
         )
-        return current_permissions == expected_permissions
-    return False
+
+        set_result(
+            check=check,
+            name=check.check_name,
+            check_type="Path Permissions",
+            actual=current_permissions,
+            expected=expected_permissions,
+        )
 
 
 def check_service(check):
@@ -150,30 +256,32 @@ def check_service(check):
     # Check the service status
     enabled_result = execute_systemctl(enabled_cmd)
 
-    def set_service_result(check_name, check_type, expected, actual):
-        result = "PASS" if expected == actual else "FAIL"
-        check.set_result({"name": check_name, "check": check_type, "result": result})
-
     # Check service enabled status
     if enabled_result in ["enabled", "disabled", "masked"]:
-        set_service_result(
-            check.check_name,
-            f"Service {enabled_result.capitalize()}",
-            check.service_enabled,
-            enabled_result == "enabled",
+        set_result(
+            check=check,
+            name=check.check_name,
+            check_type=f"Service {enabled_result.capitalize()}",
+            actual=enabled_result == "enabled",
+            expected=check.service_enabled,
         )
 
         if enabled_result == "enabled":
             active_result = execute_systemctl(active_cmd)
-            set_service_result(
-                check.check_name,
-                "Service Active",
-                check.service_active,
-                active_result == "active",
+            set_result(
+                check=check,
+                name=check.check_name,
+                check_type="Service Active",
+                actual=active_result == "active",
+                expected=check.service_active,
             )
     else:
-        set_service_result(
-            check.check_name, "Service Not Found", check.service_enabled, False
+        set_result(
+            check=check,
+            name=check.check_name,
+            check_type="Service Not Found",
+            actual=False,
+            expected=check.service_enabled,
         )
 
 
@@ -196,38 +304,46 @@ def execute_systemctl(
         return e.stderr.strip()
 
 
-# TODO
-# def check_mount(check):
-#     print("check_mount")
-#     # Check if the mount exists
-
-#     # Check if the mount is mounted
-
-#     # Check the mount options
-
-
-# TODO
-# def check_mount_options(check):
-#     print("check_mount_options")
-#     command = ["findmnt", "-no", "OPTIONS", check.check_path]
-#     result = execute_command(command)
-
-#     status = False
-
-#     # print(f"Mount options for {check.check_path}: {result}")
-
-#     # print(type(result))
-
-#     if result:
-#         print(f"Mount options for {check.check_path}: {result}")
-#         return True
-#     else:
-#         return False
+def get_mount_point_device(path):
+    """Get the device associated with the mount point."""
+    try:
+        result = subprocess.run(
+            ["findmnt", "--target", path, "--output", "SOURCE", "--noheadings"],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+            check=True,
+        )
+        return result.stdout.strip()
+    except subprocess.CalledProcessError:
+        return None
 
 
-# TODO
-# def check_mount_point(check):
-#     print("check_mount_point")
+def get_mount_point_options(path):
+    """Get the mount options for the mount point."""
+    try:
+        result = subprocess.run(
+            [
+                "findmnt",
+                "--target",
+                path,
+                "--output",
+                "OPTIONS",
+                "--noheadings",
+            ],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+            check=True,
+        )
+        return result.stdout.strip().split(",")
+    except subprocess.CalledProcessError:
+        return []
+
+
+def set_result(check, name, check_type, actual, expected):
+    result = "PASS" if expected == actual else "FAIL"
+    check.set_result({"name": name, "check": check_type, "result": result})
 
 
 # TODO
@@ -238,3 +354,30 @@ def execute_systemctl(
 # TODO
 # def check_parameter(check):
 #     print("check_parameter")
+
+
+# Old Code
+# def check_permissions(check):
+#     """
+#     Checks the permissions of a file or directory.
+
+#     Args:
+#         check (Check): The check object.
+
+#     Returns:
+#         bool: True if the permissions match, False otherwise.
+#     """
+#     if os.path.exists(check.path):
+#         file_stats = os.stat(check.path)
+#         current_permissions = (
+#             file_stats.st_uid,
+#             file_stats.st_gid,
+#             int(oct(file_stats.st_mode)[-3:]),
+#         )
+#         expected_permissions = (
+#             check.expected_uid,
+#             check.expected_gid,
+#             check.expected_permissions,
+#         )
+#         return current_permissions == expected_permissions
+#     return False

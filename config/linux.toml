@@ -2,7 +2,7 @@
 [accounts.0001a]
 check_name = "/etc/passwd"
 check_type = "path"
-check_path = "/etc/passwd"
+path = "/etc/passwd"
 expected_gid = 0
 expected_permissions = 644
 expected_uid = 0
@@ -12,7 +12,7 @@ valid_os = ["amzn-2023", "debian-12", "kali-2024.1", "ubuntu-22.04"]
 [accounts.0002a]
 check_name = "/etc/passwd-"
 check_type = "path"
-check_path = "/etc/passwd-"
+path = "/etc/passwd-"
 expected_gid = 0
 expected_permissions = 644
 expected_uid = 0
@@ -22,7 +22,7 @@ valid_os = ["amzn-2023", "debian-12", "kali-2024.1", "ubuntu-22.04"]
 [accounts.0003a]
 check_name = "/etc/group"
 check_type = "path"
-check_path = "/etc/group"
+path = "/etc/group"
 expected_gid = 0
 expected_permissions = 644
 expected_uid = 0
@@ -32,7 +32,7 @@ valid_os = ["amzn-2023", "debian-12", "kali-2024.1", "ubuntu-22.04"]
 [accounts.0004a]
 check_name = "/etc/group-"
 check_type = "path"
-check_path = "/etc/group-"
+path = "/etc/group-"
 expected_gid = 0
 expected_permissions = 644
 expected_uid = 0
@@ -42,7 +42,7 @@ valid_os = ["amzn-2023", "debian-12", "kali-2024.1", "ubuntu-22.04"]
 [accounts.0005a]
 check_name = "/etc/shadow"
 check_type = "path"
-check_path = "/etc/shadow"
+path = "/etc/shadow"
 expected_gid = 0
 expected_permissions = 0
 expected_uid = 0
@@ -52,7 +52,7 @@ valid_os = ["amzn-2023"]
 [accounts.0005b]
 check_name = "/etc/shadow"
 check_type = "path"
-check_path = "/etc/shadow"
+path = "/etc/shadow"
 expected_gid = 42
 expected_permissions = 640
 expected_uid = 0
@@ -62,7 +62,7 @@ valid_os = ["debian-12", "kali-2024.1", "ubuntu-22.04"]
 [accounts.0006a]
 check_name = "/etc/shadow-"
 check_type = "path"
-check_path = "/etc/shadow-"
+path = "/etc/shadow-"
 expected_gid = 0
 expected_permissions = 0
 expected_uid = 0
@@ -72,7 +72,7 @@ valid_os = ["amzn-2023"]
 [accounts.0006b]
 check_name = "/etc/shadow-"
 check_type = "path"
-check_path = "/etc/shadow-"
+path = "/etc/shadow-"
 expected_gid = 42
 expected_permissions = 640
 expected_uid = 0
@@ -82,7 +82,7 @@ valid_os = ["debian-12", "kali-2024.1", "ubuntu-22.04"]
 [accounts.0007a]
 check_name = "/etc/gshadow"
 check_type = "path"
-check_path = "/etc/gshadow"
+path = "/etc/gshadow"
 expected_gid = 0
 expected_permissions = 0
 expected_uid = 0
@@ -92,7 +92,7 @@ valid_os = ["amzn-2023"]
 [accounts.0007b]
 check_name = "/etc/gshadow"
 check_type = "path"
-check_path = "/etc/gshadow"
+path = "/etc/gshadow"
 expected_gid = 42
 expected_permissions = 640
 expected_uid = 0
@@ -102,7 +102,7 @@ valid_os = ["debian-12", "kali-2024.1", "ubuntu-22.04"]
 [accounts.0008a]
 check_name = "/etc/gshadow-"
 check_type = "path"
-check_path = "/etc/gshadow-"
+path = "/etc/gshadow-"
 expected_gid = 0
 expected_permissions = 0
 expected_uid = 0
@@ -112,7 +112,7 @@ valid_os = ["amzn-2023"]
 [accounts.0008b]
 check_name = "/etc/gshadow-"
 check_type = "path"
-check_path = "/etc/gshadow-"
+path = "/etc/gshadow-"
 expected_gid = 42
 expected_permissions = 640
 expected_uid = 0
@@ -146,7 +146,7 @@ valid_os = ["ubuntu-22.04"]
 [banners.0001a]
 check_name = "/etc/motd"
 check_type = "path"
-check_path = "/etc/motd"
+path = "/etc/motd"
 expected_gid = 0
 expected_permissions = 644
 expected_uid = 0
@@ -156,7 +156,7 @@ valid_os = ["amzn-2023", "ubuntu-22.04"]
 [banners.0002a]
 check_name = "/etc/issue"
 check_type = "path"
-check_path = "/etc/issue"
+path = "/etc/issue"
 expected_gid = 0
 expected_permissions = 644
 expected_uid = 0
@@ -166,7 +166,7 @@ valid_os = ["amzn-2023", "ubuntu-22.04"]
 [banners.0003a]
 check_name = "/etc/issue.net"
 check_type = "path"
-check_path = "/etc/issue.net"
+path = "/etc/issue.net"
 expected_gid = 0
 expected_permissions = 644
 expected_uid = 0
@@ -176,95 +176,117 @@ valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [mounts]
 [mounts.0001a]
-check_name = "/tmp separate partition"
-check_type = "mount-point"
-check_path = "/tmp"
+check_name = "/tmp"
+check_type = "mount"
+mount_exists = true
+nodev = true
+noexec = true
+nosuid = true
+path = "/tmp"
+separate_partition = true
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [mounts.0001b]
 check_name = "/tmp mount options not set"
 check_type = "mount-options"
-check_path = "/tmp"
+path = "/tmp"
 mount_options = ["nodev", "noexec", "nosuid"]
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [mounts.0002a]
-check_name = "/var separate partition"
-check_type = "mount-point"
-check_path = "/var"
+check_name = "/var"
+check_type = "mount"
+mount_exists = true
+nodev = true
+noexec = true
+nosuid = true
+path = "/var"
+separate_partition = true
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [mounts.0002b]
 check_name = "/var mount options not set"
 check_type = "mount-options"
-check_path = "/var"
+path = "/var"
 mount_options = ["nodev", "nosuid"]
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [mounts.0003a]
 check_name = "/var/tmp separate partition"
 check_type = "mount-point"
-check_path = "/var/tmp"
+path = "/var/tmp"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [mounts.0003b]
 check_name = "/var/tmp mount options not set"
 check_type = "mount-options"
-check_path = "/var/tmp"
+path = "/var/tmp"
 mount_options = ["nodev", "noexec", "nosuid"]
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [mounts.0004a]
 check_name = "/var/log separate partition"
 check_type = "mount-point"
-check_path = "/var/log"
+path = "/var/log"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [mounts.0004b]
 check_name = "/var/log mount options not set"
 check_type = "mount-options"
-check_path = "/var/log"
+path = "/var/log"
 mount_options = ["nodev", "noexec", "nosuid"]
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [mounts.0005a]
 check_name = "/var/log/audit separate partition"
 check_type = "mount-point"
-check_path = "/var/log/audit"
+path = "/var/log/audit"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [mounts.0005b]
 check_name = "/var/log/audit mount options not set"
 check_type = "mount-options"
-check_path = "/var/log/audit"
+path = "/var/log/audit"
 mount_options = ["nodev", "noexec", "nosuid"]
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [mounts.0006a]
 check_name = "/home separate partition"
 check_type = "mount-point"
-check_path = "/home"
+path = "/home"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [mounts.0006b]
 check_name = "/home mount options not set"
 check_type = "mount-options"
-check_path = "/home"
+path = "/home"
 mount_options = ["nodev", "nosuid"]
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [mounts.0007a]
 check_name = "/dev/shm separate partition"
 check_type = "mount-point"
-check_path = "/dev/shm"
+path = "/dev/shm"
 mount_options = ["nodev", "noexec", "nosuid"]
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [mounts.0007b]
 check_name = "/dev/shm mount options not set"
 check_type = "mount-options"
-check_path = "/dev/shm"
+path = "/dev/shm"
 mount_options = ["nodev", "noexec", "nosuid"]
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+
+[mounts.000000000000000000001a]
+check_name = "/mnt/bindmounttest"
+check_type = "mount"
+mount_exists = true
+nodev = true
+noexec = true
+nosuid = true
+path = "/mnt/bindmounttest"
+separate_partition = false
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 
@@ -416,7 +438,7 @@ valid_os = ["amzn-2023", "ubuntu-22.04"]
 [kernel_parameters.0001a]
 check_name = "testing-param1"
 check_type = "parameter"
-check_path = ""
+path = ""
 instance_type = ""
 parameter_type = ""
 valid_os = ["amzn-2023", "ubuntu-22.04"]
@@ -611,7 +633,7 @@ valid_os = ["amzn-2023", "ubuntu-22.04"]
 [at.0003a]
 check_name = "/etc/at.allow"
 check_type = "path"
-check_path = "/etc/at.allow"
+path = "/etc/at.allow"
 expected_gid = 0
 expected_permissions = 700
 expected_uid = 0
@@ -621,7 +643,7 @@ valid_os = ["amzn-2023", "ubuntu-22.04"]
 [at.0004a]
 check_name = "/etc/at.deny"
 check_type = "file-exists"
-check_path = "/etc/at.deny"
+path = "/etc/at.deny"
 expected_gid = 0
 expected_permissions = 700
 expected_uid = 0
@@ -664,7 +686,7 @@ valid_os = ["amzn-2023", "ubuntu-22.04"]
 [cron.0003a]
 check_name = "/etc/cron.allow"
 check_type = "path"
-check_path = "/etc/cron.allow"
+path = "/etc/cron.allow"
 expected_gid = 0
 expected_permissions = 700
 expected_uid = 0
@@ -674,7 +696,7 @@ valid_os = ["amzn-2023", "ubuntu-22.04"]
 [cron.0004a]
 check_name = "/etc/cron.deny"
 check_type = "path"
-check_path = "/etc/cron.deny"
+path = "/etc/cron.deny"
 expected_gid = 0
 expected_permissions = 700
 expected_uid = 0
@@ -684,7 +706,7 @@ valid_os = ["amzn-2023", "ubuntu-22.04"]
 [cron.0005a]
 check_name = "/etc/crontab"
 check_type = "path"
-check_path = "/etc/crontab"
+path = "/etc/crontab"
 expected_gid = 0
 expected_permissions = 600
 expected_uid = 0
@@ -694,7 +716,7 @@ valid_os = ["amzn-2023", "ubuntu-22.04"]
 [cron.0006a]
 check_name = "/etc/cron.hourly"
 check_type = "path"
-check_path = "/etc/cron.hourly"
+path = "/etc/cron.hourly"
 expected_gid = 0
 expected_permissions = 700
 expected_uid = 0
@@ -704,7 +726,7 @@ valid_os = ["amzn-2023", "ubuntu-22.04"]
 [cron.0007a]
 check_name = "/etc/cron.daily"
 check_type = "path"
-check_path = "/etc/cron.daily"
+path = "/etc/cron.daily"
 expected_gid = 0
 expected_permissions = 700
 expected_uid = 0
@@ -714,7 +736,7 @@ valid_os = ["amzn-2023", "ubuntu-22.04"]
 [cron.0008a]
 check_name = "/etc/cron.weekly"
 check_type = "path"
-check_path = "/etc/cron.weekly"
+path = "/etc/cron.weekly"
 expected_gid = 0
 expected_permissions = 700
 expected_uid = 0
@@ -724,7 +746,7 @@ valid_os = ["amzn-2023", "ubuntu-22.04"]
 [cron.0009a]
 check_name = "/etc/cron.monthly"
 check_type = "path"
-check_path = "/etc/cron.monthly"
+path = "/etc/cron.monthly"
 expected_gid = 0
 expected_permissions = 700
 expected_uid = 0
@@ -734,7 +756,7 @@ valid_os = ["amzn-2023", "ubuntu-22.04"]
 [cron.0010a]
 check_name = "/etc/cron.d"
 check_type = "path"
-check_path = "/etc/cron.d"
+path = "/etc/cron.d"
 expected_gid = 0
 expected_permissions = 700
 expected_uid = 0
@@ -779,7 +801,7 @@ valid_os = ["ubuntu-22.04"]
 # [cron.000000001a]
 # check_name = "/etc/cron.allow"
 # check_type = "file"
-# check_path = "/etc/cron.allow"
+# path = "/etc/cron.allow"
 # expected_gid = 0
 # expected_permissions = 600
 # expected_uid = 0
@@ -789,7 +811,7 @@ valid_os = ["ubuntu-22.04"]
 # [cron.000000002a]
 # check_name = "/etc/crontab"
 # check_type = "file"
-# check_path = "/etc/crontab"
+# path = "/etc/crontab"
 # expected_gid = 0
 # expected_permissions = 600
 # expected_uid = 0
