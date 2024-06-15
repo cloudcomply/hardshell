@@ -3,7 +3,7 @@
 #########################################################################################
 import click
 from src.hardshell import __version__
-from src.hardshell.scanners.scan import start_scanner
+from src.hardshell.scan import start_scanner
 
 
 # Package Version

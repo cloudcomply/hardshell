@@ -1,5 +1,6 @@
 import os
 import subprocess
+from src.hardshell.common.common import find_string
 
 
 # TODO Check logic
@@ -12,28 +13,28 @@ def check_module(check):
     set_result(
         check=check,
         name=check.check_name,
-        check_type="Module Blacklisted",
+        check_type=check.check_type.capitalize() + " Blacklisted",
         actual=blacklisted_check,
         expected=check.module_blacklisted,
     )
     set_result(
         check=check,
         name=check.check_name,
-        check_type="Module Denied",
+        check_type=check.check_type.capitalize() + " Denied",
         actual=denied_check,
         expected=check.module_denied,
     )
     set_result(
         check=check,
         name=check.check_name,
-        check_type="Module Loadable",
+        check_type=check.check_type.capitalize() + " Loadable",
         actual=loadable_check,
         expected=check.module_loadable,
     )
     set_result(
         check=check,
         name=check.check_name,
-        check_type="Module Loaded",
+        check_type=check.check_type.capitalize() + " Loaded",
         actual=loaded_check,
         expected=check.module_loaded,
     )
@@ -100,7 +101,7 @@ def check_mount(check):
     set_result(
         check=check,
         name=check.check_name,
-        check_type="Mount Exists",
+        check_type=check.check_type.capitalize() + " Exists",
         actual=mount_exists,
         expected=True,
     )
@@ -111,7 +112,7 @@ def check_mount(check):
         set_result(
             check=check,
             name=check.check_name,
-            check_type="Separate Partition",
+            check_type=check.check_type.capitalize() + " Separate Partition",
             actual=seppart_result,
             expected=check.separate_partition,
         )
@@ -126,7 +127,7 @@ def check_mount(check):
             set_result(
                 check=check,
                 name=check.check_name,
-                check_type="nodev",
+                check_type=check.check_type.capitalize() + " Option: nodev",
                 actual="nodev" in options_result,
                 expected=check.nodev,
             )
@@ -135,7 +136,7 @@ def check_mount(check):
             set_result(
                 check=check,
                 name=check.check_name,
-                check_type="noexec",
+                check_type=check.check_type.capitalize() + " Option: noexec",
                 actual="noexec" in options_result,
                 expected=check.noexec,
             )
@@ -144,7 +145,7 @@ def check_mount(check):
             set_result(
                 check=check,
                 name=check.check_name,
-                check_type="nosuid",
+                check_type=check.check_type.capitalize() + " Option: nosuid",
                 actual="nosuid" in options_result,
                 expected=check.nosuid,
             )
@@ -208,6 +209,92 @@ def check_mount_point_status(path):
         return False
 
 
+# TODO Check Logic
+def check_package(check, current_os, global_config):
+    """Check if a package is installed based on the OS."""
+    os_name = current_os.get("name", "").lower()
+
+    os_mapping = {
+        "ubuntu": "pkgmgr.ubuntu.command",
+        "amzn": "pkgmgr.amzn.command",
+        # "debian": "pkgmgr.debian.command",
+        # "fedora": "pkgmgr.fedora.command",
+        # "red hat": "pkgmgr.red_hat.command",
+        # "rocky linux": "pkgmgr.rocky_linux.command",
+        # "kali": "pkgmgr.kali.command",
+    }
+
+    attribute_path = os_mapping.get(os_name)
+
+    if attribute_path:
+        # Split the attribute path and dynamically access the nested attributes
+        attrs = attribute_path.split(".")
+        value = global_config
+        for attr in attrs:
+            value = getattr(value, attr, None)
+            if value is None:
+                break
+
+        cmd = value.split()
+        cmd.append(check.package_name)
+
+        cmd_result = subprocess.run(cmd, capture_output=True, text=True, check=True)
+
+        if cmd_result.returncode == 0:
+            # Use grep to filter the output for the at package
+            grep_result = subprocess.run(
+                ["grep", "-w", check.package_name],
+                input=cmd_result.stdout,
+                capture_output=True,
+                text=True,
+            )
+
+            if grep_result.stdout.strip():
+                set_result(
+                    check=check,
+                    name=check.check_name,
+                    check_type=check.check_type.capitalize() + " Installed",
+                    actual=True,
+                    expected=check.package_install,
+                )
+            else:
+                set_result(
+                    check=check,
+                    name=check.check_name,
+                    check_type=check.check_type.capitalize() + " Installed",
+                    actual=False,
+                    expected=check.package_install,
+                )
+        else:
+            pass
+
+    else:
+        print(f"No configuration found for OS: {os_name}")
+
+
+def check_parameter(check, global_config):
+    found_files = find_string(
+        global_config.sysctl.directories, check.parameter, starts_with="#"
+    )
+
+    if len(found_files) > 0:
+        set_result(
+            check=check,
+            name=check.check_name,
+            check_type=check.check_type.capitalize() + " Found",
+            actual=len(found_files) > 0,
+            expected=True,
+        )
+    else:
+        set_result(
+            check=check,
+            name=check.check_name,
+            check_type=check.check_type.capitalize() + " Found",
+            actual=len(found_files) > 0,
+            expected=True,
+        )
+
+
 def check_path(check):
     """
     Checks the existance and permissions of a file or directory.
@@ -221,7 +308,7 @@ def check_path(check):
     set_result(
         check=check,
         name=check.check_name,
-        check_type="Path Exists",
+        check_type=check.check_type.capitalize() + " Exists",
         actual=path_exists,
         expected=expected_exists,
     )
@@ -243,7 +330,7 @@ def check_path(check):
         set_result(
             check=check,
             name=check.check_name,
-            check_type="Path Permissions",
+            check_type=check.check_type.capitalize() + " Permissions",
             actual=current_permissions,
             expected=expected_permissions,
         )
@@ -261,7 +348,7 @@ def check_service(check):
         set_result(
             check=check,
             name=check.check_name,
-            check_type=f"Service {enabled_result.capitalize()}",
+            check_type=check.check_type.capitalize() + f" {enabled_result.capitalize()}",
             actual=enabled_result == "enabled",
             expected=check.service_enabled,
         )
@@ -271,7 +358,7 @@ def check_service(check):
             set_result(
                 check=check,
                 name=check.check_name,
-                check_type="Service Active",
+                check_type=check.check_type.capitalize() + " Active",
                 actual=active_result == "active",
                 expected=check.service_active,
             )
@@ -279,7 +366,7 @@ def check_service(check):
         set_result(
             check=check,
             name=check.check_name,
-            check_type="Service Not Found",
+            check_type=check.check_type.capitalize() + " Not Found",
             actual=False,
             expected=check.service_enabled,
         )
@@ -344,40 +431,3 @@ def get_mount_point_options(path):
 def set_result(check, name, check_type, actual, expected):
     result = "PASS" if expected == actual else "FAIL"
     check.set_result({"name": name, "check": check_type, "result": result})
-
-
-# TODO
-# def check_package(check):
-#     print("check_package")
-
-
-# TODO
-# def check_parameter(check):
-#     print("check_parameter")
-
-
-# Old Code
-# def check_permissions(check):
-#     """
-#     Checks the permissions of a file or directory.
-
-#     Args:
-#         check (Check): The check object.
-
-#     Returns:
-#         bool: True if the permissions match, False otherwise.
-#     """
-#     if os.path.exists(check.path):
-#         file_stats = os.stat(check.path)
-#         current_permissions = (
-#             file_stats.st_uid,
-#             file_stats.st_gid,
-#             int(oct(file_stats.st_mode)[-3:]),
-#         )
-#         expected_permissions = (
-#             check.expected_uid,
-#             check.expected_gid,
-#             check.expected_permissions,
-#         )
-#         return current_permissions == expected_permissions
-#     return False

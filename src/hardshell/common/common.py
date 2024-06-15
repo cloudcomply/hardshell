@@ -1,4 +1,5 @@
 import ctypes
+import glob
 import os
 import platform
 import re
@@ -95,6 +96,32 @@ def detect_os() -> Dict[str, Union[str, Dict[str, str]]]:
     return os_detectors.get(system, lambda: {"Error": "Unsupported OS..."})()
 
 
+def find_string(directories, string, starts_with=""):
+    """Find the string in the given directories."""
+    found_files = []
+    for directory in directories:
+        # Use glob to find all .conf files in the directory
+        for file_path in glob.glob(directory):
+            if os.path.isfile(file_path):
+                if find_string_in_file(file_path, string, starts_with):
+                    found_files.append(file_path)
+    return found_files
+
+
+def find_string_in_file(file_path, string, starts_with=""):
+    """Search for the parameter in the given file."""
+    try:
+        with open(file_path, "r") as file:
+            for line in file:
+                stripped_line = line.strip()
+                if stripped_line and not stripped_line.startswith(starts_with):
+                    if stripped_line == string:
+                        return True
+    except IOError:
+        print(f"Could not read file: {file_path}")
+    return False
+
+
 def path_exists(path):
     return os.path.exists(path)
 
@@ -137,51 +164,3 @@ def strip_non_alphabetical(s):
     """Remove all non-alphabetical characters from the string."""
     # Replace non-alphabetical characters with an empty string
     return re.sub(r"[^a-zA-Z]", "", s)
-
-
-def update_counts(category, passed_checks, failed_checks):
-    """
-    Update the counts for a specific category.
-
-    Parameters:
-    - counts (dict): The dictionary holding all count data.
-    - category (str): The category under which to update the counts.
-    - passed (int): The number of newly passed tests to add.
-    - failed (int): The number of newly failed tests to add.
-    """
-    if category not in checks:
-        # Initialize the category if it doesn't exist
-        checks[category] = {"total": 0, "passed": 0, "failed": 0}
-
-    # Update the counts for the specified category
-    checks[category]["passed"] += passed_checks
-    checks[category]["failed"] += failed_checks
-    checks[category]["total"] += passed_checks + failed_checks
-
-
-checks = {
-    "Accounts": {"total": 0, "passed": 0, "failed": 0},
-    "Aide": {"total": 0, "passed": 0, "failed": 0},
-    "Audit": {"total": 0, "passed": 0, "failed": 0},
-    "Banners": {"total": 0, "passed": 0, "failed": 0},
-    "Filesystem-Mounts": {"total": 0, "passed": 0, "failed": 0},
-    "Kernel-Modules": {"total": 0, "passed": 0, "failed": 0},
-    "Kernel-Parameters": {"total": 0, "passed": 0, "failed": 0},
-    "Logging-Rsyslog": {"total": 0, "passed": 0, "failed": 0},
-    "Restricted-Packages": {"total": 0, "passed": 0, "failed": 0},
-    "Restricted-Services": {"total": 0, "passed": 0, "failed": 0},
-    "Schedulers-At": {"total": 0, "passed": 0, "failed": 0},
-    "Schedulers-Cron": {"total": 0, "passed": 0, "failed": 0},
-    "SELinux": {"total": 0, "passed": 0, "failed": 0},
-    "Sudo": {"total": 0, "passed": 0, "failed": 0},
-    "Time-Chrony": {"total": 0, "passed": 0, "failed": 0},
-    "Time-Timesyncd": {"total": 0, "passed": 0, "failed": 0},
-}
-
-
-# Old code
-# def path_exists(path):
-#     if os.path.exists(path):
-#         return True
-#     else:
-#         return False

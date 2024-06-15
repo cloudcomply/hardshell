@@ -1,77 +1,47 @@
+from dataclasses import dataclass, field
+from typing import List, Optional
 from src.hardshell.linux import (
     check_module,
     check_mount,
-    # check_mount_options,
-    # check_mount_point,
-    # check_package,
-    # check_parameter,
+    check_package,
+    check_parameter,
     check_path,
     check_service,
 )
 
 
+@dataclass
 class SystemCheck:
-    def __init__(
-        self,
-        check_id=None,
-        check_name=None,
-        check_type=None,
-        expected_gid=None,
-        expected_permissions=None,
-        expected_uid=None,
-        path_exists=None,
-        instance_type=None,
-        module_name=None,
-        module_type=None,
-        module_blacklisted=None,
-        module_denied=None,
-        module_loadable=None,
-        module_loaded=None,
-        mount_exists=None,
-        nodev=None,
-        noexec=None,
-        nosuid=None,
-        package_name=None,
-        package_status=None,
-        parameter_type=None,
-        path=None,
-        separate_partition=None,
-        service_name=None,
-        service_active=None,
-        service_enabled=None,
-        service_masked=None,
-        valid_os=None,
-    ):
-        self.check_id = check_id
-        self.check_name = check_name
-        self.check_result = None
-        self.check_results = []
-        self.check_type = check_type
-        self.expected_gid = expected_gid
-        self.expected_permissions = expected_permissions
-        self.expected_uid = expected_uid
-        self.path_exists = path_exists
-        self.instance_type = instance_type
-        self.module_name = module_name
-        self.module_type = module_type
-        self.module_blacklisted = module_blacklisted
-        self.module_denied = module_denied
-        self.module_loadable = module_loadable
-        self.module_loaded = module_loaded
-        mount_exists = mount_exists
-        self.nodev = nodev
-        self.noexec = noexec
-        self.nosuid = nosuid
-        self.package_name = package_name
-        self.package_status = package_status
-        self.parameter_type = parameter_type
-        self.path = path
-        self.separate_partition = separate_partition
-        self.service_name = service_name
-        self.service_active = service_active
-        self.service_enabled = service_enabled
-        self.service_masked = service_masked
-        self.valid_os = valid_os
+    check_id: Optional[str] = None
+    check_name: Optional[str] = None
+    check_type: Optional[str] = None
+    expected_gid: Optional[int] = None
+    expected_permissions: Optional[int] = None
+    expected_uid: Optional[int] = None
+    path_exists: Optional[bool] = None
+    instance_type: Optional[str] = None
+    module_name: Optional[str] = None
+    module_type: Optional[str] = None
+    module_blacklisted: Optional[bool] = None
+    module_denied: Optional[bool] = None
+    module_loadable: Optional[bool] = None
+    module_loaded: Optional[bool] = None
+    mount_exists: Optional[bool] = None
+    nodev: Optional[bool] = None
+    noexec: Optional[bool] = None
+    nosuid: Optional[bool] = None
+    package_name: Optional[str] = None
+    package_install: Optional[str] = None
+    parameter: Optional[str] = None
+    path: Optional[str] = None
+    separate_partition: Optional[bool] = None
+    service_name: Optional[str] = None
+    service_active: Optional[bool] = None
+    service_enabled: Optional[bool] = None
+    service_masked: Optional[bool] = None
+    valid_os: Optional[List[str]] = field(default_factory=list)
+    check_result: Optional[str] = None
+    check_results: List[str] = field(default_factory=list)
 
     def run_check(self, current_os, global_config):
         os_version = current_os["id"] + "-" + current_os["version_id"]
@@ -87,11 +57,12 @@ class SystemCheck:
                     check_mount(self)
                     # pass
                 elif self.check_type == "package":
-                    # check_package(self)
-                    pass
+                    check_package(self, current_os, global_config)
+                    # pass
                 elif self.check_type == "parameter":
-                    # check_parameter(self)
-                    pass
+                    # FINISHED
+                    check_parameter(self, global_config)
+                    # pass
                 elif self.check_type == "path":
                     # FINISHED
                     check_path(self)
@@ -103,17 +74,11 @@ class SystemCheck:
             else:
                 print("Check Not Supported")
         else:
-            pass
             # self.check_result = "Invalid OS"
+            pass
 
     def get_results(self):
         return self.check_results
 
     def set_result(self, result):
         self.check_results.append(result)
-
-    def set_service_active_result(self, result):
-        self.result_service_active = result
-
-    def set_service_enabled_result(self, result):
-        self.result_service_enabled = result
