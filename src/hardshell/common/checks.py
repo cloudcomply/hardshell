@@ -11,13 +11,14 @@ def create_checks(config):
                 check_type=config[system_check][check]["check_type"],
                 valid_os=config[system_check][check].get("valid_os"),
                 expected_gid=config[system_check][check].get("expected_gid"),
+                expected_output=config[system_check][check].get("expected_output"),
                 expected_permissions=config[system_check][check].get(
                     "expected_permissions"
                 ),
                 expected_uid=config[system_check][check].get("expected_uid"),
+                file_extension=config[system_check][check].get("file_extension"),
                 instance_type=config[system_check][check].get("instance_type"),
                 module_name=config[system_check][check].get("module_name"),
-                module_type=config[system_check][check].get("module_type"),
                 module_blacklisted=config[system_check][check].get("module_blacklisted"),
                 module_denied=config[system_check][check].get("module_denied"),
                 module_loadable=config[system_check][check].get("module_loadable"),
@@ -31,11 +32,13 @@ def create_checks(config):
                 parameter=config[system_check][check].get("parameter"),
                 path=config[system_check][check].get("path"),
                 path_exists=config[system_check][check].get("path_exists"),
+                pattern=config[system_check][check].get("pattern"),
                 separate_partition=config[system_check][check].get("separate_partition"),
                 service_name=config[system_check][check].get("service_name"),
                 service_active=config[system_check][check].get("service_active"),
                 service_enabled=config[system_check][check].get("service_enabled"),
                 service_masked=config[system_check][check].get("service_masked"),
+                sub_type=config[system_check][check].get("sub_type"),
             )
             checks.append(new_check)
     return checks

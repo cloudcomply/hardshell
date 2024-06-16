@@ -1,15 +1,12 @@
-[pkgmgr]
-# amzn = "dnf list installed"
-# ubuntu = "dpkg-query -l"
+[config_files]
+sshd = [
+    "/etc/ssh/test",
+    "/etc/ssh/testing",
+    "/etc/ssh/sshd_config",
+    "/etc/ssh/sshd_config.d",
+]
 
-[pkgmgr.amzn]
-command = "dnf list installed"
-
-[pkgmgr.ubuntu]
-command = "dpkg-query -l"
-
-[sysctl]
-directories = [
+sysctl = [
     "/run/sysctl.d/*.conf",
     "/etc/sysctl.d/*.conf",
     "/usr/local/lib/sysctl.d/*.conf",
@@ -18,42 +15,11 @@ directories = [
     "/etc/sysctl.conf",
 ]
 
-
-# Old code
-
-# amzn.installed = ['dnf', 'list', '--installed']
-# amzn.uninstall = ['dnf', 'remove']
-# debian.installed = ['dpkg', '--list']
-# debian.uninstall = ['apt', 'remove']
-# kali.installed = ['dpkg', '--list']
-# kali.uninstall = ['apt', 'remove']
-# ubuntu.installed = ['dpkg', '--list']
-# ubuntu.uninstall = ['apt', 'remove']
-
-# [global]
-
-# [global.amzn]
-# package_install = ["install"]
-# package_remove = ["remove"]
-# # package_search = ["rpm", "-q"]
-# package_search = ["dnf", "list", "installed"]
-
-# [global.debian]
-# package_install = ["install"]
-# package_remove = ["remove"]
-# package_search = ["search"]
-
-# [global.kali]
-# package_install = ["install"]
-# package_remove = ["remove"]
-# package_search = ["search"]
-
-# [global.ubuntu]
-# package_install = ["install"]
-# package_remove = ["remove"]
-# package_search = ["dpkg-query", "-s"]
-
-# logging_service = "rsyslog"
-# time_service = "chrony"
-
-# svc_cmd = ""
+[pkgmgr]
+amzn = "dnf list installed"
+debian = ""
+fedora = ""
+kali = ""
+rhel = ""
+rocky = ""
+ubuntu = "dpkg-query -l"

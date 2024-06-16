@@ -96,7 +96,53 @@ def detect_os() -> Dict[str, Union[str, Dict[str, str]]]:
     return os_detectors.get(system, lambda: {"Error": "Unsupported OS..."})()
 
 
-def find_string(directories, string, starts_with=""):
+def find_pattern_in_directory(directory, pattern, extension=None):
+    """Find the pattern in the files in a given directory."""
+    pattern_found = False
+    pattern_line = ""
+
+    paths = glob.glob(os.path.join(directory, "*"))
+
+    if extension:
+        files = [f for f in paths if os.path.isfile(f) and f.endswith(extension)]
+    else:
+        files = [f for f in paths if os.path.isfile(f)]
+
+    directories = [f for f in paths if os.path.isdir(f)]
+
+    for file in files:
+        found, line = find_pattern_in_file(file, pattern)
+        if found:
+            pattern_found = True
+            pattern_line = line
+            break
+
+    for dir in directories:
+        found, line = find_pattern_in_directory(dir, pattern, extension)
+        if found:
+            pattern_found = True
+            pattern_line = line
+            break
+
+    return pattern_found, pattern_line
+
+
+def find_pattern_in_file(path, pattern):
+    """Search for the parameter in the given file."""
+    pattern_found = False
+    pattern_line = ""
+    try:
+        with open(path, "r") as f:
+            for line in f:
+                if re.search(pattern, line, flags=re.IGNORECASE):
+                    pattern_found = True
+                    pattern_line = line.strip()
+    except IOError:
+        print(f"Could not read file: {path}")
+    return pattern_found, pattern_line
+
+
+def find_string_in_directories(directories, string, starts_with=""):
     """Find the string in the given directories."""
     found_files = []
     for directory in directories:
