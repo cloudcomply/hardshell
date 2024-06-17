@@ -76,7 +76,7 @@ class SystemCheck:
                     pass
                 elif self.check_type == "regex":
                     # FINISHED
-                    # print(self.check_name)
+                    print(self.check_name)
                     check_regex(self, global_config)
                     pass
                 elif self.check_type == "service":
