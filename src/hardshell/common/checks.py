@@ -17,6 +17,8 @@ def create_checks(config):
                     "expected_permissions"
                 ),
                 expected_uid=config[system_check][check].get("expected_uid"),
+                field_match=config[system_check][check].get("field_match"),
+                field_value=config[system_check][check].get("field_value"),
                 file_extension=config[system_check][check].get("file_extension"),
                 module_name=config[system_check][check].get("module_name"),
                 module_blacklisted=config[system_check][check].get("module_blacklisted"),

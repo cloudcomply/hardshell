@@ -1,5 +1,6 @@
 import glob
 import os
+import re
 import subprocess
 from src.hardshell.common.common import (
     find_pattern_in_directory,
@@ -7,6 +8,77 @@ from src.hardshell.common.common import (
     get_config_mapping,
     get_pkgmgr_mapping,
 )
+
+
+def check_accounts(check):
+    user_names, user_uids, group_names, group_gids = set(), set(), set(), set()
+    cleartext_password = {"user_names": []}
+    duplicates = {"group_names": [], "user_names": [], "user_uids": [], "group_gids": []}
+    root_uid_count, root_gid_count = 0, 0
+    existing_group_names = set()
+
+    def process_line(line, is_passwd=True):
+        nonlocal root_uid_count, root_gid_count
+        fields = line.strip().split(":")
+        if is_passwd:
+            user_name, user_pass, user_uid, user_gid = (
+                fields[0],
+                fields[1],
+                fields[2],
+                fields[3],
+            )
+            if user_name == "root":
+                set_result(check, "root uid", "root uid", user_uid == "0")
+                set_result(check, "root gid", "root gid", user_gid == "0")
+            if user_uid == "0":
+                root_uid_count += 1
+            if user_gid == "0":
+                root_gid_count += 1
+            if user_pass not in {"x", "*"}:
+                cleartext_password["user_names"].append(user_name)
+            check_duplicates(user_name, user_names, duplicates["user_names"])
+            check_duplicates(user_uid, user_uids, duplicates["user_uids"])
+
+            if user_gid not in existing_group_names:
+                group_gids.add(user_gid)
+        else:
+            group_name, group_gid = fields[0], fields[2]
+            existing_group_names.add(group_gid)
+            check_duplicates(group_name, group_names, duplicates["group_names"])
+            check_duplicates(group_gid, group_gids, duplicates["group_gids"])
+
+    def check_duplicates(item, item_set, duplicate_list):
+        if item in item_set:
+            duplicate_list.append(item)
+        else:
+            item_set.add(item)
+
+    with open("/etc/group", "r") as f:
+        for line in f:
+            process_line(line, is_passwd=False)
+
+    missing_groups = []
+    with open("/etc/passwd", "r") as f:
+        for line in f:
+            fields = line.strip().split(":")
+            user_gid = fields[3]
+            if user_gid not in group_gids:
+                missing_groups.append(user_gid)
+            process_line(line, is_passwd=True)
+
+    set_result(
+        check,
+        "user shadowed password",
+        "shadowed password",
+        not cleartext_password["user_names"],
+    )
+    set_result(check, "user names", "duplicate", not duplicates["user_names"])
+    set_result(check, "user uids", "duplicate", not duplicates["user_uids"])
+    set_result(check, "group names", "duplicate", not duplicates["group_names"])
+    set_result(check, "group gids", "duplicate", not duplicates["group_gids"])
+    set_result(check, "root uid unique", "root uid unique", root_uid_count == 1)
+    set_result(check, "root gid unique", "root gid unique", root_gid_count == 1)
+    set_result(check, "all group names exist", "group existence", not missing_groups)
 
 
 # TODO Check logic
@@ -522,5 +594,7 @@ def set_result(check, name, check_type, actual, expected=None):
     if expected is not None:
         result = "PASS" if expected == actual else "FAIL"
     elif check.check_type == "regex":
+        result = "PASS" if actual else "FAIL"
+    else:
         result = "PASS" if actual else "FAIL"
     check.set_result({"name": name, "check": check_type, "result": result})

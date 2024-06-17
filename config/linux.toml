@@ -1,3 +1,9 @@
+[accounts]
+[accounts.0002a]
+check_name = "accounts"
+check_type = "accounts"
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
 [aide]
 [aide.0001a]
 check_name = "aide package"
@@ -976,87 +982,6 @@ pattern = "^PASS_WARN_AGE\\s+7$"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 
-[path]
-[path.0011a]
-check_name = "/etc/group"
-check_type = "path"
-path = "/etc/group"
-path_exists = true
-expected_uid = 0
-expected_gid = 0
-expected_permissions = 644
-valid_os = ["amzn-2023", "ubuntu-22.04"]
-
-[path.0012a]
-check_name = "/etc/group-"
-check_type = "path"
-path = "/etc/group-"
-path_exists = true
-expected_uid = 0
-expected_gid = 0
-expected_permissions = 644
-valid_os = ["amzn-2023", "ubuntu-22.04"]
-
-[path.0013a]
-check_name = "/etc/gshadow"
-check_type = "path"
-path = "/etc/gshadow"
-path_exists = true
-expected_uid = 0
-expected_gid = 0
-expected_permissions = 0
-valid_os = ["amzn-2023", "ubuntu-22.04"]
-
-[path.0014a]
-check_name = "/etc/gshadow-"
-check_type = "path"
-path = "/etc/gshadow-"
-path_exists = true
-expected_uid = 0
-expected_gid = 0
-expected_permissions = 0
-valid_os = ["amzn-2023", "ubuntu-22.04"]
-
-[path.0018a]
-check_name = "/etc/passwd"
-check_type = "path"
-path = "/etc/passwd"
-path_exists = true
-expected_uid = 0
-expected_gid = 0
-expected_permissions = 644
-valid_os = ["amzn-2023", "ubuntu-22.04"]
-
-[path.0019a]
-check_name = "/etc/passwd-"
-check_type = "path"
-path = "/etc/passwd-"
-path_exists = true
-expected_uid = 0
-expected_gid = 0
-expected_permissions = 644
-valid_os = ["amzn-2023", "ubuntu-22.04"]
-
-[path.0020a]
-check_name = "/etc/shadow"
-check_type = "path"
-path = "/etc/shadow"
-path_exists = true
-expected_uid = 0
-expected_gid = 0
-expected_permissions = 0
-valid_os = ["amzn-2023", "ubuntu-22.04"]
-
-[path.0021a]
-check_name = "/etc/shadow-"
-check_type = "path"
-path = "/etc/shadow-"
-path_exists = true
-expected_uid = 0
-expected_gid = 0
-expected_permissions = 0
-valid_os = ["amzn-2023", "ubuntu-22.04"]
-
 [rsyslog]
 [rsyslog.0001a]
 check_name = "rsyslog package"
@@ -1379,6 +1304,87 @@ pattern = "^Defaults\\s+use_pty\\s*$"
 category = "sudo"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
+[system]
+[system.0011a]
+check_name = "/etc/group"
+check_type = "path"
+path = "/etc/group"
+path_exists = true
+expected_uid = 0
+expected_gid = 0
+expected_permissions = 644
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[system.0012a]
+check_name = "/etc/group-"
+check_type = "path"
+path = "/etc/group-"
+path_exists = true
+expected_uid = 0
+expected_gid = 0
+expected_permissions = 644
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[system.0013a]
+check_name = "/etc/gshadow"
+check_type = "path"
+path = "/etc/gshadow"
+path_exists = true
+expected_uid = 0
+expected_gid = 0
+expected_permissions = 0
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[system.0014a]
+check_name = "/etc/gshadow-"
+check_type = "path"
+path = "/etc/gshadow-"
+path_exists = true
+expected_uid = 0
+expected_gid = 0
+expected_permissions = 0
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[system.0018a]
+check_name = "/etc/passwd"
+check_type = "path"
+path = "/etc/passwd"
+path_exists = true
+expected_uid = 0
+expected_gid = 0
+expected_permissions = 644
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[system.0019a]
+check_name = "/etc/passwd-"
+check_type = "path"
+path = "/etc/passwd-"
+path_exists = true
+expected_uid = 0
+expected_gid = 0
+expected_permissions = 644
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[system.0020a]
+check_name = "/etc/shadow"
+check_type = "path"
+path = "/etc/shadow"
+path_exists = true
+expected_uid = 0
+expected_gid = 0
+expected_permissions = 0
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[system.0021a]
+check_name = "/etc/shadow-"
+check_type = "path"
+path = "/etc/shadow-"
+path_exists = true
+expected_uid = 0
+expected_gid = 0
+expected_permissions = 0
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
 [systemd]
 [systemd.0001a]
 check_name = "coredump backtraces"
@@ -1395,3 +1401,12 @@ file_extension = ".conf"
 pattern = "^Storage\\s*=\\s*none\\s*$"
 category = "coredump"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+
+# [users_groups.0001a]
+# check_name = "users use shadowed passwords"
+# check_type = "field"
+# field_match = 2
+# field_value = "x"
+# path = "/etc/passwd"
+# valid_os = ["amzn-2023", "ubuntu-22.04"]

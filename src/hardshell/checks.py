@@ -1,6 +1,7 @@
 from dataclasses import dataclass, field
 from typing import List, Optional
 from src.hardshell.linux import (
+    check_accounts,
     check_module,
     check_mount,
     check_package,
@@ -23,6 +24,8 @@ class SystemCheck:
     expected_output: Optional[str] = None
     expected_permissions: Optional[int] = None
     expected_uid: Optional[int] = None
+    field_match: Optional[str] = None
+    field_value: Optional[str] = None
     file_extension: Optional[str] = None
     module_name: Optional[str] = None
     module_blacklisted: Optional[bool] = None
@@ -54,7 +57,11 @@ class SystemCheck:
             if current_os["type"] == "linux":
                 # print(f"Running Check: {self.check_name}")
                 # print(f"Check Type: {self.check_type}")
-                if self.check_type == "kernel-module":
+                if self.check_type == "accounts":
+                    # print(self.check_name)
+                    check_accounts(self)
+                    pass
+                elif self.check_type == "kernel-module":
                     # FINISHED
                     # print(self.check_name)
                     # check_module(self)
@@ -66,8 +73,8 @@ class SystemCheck:
                     pass
                 elif self.check_type == "package":
                     # FINISHED
-                    print(self.check_name)
-                    check_package(self, current_os, global_config)
+                    # print(self.check_name)
+                    # check_package(self, current_os, global_config)
                     pass
                 elif self.check_type == "path":
                     # FINISHED

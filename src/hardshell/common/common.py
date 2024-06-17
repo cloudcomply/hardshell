@@ -134,6 +134,7 @@ def find_pattern_in_file(path, pattern):
     try:
         with open(path, "r") as f:
             for line in f:
+                print(line)
                 if re.search(pattern, line, flags=re.IGNORECASE):
                     pattern_found = True
                     pattern_line = line.strip()
