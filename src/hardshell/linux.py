@@ -4,7 +4,9 @@ import subprocess
 from src.hardshell.common.common import (
     find_pattern_in_directory,
     find_pattern_in_file,
-    find_string_in_directories,
+    # find_string_in_directories,
+    get_config_mapping,
+    get_pkgmgr_mapping,
 )
 
 
@@ -45,6 +47,7 @@ def check_module(check):
     )
 
 
+# TODO Convert to regex
 def check_module_blacklisted(module_name):
     try:
         blacklist_result = subprocess.run(
@@ -60,6 +63,7 @@ def check_module_blacklisted(module_name):
         return False
 
 
+# TODO Convert to regex
 def check_module_denied(module_name):
     try:
         install_result = subprocess.run(
@@ -78,7 +82,8 @@ def check_module_denied(module_name):
 def check_module_loadable(module_name):
     try:
         result = subprocess.run(
-            ["sudo", "modprobe", module_name],
+            # ["sudo", "modprobe", module_name],
+            ["modprobe", module_name],
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
             text=True,
@@ -100,7 +105,6 @@ def check_module_loaded(module_name):
         return False
 
 
-# TODO Add check_mount_point_boot
 def check_mount(check):
     # Check if mount exists
     mount_exists = check_mount_point(check.path)
@@ -114,6 +118,14 @@ def check_mount(check):
 
     if mount_exists:
         # Check if mounted at boot
+        boot_result = check_mount_point_boot(check.path)
+        set_result(
+            check=check,
+            name=check.check_name,
+            check_type=f"{check.check_type.capitalize()} Boot",
+            actual=boot_result,
+            expected=check.mount_boot,
+        )
 
         # Check if separate partition
         seppart_result = check_mount_point_separate_partition(check.path)
@@ -205,7 +217,7 @@ def check_mount_point_separate_partition(path):
 
 # TODO Check for mount point at boot
 def check_mount_point_boot(path):
-    pass
+    return False
 
 
 def check_mount_point_mounted(path):
@@ -222,32 +234,21 @@ def check_mount_point_mounted(path):
         return False
 
 
-# TODO Check Logic
 def check_package(check, current_os, global_config):
     """Check if a package is installed based on the OS."""
-    os_name = current_os.get("name", "").lower()
+    os_name = current_os.get("name", None).lower()
 
-    # attribute_path = os_mapping.get(os_name)
-    attribute_path = package_mapping.get(os_name)
+    if os_name is not None:
+        pkgmgr = get_pkgmgr_mapping(global_config, os_name)
 
-    if attribute_path:
-        # Split the attribute path and dynamically access the nested attributes
-        attrs = attribute_path.split(".")
-        value = global_config
-        for attr in attrs:
-            value = getattr(value, attr, None)
-            if value is None:
-                break
-
-        cmd = value.split()
+        cmd = pkgmgr.split()
         cmd.append(check.package_name)
 
         try:
-            cmd_result = subprocess.run(cmd, capture_output=True, text=True, check=True)
+            cmd_result = subprocess.run(cmd, capture_output=True, text=True)
 
             if cmd_result.returncode == 0:
                 # Use grep to filter the output for the at package
-                # TODO Fix this. Misreporting
                 grep_result = subprocess.run(
                     ["grep", "-w", check.package_name],
                     input=cmd_result.stdout,
@@ -259,61 +260,23 @@ def check_package(check, current_os, global_config):
                     set_result(
                         check=check,
                         name=check.check_name,
-                        check_type=f"{check.check_type.capitalize()} Installed",
+                        check_type=f"{check.check_type}",
                         actual=True,
                         expected=check.package_install,
                     )
-                else:
-                    set_result(
-                        check=check,
-                        name=check.check_name,
-                        check_type=f"{check.check_type.capitalize()} Installed",
-                        actual=False,
-                        expected=check.package_install,
-                    )
             else:
-                pass
+                set_result(
+                    check=check,
+                    name=check.check_name,
+                    check_type=f"{check.check_type}",
+                    actual=False,
+                    expected=check.package_install,
+                )
 
         except subprocess.CalledProcessError as e:
-            pass
+            print(f"Error checking if package {check.package_name} is installed: {e}")
     else:
         print(f"No configuration found for OS: {os_name}")
-
-
-def check_parameter(check, global_config):
-    if check.sub_type is not None:
-        attribute_path = config_mapping.get(check.sub_type)
-        if attribute_path:
-            # Split the attribute path and dynamically access the nested attributes
-            attrs = attribute_path.split(".")
-            value = global_config
-            for attr in attrs:
-                value = getattr(value, attr, None)
-                if value is None:
-                    break
-
-            config_files = value
-
-            found_files = find_string_in_directories(
-                config_files, check.parameter, starts_with="#"
-            )
-
-            if len(found_files) > 0:
-                set_result(
-                    check=check,
-                    name=check.check_name,
-                    check_type=f"{check.check_type.capitalize()} Found",
-                    actual=len(found_files) > 0,
-                    expected=True,
-                )
-            else:
-                set_result(
-                    check=check,
-                    name=check.check_name,
-                    check_type=f"{check.check_type.capitalize()} Found",
-                    actual=len(found_files) > 0,
-                    expected=True,
-                )
 
 
 def check_path(check):
@@ -365,42 +328,30 @@ def check_path(check):
         )
 
 
-# TODO
 def check_regex(check, global_config):
     pattern_found = False
     pattern_line = ""
 
     if check.sub_type is not None:
-        attribute_path = config_mapping.get(check.sub_type)
-        if attribute_path:
-            # Split the attribute path and dynamically access the nested attributes
-            attrs = attribute_path.split(".")
-            value = global_config
-            for attr in attrs:
-                value = getattr(value, attr, None)
-                if value is None:
-                    break
-
-            paths = value
-
-    for path in paths:
-        if os.path.isfile(path):
-            result = find_pattern_in_file(path, check.pattern)
-            pattern_found = result[0]
-            pattern_line = result[1]
-
-        elif os.path.isdir(path):
-            result = find_pattern_in_directory(path, check.pattern, check.file_extension)
-            pattern_found = result[0]
-            pattern_line = result[1]
-
-        if pattern_found:
-            break
+        paths = get_config_mapping(check, global_config)
+        for path in paths:
+            if os.path.isfile(path):
+                result = find_pattern_in_file(path, check.pattern)
+                pattern_found = result[0]
+                pattern_line = result[1]
+            elif os.path.isdir(path):
+                result = find_pattern_in_directory(
+                    path, check.pattern, check.file_extension
+                )
+                pattern_found = result[0]
+                pattern_line = result[1]
+            if pattern_found:
+                break
 
     set_result(
         check=check,
         name=check.check_name,
-        check_type=f"{check.check_type.capitalize()} Pattern",
+        check_type=f"{check.check_type}",
         actual=pattern_found,
     )
 
@@ -571,19 +522,3 @@ def set_result(check, name, check_type, actual, expected=None):
     elif check.check_type == "regex":
         result = "PASS" if actual else "FAIL"
     check.set_result({"name": name, "check": check_type, "result": result})
-
-
-config_mapping = {
-    "sshd": "config_files.sshd",
-    "sysctl": "config_files.sysctl",
-}
-
-package_mapping = {
-    "amzn": "pkgmgr.amzn",
-    # "debian": "pkgmgr.debian",
-    # "fedora": "pkgmgr.fedora",
-    # "kali": "pkgmgr.kali",
-    # "rhel": "pkgmgr.rhel",
-    # "rocky": "pkgmgr.rocky",
-    "ubuntu": "pkgmgr.ubuntu",
-}

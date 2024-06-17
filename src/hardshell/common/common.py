@@ -168,6 +168,30 @@ def find_string_in_file(file_path, string, starts_with=""):
     return False
 
 
+def get_config_mapping(check, global_config):
+    attribute_path = config_mapping.get(check.sub_type)
+    if attribute_path:
+        attrs = attribute_path.split(".")
+        value = global_config
+        for attr in attrs:
+            value = getattr(value, attr, None)
+            if value is None:
+                break
+        return value
+
+
+def get_pkgmgr_mapping(global_config, os_name):
+    attribute_path = pkgmgr_mapping.get(os_name)
+    if attribute_path:
+        attrs = attribute_path.split(".")
+        value = global_config
+        for attr in attrs:
+            value = getattr(value, attr, None)
+            if value is None:
+                break
+        return value
+
+
 def path_exists(path):
     return os.path.exists(path)
 
@@ -210,3 +234,20 @@ def strip_non_alphabetical(s):
     """Remove all non-alphabetical characters from the string."""
     # Replace non-alphabetical characters with an empty string
     return re.sub(r"[^a-zA-Z]", "", s)
+
+
+config_mapping = {
+    "sshd": "config_files.sshd",
+    "sudo": "config_files.sudo",
+    "sysctl": "config_files.sysctl",
+}
+
+pkgmgr_mapping = {
+    "amzn": "pkgmgr.amzn",
+    # "debian": "pkgmgr.debian",
+    # "fedora": "pkgmgr.fedora",
+    # "kali": "pkgmgr.kali",
+    # "rhel": "pkgmgr.rhel",
+    # "rocky": "pkgmgr.rocky",
+    "ubuntu": "pkgmgr.ubuntu",
+}

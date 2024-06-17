@@ -23,6 +23,7 @@ def create_checks(config):
                 module_denied=config[system_check][check].get("module_denied"),
                 module_loadable=config[system_check][check].get("module_loadable"),
                 module_loaded=config[system_check][check].get("module_loaded"),
+                mount_boot=config[system_check][check].get("mount_boot"),
                 mount_exists=config[system_check][check].get("mount_exists"),
                 nodev=config[system_check][check].get("nodev"),
                 noexec=config[system_check][check].get("noexec"),

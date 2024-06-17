@@ -4,7 +4,6 @@ from src.hardshell.linux import (
     check_module,
     check_mount,
     check_package,
-    check_parameter,
     check_path,
     check_regex,
     check_service,
@@ -30,6 +29,7 @@ class SystemCheck:
     module_denied: Optional[bool] = None
     module_loadable: Optional[bool] = None
     module_loaded: Optional[bool] = None
+    mount_boot: Optional[bool] = None
     mount_exists: Optional[bool] = None
     nodev: Optional[bool] = None
     noexec: Optional[bool] = None
@@ -56,39 +56,35 @@ class SystemCheck:
                 if self.check_type == "kernel-module":
                     # FINISHED
                     # print(self.check_name)
-                    # check_module(self)
-                    pass
-                elif self.check_type == "kernel-parameter":
-                    # FINISHED
-                    # print(self.check_name)
-                    # check_parameter(self, global_config)
+                    check_module(self)
                     pass
                 elif self.check_type == "mount":
                     # FINISHED
                     # print(self.check_name)
-                    # check_mount(self)
+                    check_mount(self)
                     pass
                 elif self.check_type == "package":
+                    # FINISHED
                     # print(self.check_name)
-                    # check_package(self, current_os, global_config)
+                    check_package(self, current_os, global_config)
                     pass
                 elif self.check_type == "path":
                     # FINISHED
                     # print(self.check_name)
-                    # check_path(self)
+                    check_path(self)
                     pass
                 elif self.check_type == "regex":
+                    # FINISHED
                     # print(self.check_name)
-                    # check_regex(self, global_config)
+                    check_regex(self, global_config)
                     pass
                 elif self.check_type == "service":
                     # FINISHED
                     # print(self.check_name)
-                    # check_service(self)
+                    check_service(self)
                     pass
                 elif self.check_type == "ssh-keys":
                     # print(self.check_name)
-                    # check_service(self)
                     check_ssh_keys(self)
                     pass
             else:
