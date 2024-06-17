@@ -56,13 +56,13 @@ class SystemCheck:
                 # print(f"Check Type: {self.check_type}")
                 if self.check_type == "kernel-module":
                     # FINISHED
-                    print(self.check_name)
-                    check_module(self)
+                    # print(self.check_name)
+                    # check_module(self)
                     pass
                 elif self.check_type == "mount":
                     # FINISHED
-                    print(self.check_name)
-                    check_mount(self)
+                    # print(self.check_name)
+                    # check_mount(self)
                     pass
                 elif self.check_type == "package":
                     # FINISHED
@@ -71,22 +71,22 @@ class SystemCheck:
                     pass
                 elif self.check_type == "path":
                     # FINISHED
-                    print(self.check_name)
-                    check_path(self)
+                    # print(self.check_name)
+                    # check_path(self)
                     pass
                 elif self.check_type == "regex":
                     # FINISHED
-                    print(self.check_name)
-                    check_regex(self, global_config)
+                    # print(self.check_name)
+                    # check_regex(self, global_config)
                     pass
                 elif self.check_type == "service":
                     # FINISHED
-                    print(self.check_name)
-                    check_service(self)
+                    # print(self.check_name)
+                    # check_service(self)
                     pass
                 elif self.check_type == "ssh-keys":
-                    print(self.check_name)
-                    check_ssh_keys(self)
+                    # print(self.check_name)
+                    # check_ssh_keys(self)
                     pass
             else:
                 print("Check Not Supported")
