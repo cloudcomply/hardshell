@@ -113,13 +113,13 @@ service_active = true
 service_masked = false
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
-# [chrony.0003a]
-# check_name = "chrony configured"
-# check_type = "regex"
-# category = "chrony"
-# file_extension = ".conf"
-# pattern = "^\\h*(server|pool)\\h+[^#\\n\\r]+"
-# valid_os = ["amzn-2023", "ubuntu-22.04"]
+[chrony.0003a]
+check_name = "chrony configured"
+check_type = "regex"
+category = "chrony"
+file_extension = ".conf"
+pattern = "^\\s*(server|pool)\\s+[^#\\n\\r]+"
+valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [cron]
 [cron.0001a]
