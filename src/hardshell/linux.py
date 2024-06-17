@@ -235,7 +235,7 @@ def check_mount_point_mounted(path):
 
 def check_package(check, current_os, global_config):
     """Check if a package is installed based on the OS."""
-    os_name = current_os.get("name", None).lower()
+    os_name = current_os.get("id", None).lower()
 
     print(os_name)
 
