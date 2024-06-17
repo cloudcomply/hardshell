@@ -237,8 +237,14 @@ def check_package(check, current_os, global_config):
     """Check if a package is installed based on the OS."""
     os_name = current_os.get("name", None).lower()
 
+    print(os_name)
+
     if os_name is not None:
+        print(os_name)
+
         pkgmgr = get_pkgmgr_mapping(global_config, os_name)
+
+        print(pkgmgr)
 
         cmd = pkgmgr.split()
         cmd.append(check.package_name)
