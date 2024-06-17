@@ -77,7 +77,7 @@ def check_accounts(check):
     set_result(check, "group names", "duplicate", not duplicates["group_names"])
     set_result(check, "group gids", "duplicate", not duplicates["group_gids"])
     set_result(check, "root uid unique", "root uid unique", root_uid_count == 1)
-    set_result(check, "root gid unique", "root gid unique", root_gid_count == 1)
+    # set_result(check, "root gid unique", "root gid unique", root_gid_count == 1)
     set_result(check, "all group names exist", "group existence", not missing_groups)
 
 
