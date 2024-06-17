@@ -66,8 +66,8 @@ class SystemCheck:
                     pass
                 elif self.check_type == "package":
                     # FINISHED
-                    # print(self.check_name)
-                    # check_package(self, current_os, global_config)
+                    print(self.check_name)
+                    check_package(self, current_os, global_config)
                     pass
                 elif self.check_type == "path":
                     # FINISHED
@@ -76,8 +76,8 @@ class SystemCheck:
                     pass
                 elif self.check_type == "regex":
                     # FINISHED
-                    # print(self.check_name)
-                    # check_regex(self, global_config)
+                    print(self.check_name)
+                    check_regex(self, global_config)
                     pass
                 elif self.check_type == "service":
                     # FINISHED
