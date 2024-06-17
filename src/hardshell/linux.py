@@ -347,12 +347,20 @@ def check_regex(check, global_config):
             if pattern_found:
                 break
 
-    set_result(
-        check=check,
-        name=check.check_name,
-        check_type=f"{check.check_type}",
-        actual=pattern_found,
-    )
+    if check.pattern_exists == False:
+        set_result(
+            check=check,
+            name=check.check_name,
+            check_type=f"{check.check_type}",
+            actual=check.pattern_exists == False and pattern_found == False,
+        )
+    else:
+        set_result(
+            check=check,
+            name=check.check_name,
+            check_type=f"{check.check_type}",
+            actual=pattern_found,
+        )
 
 
 def check_service(check):

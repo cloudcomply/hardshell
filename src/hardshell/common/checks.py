@@ -34,6 +34,7 @@ def create_checks(config):
                 path=config[system_check][check].get("path"),
                 path_exists=config[system_check][check].get("path_exists"),
                 pattern=config[system_check][check].get("pattern"),
+                pattern_exists=config[system_check][check].get("pattern_exists"),
                 separate_partition=config[system_check][check].get("separate_partition"),
                 service_name=config[system_check][check].get("service_name"),
                 service_active=config[system_check][check].get("service_active"),

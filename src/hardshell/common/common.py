@@ -211,6 +211,9 @@ def strip_non_alphabetical(s):
 
 
 config_mapping = {
+    "chrony": "config_files.chrony",
+    "coredump": "config_files.coredump",
+    "crypto-policies": "config_files.crypto_policies",
     "selinux": "config_files.selinux",
     "sshd": "config_files.sshd",
     "sudo": "config_files.sudo",

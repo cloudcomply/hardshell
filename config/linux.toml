@@ -62,7 +62,7 @@ valid_os = ["amzn-2023", "ubuntu-22.04"]
 check_name = "authselect package"
 check_type = "package"
 package_name = "authselect"
-package_install = true
+package_install = false
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [banners]
@@ -102,6 +102,23 @@ check_name = "chrony package"
 check_type = "package"
 package_name = "chrony"
 package_install = true
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[chrony.0002a]
+check_name = "chrony service"
+check_type = "service"
+service_name = "chronyd.service"
+service_enabled = true
+service_active = true
+service_masked = false
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[chrony.0003a]
+check_name = "chrony configured"
+check_type = "regex"
+category = "chrony"
+file_extension = ".conf"
+pattern = "^\\h*(server|pool)\\h+[^#\n\r]+"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [cron]
@@ -196,6 +213,15 @@ service_name = "crond"
 service_enabled = true
 service_active = true
 service_masked = false
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[crypto_policies]
+[crypto_policies.0001a]
+check_name = "crypto-policies not legacy"
+check_type = "regex"
+pattern = "^\\s*LEGACY\\s*(#.*)?$"
+category = "crypto-policies"
+pattern_exists = false
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [firewalld]
@@ -822,11 +848,133 @@ package_name = "xorg-x11-server-common"
 package_install = false
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
-# [pam]
-# [pam.0001a]
-# check_name = ""
-# check_type = ""
-# valid_os = ["amzn-2023", "ubuntu-22.04"]
+[pam]
+[pam.0001a]
+check_name = "password quality password-auth"
+check_type = "regex"
+path = "/etc/pam.d/password-auth"
+pattern = "^password\\s+requisite\\s+pam_pwquality\\.so\\b.*$"
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[pam.0002a]
+check_name = "password quality system-auth"
+check_type = "regex"
+path = "/etc/pam.d/system-auth"
+pattern = "^password\\s+requisite\\s+pam_pwquality\\.so\\b.*$"
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[pam.0003a]
+check_name = "password hashing password-auth"
+check_type = "regex"
+path = "/etc/pam.d/password-auth"
+pattern = ""
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[pam.0004a]
+check_name = "password hashing system-auth"
+check_type = "regex"
+path = "/etc/pam.d/system-auth"
+pattern = ""
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[pam.0005a]
+check_name = "password history password-auth 1"
+check_type = "regex"
+path = "/etc/pam.d/password-auth"
+pattern = "^password\\s+requisite\\s+pam_pwhistory\\.so\\b.*\\bremember=5\\b.*$"
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[pam.0006a]
+check_name = "password history system-auth 1"
+check_type = "regex"
+path = "/etc/pam.d/system-auth"
+pattern = "^password\\s+requisite\\s+pam_pwhistory\\.so\\b.*\\bremember=5\\b.*$"
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[pam.0007a]
+check_name = "password history password-auth 2"
+check_type = "regex"
+path = "/etc/pam.d/password-auth"
+pattern = "^password\\s+required\\s+pam_unix\\.so\\b.*\\bremember=5\\b.*$"
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[pam.0008a]
+check_name = "password history system-auth 2"
+check_type = "regex"
+path = "/etc/pam.d/system-auth"
+pattern = "^password\\s+required\\s+pam_unix\\.so\\b.*\\bremember=5\\b.*$"
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[pam.0009a]
+check_name = "password class 1"
+check_type = "regex"
+path = "/etc/security/pwquality.conf"
+pattern = "^minclass\\s*=\\s*4$"
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[pam.0010a]
+check_name = "password class 2"
+check_type = "regex"
+path = "/etc/security/pwquality.conf"
+pattern = "^[duol]credit\\s*=\\s*-1$"
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[pam.0011a]
+check_name = "password length"
+check_type = "regex"
+path = "/etc/security/pwquality.conf"
+pattern = "^minlen\\s*=\\s*14$"
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[pam.0012a]
+check_name = "password lockout tries"
+check_type = "regex"
+path = "/etc/security/faillock.conf"
+pattern = "^deny\\s*=\\s*(0|[6-9]|[1-9][0-9]*)$"
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[pam.0013a]
+check_name = "password unlock time"
+check_type = "regex"
+path = "/etc/security/faillock.conf"
+pattern = "^unlock_time\\s*=\\s*(0|[9-9][0-9]{2,}|[1-9][0-9]{3,})$"
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[pam.0014a]
+check_name = "password hashing libuser.conf"
+check_type = "regex"
+path = "/etc/libuser.conf"
+pattern = "^crypt_style\\s*=\\s*(sha512|yescrypt)$"
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[pam.0015a]
+check_name = "password hashing login.defs"
+check_type = "regex"
+path = "/etc/login.defs"
+pattern = "^ENCRYPT_METHOD\\s+(SHA512|YESCRYPT)$"
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[pam.0016a]
+check_name = "password max age login.defs"
+check_type = "regex"
+path = "/etc/login.defs"
+pattern = "^PASS_MAX_DAYS\\s+365$"
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[pam.0017a]
+check_name = "password min age login.defs"
+check_type = "regex"
+path = "/etc/login.defs"
+pattern = "^PASS_MIN_DAYS\\s+1$"
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[pam.0018a]
+check_name = "password age warning login.defs"
+check_type = "regex"
+path = "/etc/login.defs"
+pattern = "^PASS_WARN_AGE\\s+7$"
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
 
 [path]
 [path.0011a]
@@ -967,6 +1115,15 @@ category = "sshd"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [sshd.0006a]
+check_name = "SSH Crypto Policy"
+check_type = "regex"
+file_extension = ".conf"
+pattern = "^\\sCRYPTO_POLICY="
+pattern_exists = false
+category = "sshd"
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[sshd.0007a]
 check_name = "SSH HostbasedAuthentication"
 check_type = "regex"
 file_extension = ".conf"
@@ -974,7 +1131,7 @@ pattern = "^\\s*HostbasedAuthentication\\s+no"
 category = "sshd"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
-[sshd.0007a]
+[sshd.0008a]
 check_name = "SSH IgnoreRhosts"
 check_type = "regex"
 file_extension = ".conf"
@@ -982,7 +1139,7 @@ pattern = "^\\s*IgnoreRhosts\\s+yes"
 category = "sshd"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
-[sshd.0008a]
+[sshd.0009a]
 check_name = "SSH LoginGraceTime"
 check_type = "regex"
 file_extension = ".conf"
@@ -990,7 +1147,7 @@ pattern = "^\\s*LoginGraceTime\\s+(1[6-9]|[2-5][0-9]|60)$"
 category = "sshd"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
-[sshd.0009a]
+[sshd.0010a]
 check_name = "SSH LogLevel"
 check_type = "regex"
 file_extension = ".conf"
@@ -998,7 +1155,7 @@ pattern = "^\\s*LogLevel\\s+(VERBOSE|INFO)"
 category = "sshd"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
-[sshd.0010a]
+[sshd.0011a]
 check_name = "SSH MaxAuthTries"
 check_type = "regex"
 file_extension = ".conf"
@@ -1006,7 +1163,7 @@ pattern = "^\\s*MaxAuthTries\\s+[2-4]$"
 category = "sshd"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
-[sshd.0011a]
+[sshd.0012a]
 check_name = "SSH MaxSessions"
 check_type = "regex"
 file_extension = ".conf"
@@ -1014,7 +1171,7 @@ pattern = "^\\s*MaxSessions\\s+([1-9]|10)$"
 category = "sshd"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
-[sshd.0012a]
+[sshd.0013a]
 check_name = "SSH MaxStartups"
 check_type = "regex"
 file_extension = ".conf"
@@ -1022,7 +1179,7 @@ pattern = "^\\s*MaxStartups\\s+10:([0-2]?[0-9]|30):([0-5]?[0-9]|60)$"
 category = "sshd"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
-[sshd.0013a]
+[sshd.0014a]
 check_name = "SSH PermitEmptyPasswords"
 check_type = "regex"
 file_extension = ".conf"
@@ -1030,7 +1187,7 @@ pattern = "^\\s*PermitEmptyPasswords\\s+no"
 category = "sshd"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
-[sshd.0014a]
+[sshd.0015a]
 check_name = "SSH PermitRootLogin"
 check_type = "regex"
 file_extension = ".conf"
@@ -1038,7 +1195,7 @@ pattern = "^\\s*PermitRootLogin\\s+no"
 category = "sshd"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
-[sshd.0015a]
+[sshd.0016a]
 check_name = "SSH PermitUserEnvironment"
 check_type = "regex"
 file_extension = ".conf"
@@ -1046,7 +1203,7 @@ pattern = "^\\s*PermitUserEnvironment\\s+no"
 category = "sshd"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
-[sshd.0016a]
+[sshd.0017a]
 check_name = "SSH UsePAM"
 check_type = "regex"
 file_extension = ".conf"
@@ -1054,7 +1211,7 @@ pattern = "^\\s*UsePAM\\s+yes"
 category = "sshd"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
-[sshd.0017a]
+[sshd.0018a]
 check_name = "SSH X11Forwarding"
 check_type = "regex"
 file_extension = ".conf"
@@ -1062,7 +1219,7 @@ pattern = "^\\s*X11Forwarding\\s+no"
 category = "sshd"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
-[sshd.0018a]
+[sshd.0019a]
 check_name = "SSH Private Keys"
 check_type = "ssh-keys"
 expected_uid = 0
@@ -1072,7 +1229,7 @@ path = "/etc/ssh"
 category = "private"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
-[sshd.0019a]
+[sshd.0020a]
 check_name = "SSH Public Keys"
 check_type = "ssh-keys"
 expected_uid = 0
@@ -1082,7 +1239,7 @@ path = "/etc/ssh"
 category = "public"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
-[sshd.0020a]
+[sshd.0021a]
 check_name = "/etc/ssh/sshd_config"
 check_type = "path"
 path = "/etc/ssh/sshd_config"
@@ -1222,4 +1379,19 @@ pattern = "^Defaults\\s+use_pty\\s*$"
 category = "sudo"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
-[system]
+[systemd]
+[systemd.0001a]
+check_name = "coredump backtraces"
+check_type = "regex"
+file_extension = ".conf"
+pattern = "^ProcessSizeMax\\s*=\\s*0\\s*$"
+category = "coredump"
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[systemd.0002a]
+check_name = "coredump storage"
+check_type = "regex"
+file_extension = ".conf"
+pattern = "^Storage\\s*=\\s*none\\s*$"
+category = "coredump"
+valid_os = ["amzn-2023", "ubuntu-22.04"]

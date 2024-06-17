@@ -40,6 +40,7 @@ class SystemCheck:
     path: Optional[str] = None
     path_exists: Optional[bool] = None
     pattern: Optional[str] = None
+    pattern_exists: Optional[bool] = True
     separate_partition: Optional[bool] = None
     service_name: Optional[str] = None
     service_active: Optional[bool] = None

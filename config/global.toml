@@ -1,6 +1,19 @@
 [config_files]
+chrony = ["/etc/chrony.conf", "/etc/chrony.d", "/run/chrony.d"]
+coredump = [
+    "/etc/systemd/coredump.conf",
+    "/etc/systemd/coredump.conf.d",
+    "/run/systemd/coredump.conf.d",
+    "/usr/lib/systemd/coredump.conf.d",
+]
+crypto_policies = [
+    "/etc/crypto-policies/config",
+    "/etc/crypto-policies/local.d",
+    "/usr/share/crypto-policies/policies",
+    "/etc/crypto-policies/policies",
+]
 selinux = ["/etc/selinux/config"]
-sshd = ["/etc/ssh/sshd_config", "/etc/ssh/sshd_config.d"]
+sshd = ["/etc/ssh/test", "/etc/ssh/sshd_config", "/etc/ssh/sshd_config.d"]
 sudo = ["/etc/sudoers", "/etc/sudoers.d"]
 sysctl = [
     "/run/sysctl.d/",
