@@ -118,7 +118,7 @@ check_name = "chrony configured"
 check_type = "regex"
 category = "chrony"
 file_extension = ".conf"
-pattern = "^\\h*(server|pool)\\h+[^#\n\r]+"
+pattern = "^\\h*(server|pool)\\h+[^#\\n\\r]+"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [cron]
