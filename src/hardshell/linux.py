@@ -32,8 +32,8 @@ def check_accounts(check):
                 set_result(check, "root gid", "root gid", user_gid == "0")
             if user_uid == "0":
                 root_uid_count += 1
-            if user_gid == "0":
-                root_gid_count += 1
+            # if user_gid == "0":
+            #     root_gid_count += 1
             if user_pass not in {"x", "*"}:
                 cleartext_password["user_names"].append(user_name)
             check_duplicates(user_name, user_names, duplicates["user_names"])
