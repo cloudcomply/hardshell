@@ -1,4 +1,5 @@
 [config_files]
+selinux = ["/etc/selinux/config"]
 sshd = ["/etc/ssh/sshd_config", "/etc/ssh/sshd_config.d"]
 sudo = ["/etc/sudoers", "/etc/sudoers.d"]
 sysctl = [

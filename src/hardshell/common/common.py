@@ -142,34 +142,8 @@ def find_pattern_in_file(path, pattern):
     return pattern_found, pattern_line
 
 
-def find_string_in_directories(directories, string, starts_with=""):
-    """Find the string in the given directories."""
-    found_files = []
-    for directory in directories:
-        # Use glob to find all .conf files in the directory
-        for file_path in glob.glob(directory):
-            if os.path.isfile(file_path):
-                if find_string_in_file(file_path, string, starts_with):
-                    found_files.append(file_path)
-    return found_files
-
-
-def find_string_in_file(file_path, string, starts_with=""):
-    """Search for the parameter in the given file."""
-    try:
-        with open(file_path, "r") as file:
-            for line in file:
-                stripped_line = line.strip()
-                if stripped_line and not stripped_line.startswith(starts_with):
-                    if stripped_line == string:
-                        return True
-    except IOError:
-        print(f"Could not read file: {file_path}")
-    return False
-
-
 def get_config_mapping(check, global_config):
-    attribute_path = config_mapping.get(check.sub_type)
+    attribute_path = config_mapping.get(check.category)
     if attribute_path:
         attrs = attribute_path.split(".")
         value = global_config
@@ -237,6 +211,7 @@ def strip_non_alphabetical(s):
 
 
 config_mapping = {
+    "selinux": "config_files.selinux",
     "sshd": "config_files.sshd",
     "sudo": "config_files.sudo",
     "sysctl": "config_files.sysctl",
@@ -251,3 +226,6 @@ pkgmgr_mapping = {
     # "rocky": "pkgmgr.rocky",
     "ubuntu": "pkgmgr.ubuntu",
 }
+
+
+# Old Code

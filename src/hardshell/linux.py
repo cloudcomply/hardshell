@@ -4,7 +4,6 @@ import subprocess
 from src.hardshell.common.common import (
     find_pattern_in_directory,
     find_pattern_in_file,
-    # find_string_in_directories,
     get_config_mapping,
     get_pkgmgr_mapping,
 )
@@ -332,7 +331,7 @@ def check_regex(check, global_config):
     pattern_found = False
     pattern_line = ""
 
-    if check.sub_type is not None:
+    if check.category is not None:
         paths = get_config_mapping(check, global_config)
         for path in paths:
             if os.path.isfile(path):
@@ -395,7 +394,7 @@ def check_service(check):
 def check_ssh_keys(check):
     paths = glob.glob(os.path.join(check.path, "*"))
     files = [
-        f for f in paths if os.path.isfile(f) and detect_openssh_key(f) == check.sub_type
+        f for f in paths if os.path.isfile(f) and detect_openssh_key(f) == check.category
     ]
 
     for file in files:

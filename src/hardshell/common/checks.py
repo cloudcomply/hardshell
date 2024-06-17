@@ -6,10 +6,11 @@ def create_checks(config):
     for system_check in config:
         for check in config[system_check]:
             new_check = SystemCheck(
+                category=config[system_check][check].get("category"),
                 check_id=check,
                 check_name=config[system_check][check].get("check_name"),
-                check_type=config[system_check][check]["check_type"],
-                valid_os=config[system_check][check].get("valid_os"),
+                check_type=config[system_check][check].get("check_type"),
+                depends_on=config[system_check][check].get("depends_on"),
                 expected_gid=config[system_check][check].get("expected_gid"),
                 expected_output=config[system_check][check].get("expected_output"),
                 expected_permissions=config[system_check][check].get(
@@ -17,7 +18,6 @@ def create_checks(config):
                 ),
                 expected_uid=config[system_check][check].get("expected_uid"),
                 file_extension=config[system_check][check].get("file_extension"),
-                instance_type=config[system_check][check].get("instance_type"),
                 module_name=config[system_check][check].get("module_name"),
                 module_blacklisted=config[system_check][check].get("module_blacklisted"),
                 module_denied=config[system_check][check].get("module_denied"),
@@ -39,7 +39,7 @@ def create_checks(config):
                 service_active=config[system_check][check].get("service_active"),
                 service_enabled=config[system_check][check].get("service_enabled"),
                 service_masked=config[system_check][check].get("service_masked"),
-                sub_type=config[system_check][check].get("sub_type"),
+                valid_os=config[system_check][check].get("valid_os"),
             )
             checks.append(new_check)
     return checks

@@ -14,6 +14,32 @@ package_name = "at"
 package_install = true
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
+[at.0002a]
+check_name = "/etc/at.allow"
+check_type = "path"
+path = "/etc/at.allow"
+path_exists = true
+expected_uid = 0
+expected_gid = 0
+expected_permissions = 600
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[at.0003a]
+check_name = "/etc/at.deny"
+check_type = "path"
+path = "/etc/at.deny"
+path_exists = false
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[at.0004a]
+check_name = "atd.service"
+check_type = "service"
+service_name = "atd.service"
+service_enabled = true
+service_active = true
+service_masked = false
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
 [audit]
 [audit.0001a]
 check_name = "audit package"
@@ -22,12 +48,52 @@ package_name = "audit"
 package_install = true
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
+[audit.0002a]
+check_name = "auditd"
+check_type = "service"
+service_name = "auditd"
+service_enabled = true
+service_active = true
+service_masked = false
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
 [authselect]
 [authselect.0001a]
 check_name = "authselect package"
 check_type = "package"
 package_name = "authselect"
 package_install = true
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[banners]
+[banners.0001a]
+check_name = "/etc/issue"
+check_type = "path"
+path = "/etc/issue"
+path_exists = true
+expected_uid = 0
+expected_gid = 0
+expected_permissions = 644
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[banners.0002a]
+check_name = "/etc/issue.net"
+check_type = "path"
+path = "/etc/issue.net"
+path_exists = true
+expected_uid = 0
+expected_gid = 0
+expected_permissions = 644
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[banners.0003a]
+check_name = "/etc/motd"
+check_type = "path"
+path = "/etc/motd"
+path_exists = true
+expected_uid = 0
+expected_gid = 0
+expected_permissions = 644
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [chrony]
@@ -46,19 +112,133 @@ package_name = "cronie"
 package_install = true
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
-[firewall]
-[firewall.0001a]
+[cron.0003a]
+check_name = "/etc/cron.allow"
+check_type = "path"
+path = "/etc/cron.allow"
+path_exists = true
+expected_uid = 0
+expected_gid = 0
+expected_permissions = 600
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[cron.0004a]
+check_name = "/etc/cron.deny"
+check_type = "path"
+path = "/etc/cron.deny"
+path_exists = false
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[cron.0005a]
+check_name = "/etc/cron.d"
+check_type = "path"
+path = "/etc/cron.d"
+path_exists = true
+expected_uid = 0
+expected_gid = 0
+expected_permissions = 700
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[cron.0006a]
+check_name = "/etc/cron.daily"
+check_type = "path"
+path = "/etc/cron.daily"
+path_exists = true
+expected_uid = 0
+expected_gid = 0
+expected_permissions = 700
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[cron.0007a]
+check_name = "/etc/cron.hourly"
+check_type = "path"
+path = "/etc/cron.hourly"
+path_exists = true
+expected_uid = 0
+expected_gid = 0
+expected_permissions = 700
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[cron.0008a]
+check_name = "/etc/cron.monthly"
+check_type = "path"
+path = "/etc/cron.monthly"
+path_exists = true
+expected_uid = 0
+expected_gid = 0
+expected_permissions = 700
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[cron.0009a]
+check_name = "/etc/cron.weekly"
+check_type = "path"
+path = "/etc/cron.weekly"
+path_exists = true
+expected_uid = 0
+expected_gid = 0
+expected_permissions = 700
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[cron.0010a]
+check_name = "/etc/crontab"
+check_type = "path"
+path = "/etc/crontab"
+path_exists = true
+expected_uid = 0
+expected_gid = 0
+expected_permissions = 600
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[cron.0011a]
+check_name = "crond"
+check_type = "service"
+service_name = "crond"
+service_enabled = true
+service_active = true
+service_masked = false
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[firewalld]
+[firewalld.0001a]
 check_name = "firewalld package"
 check_type = "package"
 package_name = "firewalld"
 package_install = true
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
-[firewall.0002a]
-check_name = "nftables package"
+[journald]
+[journald.0002a]
+check_name = "systemd-journal-remote package"
 check_type = "package"
-package_name = "nftables"
+package_name = "systemd-journal-remote"
 package_install = true
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[journald.0012a]
+check_name = "systemd-journald.service"
+check_type = "service"
+service_name = "systemd-journald.service"
+service_enabled = true
+service_active = true
+service_masked = false
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[journald.0013a]
+check_name = "systemd-journal-remote.socket"
+check_type = "service"
+service_name = "systemd-journal-remote.socket"
+service_enabled = false
+service_active = false
+service_masked = false
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[journald.0014a]
+check_name = "systemd-journal-upload.service"
+check_type = "service"
+service_name = "systemd-journal-upload.service"
+service_enabled = false
+service_active = false
+service_masked = false
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [kernel_module]
@@ -190,7 +370,7 @@ check_type = "regex"
 file_extension = ".conf"
 parameter = "kernel.randomize_va_space = 2"
 pattern = "^kernel\\.randomize_va_space\\s*=\\s*2\\s*$"
-sub_type = "sysctl"
+category = "sysctl"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [kernel_parameters.0002a]
@@ -199,7 +379,7 @@ check_type = "regex"
 file_extension = ".conf"
 parameter = "kernel.yama.ptrace_scope = 1"
 pattern = "^kernel\\.yama\\.ptrace_scope\\s*=\\s*1\\s*$"
-sub_type = "sysctl"
+category = "sysctl"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [kernel_parameters.0003a]
@@ -208,7 +388,7 @@ check_type = "regex"
 file_extension = ".conf"
 parameter = "net.ipv4.conf.all.accept_redirects = 0"
 pattern = "^net\\.ipv4\\.conf\\.all\\.accept_redirects\\s*=\\s*0\\s*$"
-sub_type = "sysctl"
+category = "sysctl"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [kernel_parameters.0004a]
@@ -217,7 +397,7 @@ check_type = "regex"
 file_extension = ".conf"
 parameter = "net.ipv4.conf.all.accept_source_route = 0"
 pattern = "^net\\.ipv4\\.conf\\.all\\.accept_source_route\\s*=\\s*0\\s*$"
-sub_type = "sysctl"
+category = "sysctl"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [kernel_parameters.0005a]
@@ -226,7 +406,7 @@ check_type = "regex"
 file_extension = ".conf"
 parameter = "net.ipv4.conf.all.log_martians = 1"
 pattern = "^net\\.ipv4\\.conf\\.all\\.log_martians\\s*=\\s*1\\s*$"
-sub_type = "sysctl"
+category = "sysctl"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [kernel_parameters.0006a]
@@ -235,7 +415,7 @@ check_type = "regex"
 file_extension = ".conf"
 parameter = "net.ipv4.conf.all.rp_filter = 1"
 pattern = "^net\\.ipv4\\.conf\\.all\\.rp_filter\\s*=\\s*1\\s*$"
-sub_type = "sysctl"
+category = "sysctl"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [kernel_parameters.0007a]
@@ -244,7 +424,7 @@ check_type = "regex"
 file_extension = ".conf"
 parameter = "net.ipv4.conf.all.secure_redirects = 0"
 pattern = "^net\\.ipv4\\.conf\\.all\\.secure_redirects\\s*=\\s*0\\s*$"
-sub_type = "sysctl"
+category = "sysctl"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [kernel_parameters.0008a]
@@ -253,7 +433,7 @@ check_type = "regex"
 file_extension = ".conf"
 parameter = "net.ipv4.conf.all.send_redirects = 0"
 pattern = "^net\\.ipv4\\.conf\\.all\\.send_redirects\\s*=\\s*0\\s*$"
-sub_type = "sysctl"
+category = "sysctl"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [kernel_parameters.0009a]
@@ -262,7 +442,7 @@ check_type = "regex"
 file_extension = ".conf"
 parameter = "net.ipv4.conf.default.accept_redirects = 0"
 pattern = "^net\\.ipv4\\.conf\\.default\\.accept_redirects\\s*=\\s*0\\s*$"
-sub_type = "sysctl"
+category = "sysctl"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [kernel_parameters.0010a]
@@ -271,7 +451,7 @@ check_type = "regex"
 file_extension = ".conf"
 parameter = "net.ipv4.conf.default.accept_source_route = 0"
 pattern = "^net\\.ipv4\\.conf\\.default\\.accept_source_route\\s*=\\s*0\\s*$"
-sub_type = "sysctl"
+category = "sysctl"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [kernel_parameters.0011a]
@@ -280,7 +460,7 @@ check_type = "regex"
 file_extension = ".conf"
 parameter = "net.ipv4.conf.default.log_martians = 1"
 pattern = "^net\\.ipv4\\.conf\\.default\\.log_martians\\s*=\\s*1\\s*$"
-sub_type = "sysctl"
+category = "sysctl"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [kernel_parameters.0012a]
@@ -289,7 +469,7 @@ check_type = "regex"
 file_extension = ".conf"
 parameter = "net.ipv4.conf.default.rp_filter = 1"
 pattern = "^net\\.ipv4\\.conf\\.default\\.rp_filter\\s*=\\s*1\\s*$"
-sub_type = "sysctl"
+category = "sysctl"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [kernel_parameters.0013a]
@@ -306,7 +486,7 @@ check_type = "regex"
 file_extension = ".conf"
 parameter = "net.ipv4.conf.default.send_redirects = 0"
 pattern = "^net\\.ipv4\\.conf\\.default\\.send_redirects\\s*=\\s*0\\s*$"
-sub_type = "sysctl"
+category = "sysctl"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [kernel_parameters.0015a]
@@ -315,7 +495,7 @@ check_type = "regex"
 file_extension = ".conf"
 parameter = "net.ipv4.icmp_echo_ignore_broadcasts = 1"
 pattern = "^net\\.ipv4\\.icmp_echo_ignore_broadcasts\\s*=\\s*1\\s*$"
-sub_type = "sysctl"
+category = "sysctl"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [kernel_parameters.0016a]
@@ -324,7 +504,7 @@ check_type = "regex"
 file_extension = ".conf"
 parameter = "net.ipv4.icmp_ignore_bogus_error_responses = 1"
 pattern = "^net\\.ipv4\\.icmp_ignore_bogus_error_responses\\s*=\\s*1\\s*$"
-sub_type = "sysctl"
+category = "sysctl"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [kernel_parameters.0017a]
@@ -333,7 +513,7 @@ check_type = "regex"
 file_extension = ".conf"
 parameter = "net.ipv4.ip_forward = 0"
 pattern = "^net\\.ipv4\\.ip_forward\\s*=\\s*0\\s*$"
-sub_type = "sysctl"
+category = "sysctl"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [kernel_parameters.0018a]
@@ -342,7 +522,7 @@ check_type = "regex"
 file_extension = ".conf"
 parameter = "net.ipv4.tcp_syncookies = 1"
 pattern = "^net\\.ipv4\\.tcp_syncookies\\s*=\\s*1\\s*$"
-sub_type = "sysctl"
+category = "sysctl"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [kernel_parameters.0019a]
@@ -351,7 +531,7 @@ check_type = "regex"
 file_extension = ".conf"
 parameter = "net.ipv6.conf.all.accept_ra = 0"
 pattern = "^net\\.ipv6\\.conf\\.all\\.accept_ra\\s*=\\s*0\\s*$"
-sub_type = "sysctl"
+category = "sysctl"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [kernel_parameters.0020a]
@@ -360,7 +540,7 @@ check_type = "regex"
 file_extension = ".conf"
 parameter = "net.ipv6.conf.all.accept_redirects = 0"
 pattern = "^net\\.ipv6\\.conf\\.all\\.accept_redirects\\s*=\\s*0\\s*$"
-sub_type = "sysctl"
+category = "sysctl"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [kernel_parameters.0021a]
@@ -369,7 +549,7 @@ check_type = "regex"
 file_extension = ".conf"
 parameter = "net.ipv6.conf.all.accept_source_route = 0"
 pattern = "^net\\.ipv6\\.conf\\.all\\.accept_source_route\\s*=\\s*0\\s*$"
-sub_type = "sysctl"
+category = "sysctl"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [kernel_parameters.0022a]
@@ -378,7 +558,7 @@ check_type = "regex"
 file_extension = ".conf"
 parameter = "net.ipv6.conf.all.forwarding = 0"
 pattern = "^net\\.ipv6\\.conf\\.all\\.forwarding\\s*=\\s*0\\s*$"
-sub_type = "sysctl"
+category = "sysctl"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [kernel_parameters.0023a]
@@ -387,7 +567,7 @@ check_type = "regex"
 file_extension = ".conf"
 parameter = "net.ipv6.conf.default.accept_ra = 0"
 pattern = "^net\\.ipv6\\.conf\\.default\\.accept_ra\\s*=\\s*0\\s*$"
-sub_type = "sysctl"
+category = "sysctl"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [kernel_parameters.0024a]
@@ -396,7 +576,7 @@ check_type = "regex"
 file_extension = ".conf"
 parameter = "net.ipv6.conf.default.accept_redirects = 0"
 pattern = "^net\\.ipv6\\.conf\\.default\\.accept_redirects\\s*=\\s*0\\s*$"
-sub_type = "sysctl"
+category = "sysctl"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [kernel_parameters.0025a]
@@ -405,22 +585,7 @@ check_type = "regex"
 file_extension = ".conf"
 parameter = "net.ipv6.conf.default.accept_source_route = 0"
 pattern = "^net\\.ipv6\\.conf\\.default\\.accept_source_route\\s*=\\s*0\\s*$"
-sub_type = "sysctl"
-valid_os = ["amzn-2023", "ubuntu-22.04"]
-
-[logging]
-[logging.0001a]
-check_name = "rsyslog package"
-check_type = "package"
-package_name = "rsyslog"
-package_install = true
-valid_os = ["amzn-2023", "ubuntu-22.04"]
-
-[logging.0002a]
-check_name = "systemd-journal-remote package"
-check_type = "package"
-package_name = "systemd-journal-remote"
-package_install = true
+category = "sysctl"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [mount]
@@ -506,6 +671,14 @@ separate_partition = true
 nodev = true
 noexec = true
 nosuid = true
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[nftables]
+[nftables.0001a]
+check_name = "nftables package"
+check_type = "package"
+package_name = "nftables"
+package_install = true
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [package]
@@ -649,101 +822,13 @@ package_name = "xorg-x11-server-common"
 package_install = false
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
+# [pam]
+# [pam.0001a]
+# check_name = ""
+# check_type = ""
+# valid_os = ["amzn-2023", "ubuntu-22.04"]
+
 [path]
-[path.0001a]
-check_name = "/etc/at.allow"
-check_type = "path"
-path = "/etc/at.allow"
-path_exists = true
-expected_uid = 0
-expected_gid = 0
-expected_permissions = 600
-valid_os = ["amzn-2023", "ubuntu-22.04"]
-
-[path.0002a]
-check_name = "/etc/at.deny"
-check_type = "path"
-path = "/etc/at.deny"
-path_exists = false
-valid_os = ["amzn-2023", "ubuntu-22.04"]
-
-[path.0003a]
-check_name = "/etc/cron.allow"
-check_type = "path"
-path = "/etc/cron.allow"
-path_exists = true
-expected_uid = 0
-expected_gid = 0
-expected_permissions = 600
-valid_os = ["amzn-2023", "ubuntu-22.04"]
-
-[path.0004a]
-check_name = "/etc/cron.deny"
-check_type = "path"
-path = "/etc/cron.deny"
-path_exists = false
-valid_os = ["amzn-2023", "ubuntu-22.04"]
-
-[path.0005a]
-check_name = "/etc/cron.d"
-check_type = "path"
-path = "/etc/cron.d"
-path_exists = true
-expected_uid = 0
-expected_gid = 0
-expected_permissions = 700
-valid_os = ["amzn-2023", "ubuntu-22.04"]
-
-[path.0006a]
-check_name = "/etc/cron.daily"
-check_type = "path"
-path = "/etc/cron.daily"
-path_exists = true
-expected_uid = 0
-expected_gid = 0
-expected_permissions = 700
-valid_os = ["amzn-2023", "ubuntu-22.04"]
-
-[path.0007a]
-check_name = "/etc/cron.hourly"
-check_type = "path"
-path = "/etc/cron.hourly"
-path_exists = true
-expected_uid = 0
-expected_gid = 0
-expected_permissions = 700
-valid_os = ["amzn-2023", "ubuntu-22.04"]
-
-[path.0008a]
-check_name = "/etc/cron.monthly"
-check_type = "path"
-path = "/etc/cron.monthly"
-path_exists = true
-expected_uid = 0
-expected_gid = 0
-expected_permissions = 700
-valid_os = ["amzn-2023", "ubuntu-22.04"]
-
-[path.0009a]
-check_name = "/etc/cron.weekly"
-check_type = "path"
-path = "/etc/cron.weekly"
-path_exists = true
-expected_uid = 0
-expected_gid = 0
-expected_permissions = 700
-valid_os = ["amzn-2023", "ubuntu-22.04"]
-
-[path.0010a]
-check_name = "/etc/crontab"
-check_type = "path"
-path = "/etc/crontab"
-path_exists = true
-expected_uid = 0
-expected_gid = 0
-expected_permissions = 600
-valid_os = ["amzn-2023", "ubuntu-22.04"]
-
 [path.0011a]
 check_name = "/etc/group"
 check_type = "path"
@@ -782,36 +867,6 @@ path_exists = true
 expected_uid = 0
 expected_gid = 0
 expected_permissions = 0
-valid_os = ["amzn-2023", "ubuntu-22.04"]
-
-[path.0015a]
-check_name = "/etc/issue"
-check_type = "path"
-path = "/etc/issue"
-path_exists = true
-expected_uid = 0
-expected_gid = 0
-expected_permissions = 644
-valid_os = ["amzn-2023", "ubuntu-22.04"]
-
-[path.0016a]
-check_name = "/etc/issue.net"
-check_type = "path"
-path = "/etc/issue.net"
-path_exists = true
-expected_uid = 0
-expected_gid = 0
-expected_permissions = 644
-valid_os = ["amzn-2023", "ubuntu-22.04"]
-
-[path.0017a]
-check_name = "/etc/motd"
-check_type = "path"
-path = "/etc/motd"
-path_exists = true
-expected_uid = 0
-expected_gid = 0
-expected_permissions = 644
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [path.0018a]
@@ -854,14 +909,21 @@ expected_gid = 0
 expected_permissions = 0
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
-[path.0022a]
-check_name = "/etc/ssh/sshd_config"
-check_type = "path"
-path = "/etc/ssh/sshd_config"
-path_exists = true
-expected_uid = 0
-expected_gid = 0
-expected_permissions = 600
+[rsyslog]
+[rsyslog.0001a]
+check_name = "rsyslog package"
+check_type = "package"
+package_name = "rsyslog"
+package_install = true
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[rsyslog.0010a]
+check_name = "rsyslog"
+check_type = "service"
+service_name = "rsyslog"
+service_enabled = true
+service_active = true
+service_masked = false
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [sshd]
@@ -877,7 +939,7 @@ check_name = "SSH Access Limited"
 check_type = "regex"
 file_extension = ".conf"
 pattern = "^\\s*(allowusers|allowgroups|denyusers|denygroups)\\s+.+$"
-sub_type = "sshd"
+category = "sshd"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [sshd.0003a]
@@ -885,7 +947,7 @@ check_name = "SSH AllowTcpForwarding"
 check_type = "regex"
 file_extension = ".conf"
 pattern = "^\\s*AllowTcpForwarding\\s+no"
-sub_type = "sshd"
+category = "sshd"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [sshd.0004a]
@@ -893,7 +955,7 @@ check_name = "SSH ClientAliveCountMax"
 check_type = "regex"
 file_extension = ".conf"
 pattern = "^\\s*ClientAliveCountMax\\s+[3-9]$"
-sub_type = "sshd"
+category = "sshd"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [sshd.0005a]
@@ -901,7 +963,7 @@ check_name = "SSH ClientAliveInterval"
 check_type = "regex"
 file_extension = ".conf"
 pattern = "^\\s*ClientAliveInterval\\s+([1-9]|[12][0-9]|30)$"
-sub_type = "sshd"
+category = "sshd"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [sshd.0006a]
@@ -909,7 +971,7 @@ check_name = "SSH HostbasedAuthentication"
 check_type = "regex"
 file_extension = ".conf"
 pattern = "^\\s*HostbasedAuthentication\\s+no"
-sub_type = "sshd"
+category = "sshd"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [sshd.0007a]
@@ -917,7 +979,7 @@ check_name = "SSH IgnoreRhosts"
 check_type = "regex"
 file_extension = ".conf"
 pattern = "^\\s*IgnoreRhosts\\s+yes"
-sub_type = "sshd"
+category = "sshd"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [sshd.0008a]
@@ -925,7 +987,7 @@ check_name = "SSH LoginGraceTime"
 check_type = "regex"
 file_extension = ".conf"
 pattern = "^\\s*LoginGraceTime\\s+(1[6-9]|[2-5][0-9]|60)$"
-sub_type = "sshd"
+category = "sshd"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [sshd.0009a]
@@ -933,7 +995,7 @@ check_name = "SSH LogLevel"
 check_type = "regex"
 file_extension = ".conf"
 pattern = "^\\s*LogLevel\\s+(VERBOSE|INFO)"
-sub_type = "sshd"
+category = "sshd"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [sshd.0010a]
@@ -941,7 +1003,7 @@ check_name = "SSH MaxAuthTries"
 check_type = "regex"
 file_extension = ".conf"
 pattern = "^\\s*MaxAuthTries\\s+[2-4]$"
-sub_type = "sshd"
+category = "sshd"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [sshd.0011a]
@@ -949,7 +1011,7 @@ check_name = "SSH MaxSessions"
 check_type = "regex"
 file_extension = ".conf"
 pattern = "^\\s*MaxSessions\\s+([1-9]|10)$"
-sub_type = "sshd"
+category = "sshd"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [sshd.0012a]
@@ -957,7 +1019,7 @@ check_name = "SSH MaxStartups"
 check_type = "regex"
 file_extension = ".conf"
 pattern = "^\\s*MaxStartups\\s+10:([0-2]?[0-9]|30):([0-5]?[0-9]|60)$"
-sub_type = "sshd"
+category = "sshd"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [sshd.0013a]
@@ -965,7 +1027,7 @@ check_name = "SSH PermitEmptyPasswords"
 check_type = "regex"
 file_extension = ".conf"
 pattern = "^\\s*PermitEmptyPasswords\\s+no"
-sub_type = "sshd"
+category = "sshd"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [sshd.0014a]
@@ -973,7 +1035,7 @@ check_name = "SSH PermitRootLogin"
 check_type = "regex"
 file_extension = ".conf"
 pattern = "^\\s*PermitRootLogin\\s+no"
-sub_type = "sshd"
+category = "sshd"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [sshd.0015a]
@@ -981,7 +1043,7 @@ check_name = "SSH PermitUserEnvironment"
 check_type = "regex"
 file_extension = ".conf"
 pattern = "^\\s*PermitUserEnvironment\\s+no"
-sub_type = "sshd"
+category = "sshd"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [sshd.0016a]
@@ -989,7 +1051,7 @@ check_name = "SSH UsePAM"
 check_type = "regex"
 file_extension = ".conf"
 pattern = "^\\s*UsePAM\\s+yes"
-sub_type = "sshd"
+category = "sshd"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [sshd.0017a]
@@ -997,7 +1059,7 @@ check_name = "SSH X11Forwarding"
 check_type = "regex"
 file_extension = ".conf"
 pattern = "^\\s*X11Forwarding\\s+no"
-sub_type = "sshd"
+category = "sshd"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [sshd.0018a]
@@ -1007,7 +1069,7 @@ expected_uid = 0
 expected_gid = 0
 expected_permissions = 600
 path = "/etc/ssh"
-sub_type = "private"
+category = "private"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [sshd.0019a]
@@ -1017,7 +1079,17 @@ expected_uid = 0
 expected_gid = 0
 expected_permissions = 644
 path = "/etc/ssh"
-sub_type = "public"
+category = "public"
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[sshd.0020a]
+check_name = "/etc/ssh/sshd_config"
+check_type = "path"
+path = "/etc/ssh/sshd_config"
+path_exists = true
+expected_uid = 0
+expected_gid = 0
+expected_permissions = 600
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [selinux]
@@ -1028,25 +1100,36 @@ package_name = "libselinux"
 package_install = true
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
+[selinux.0002a]
+check_name = "selinux boot enabled"
+category = "selinux"
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[selinux.0003a]
+check_name = "selinux enabled"
+check_type = "regex"
+file_extension = ".conf"
+pattern = "^SELINUX=(enforcing|permissive)\\s*$"
+category = "selinux"
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[selinux.0004a]
+check_name = "selinux mode"
+check_type = "regex"
+file_extension = ".conf"
+pattern = "^SELINUX=enforcing\\s*$"
+category = "selinux"
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[selinux.0005a]
+check_name = "selinux policy"
+check_type = "regex"
+file_extension = ".conf"
+pattern = "^SELINUXTYPE=targeted\\s*$"
+category = "selinux"
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
 [service]
-[service.0001a]
-check_name = "atd.service"
-check_type = "service"
-service_name = "atd.service"
-service_enabled = true
-service_active = true
-service_masked = false
-valid_os = ["amzn-2023", "ubuntu-22.04"]
-
-[service.0002a]
-check_name = "auditd"
-check_type = "service"
-service_name = "auditd"
-service_enabled = true
-service_active = true
-service_masked = false
-valid_os = ["amzn-2023", "ubuntu-22.04"]
-
 [service.0003a]
 check_name = "avahi-daemon.service"
 check_type = "service"
@@ -1062,15 +1145,6 @@ check_type = "service"
 service_name = "avahi-daemon.socket"
 service_enabled = false
 service_active = false
-service_masked = false
-valid_os = ["amzn-2023", "ubuntu-22.04"]
-
-[service.0005a]
-check_name = "crond"
-check_type = "service"
-service_name = "crond"
-service_enabled = true
-service_active = true
 service_masked = false
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
@@ -1110,15 +1184,6 @@ service_active = false
 service_masked = true
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
-[service.0010a]
-check_name = "rsyslog"
-check_type = "service"
-service_name = "rsyslog"
-service_enabled = true
-service_active = true
-service_masked = false
-valid_os = ["amzn-2023", "ubuntu-22.04"]
-
 [service.0011a]
 check_name = "snmpd"
 check_type = "service"
@@ -1126,33 +1191,6 @@ service_name = "snmpd"
 service_enabled = false
 service_active = false
 service_masked = true
-valid_os = ["amzn-2023", "ubuntu-22.04"]
-
-[service.0012a]
-check_name = "systemd-journald.service"
-check_type = "service"
-service_name = "systemd-journald.service"
-service_enabled = true
-service_active = true
-service_masked = false
-valid_os = ["amzn-2023", "ubuntu-22.04"]
-
-[service.0013a]
-check_name = "systemd-journal-remote.socket"
-check_type = "service"
-service_name = "systemd-journal-remote.socket"
-service_enabled = false
-service_active = false
-service_masked = false
-valid_os = ["amzn-2023", "ubuntu-22.04"]
-
-[service.0014a]
-check_name = "systemd-journal-upload.service"
-check_type = "service"
-service_name = "systemd-journal-upload.service"
-service_enabled = false
-service_active = false
-service_masked = false
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [sudo]
@@ -1167,19 +1205,21 @@ valid_os = ["amzn-2023", "ubuntu-22.04"]
 check_name = "sudo auth timeout"
 check_type = "regex"
 pattern = "^Defaults\\s+timestamp_timeout=15\\s*$"
-sub_type = "sudo"
+category = "sudo"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [sudo.0003a]
 check_name = "sudo logging"
 check_type = "regex"
 pattern = "^Defaults\\s+logfile=\"/var/log/sudo.log\"\\s*$"
-sub_type = "sudo"
+category = "sudo"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [sudo.0004a]
 check_name = "sudo use_pty"
 check_type = "regex"
 pattern = "^Defaults\\s+use_pty\\s*$"
-sub_type = "sudo"
+category = "sudo"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[system]
