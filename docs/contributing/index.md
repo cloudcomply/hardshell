@@ -35,4 +35,4 @@ This section covers the following topics:
 - {doc}`the_basics`
 - {doc}`release_process`
 
-For an overview on contributing to the _Black_, please checkout {doc}`the_basics`.
+For an overview on contributing to the _hardshell_, please checkout {doc}`the_basics`.
