@@ -13,7 +13,12 @@ from src.hardshell.common.common import (
 def check_accounts(check):
     user_names, user_uids, group_names, group_gids = set(), set(), set(), set()
     cleartext_pw = {"user_names": []}
-    duplicates = {"group_names": [], "user_names": [], "user_uids": [], "group_gids": []}
+    duplicates = {
+        "group_names": [],
+        "user_names": [],
+        "user_uids": [],
+        "group_gids": [],
+    }
     root_uid_count = 0
     existing_group_names = set()
     shadowed_passwords = set()
@@ -94,76 +99,9 @@ def check_accounts(check):
     set_result(check, "group names", "duplicate", not duplicates["group_names"])
     set_result(check, "group gids", "duplicate", not duplicates["group_gids"])
     set_result(check, "root uid unique", "root uid unique", root_uid_count == 1)
-    set_result(check, "all group names exist", "group existence", not missing_groups)
-
-
-# Working
-# def check_accounts(check):
-#     user_names, user_uids, group_names, group_gids = set(), set(), set(), set()
-#     cleartext_pw = {"user_names": []}
-#     duplicates = {"group_names": [], "user_names": [], "user_uids": [], "group_gids": []}
-#     root_uid_count = 0
-#     existing_group_names = set()
-
-#     def process_line(line, is_passwd=True):
-#         nonlocal root_uid_count
-#         fields = line.strip().split(":")
-#         if is_passwd:
-#             user_name, user_pass, user_uid, user_gid = (
-#                 fields[0],
-#                 fields[1],
-#                 fields[2],
-#                 fields[3],
-#             )
-#             if user_name == "root":
-#                 set_result(check, "root uid", "root uid", user_uid == "0")
-#                 set_result(check, "root gid", "root gid", user_gid == "0")
-#             if user_uid == "0":
-#                 root_uid_count += 1
-#             if user_pass not in {"x", "*"}:
-#                 cleartext_pw["user_names"].append(user_name)
-#             check_duplicates(user_name, user_names, duplicates["user_names"])
-#             check_duplicates(user_uid, user_uids, duplicates["user_uids"])
-
-#             if user_gid not in existing_group_names:
-#                 group_gids.add(user_gid)
-#         else:
-#             group_name, group_gid = fields[0], fields[2]
-#             existing_group_names.add(group_gid)
-#             check_duplicates(group_name, group_names, duplicates["group_names"])
-#             check_duplicates(group_gid, group_gids, duplicates["group_gids"])
-
-#     def check_duplicates(item, item_set, duplicate_list):
-#         if item in item_set:
-#             duplicate_list.append(item)
-#         else:
-#             item_set.add(item)
-
-#     with open("/etc/group", "r") as f:
-#         for line in f:
-#             process_line(line, is_passwd=False)
-
-#     missing_groups = []
-#     with open("/etc/passwd", "r") as f:
-#         for line in f:
-#             fields = line.strip().split(":")
-#             user_gid = fields[3]
-#             if user_gid not in group_gids:
-#                 missing_groups.append(user_gid)
-#             process_line(line, is_passwd=True)
-
-#     set_result(
-#         check,
-#         "user shadow password",
-#         "password",
-#         not cleartext_pw["user_names"],
-#     )
-#     set_result(check, "user names", "duplicate", not duplicates["user_names"])
-#     set_result(check, "user uids", "duplicate", not duplicates["user_uids"])
-#     set_result(check, "group names", "duplicate", not duplicates["group_names"])
-#     set_result(check, "group gids", "duplicate", not duplicates["group_gids"])
-#     set_result(check, "root uid unique", "root uid unique", root_uid_count == 1)
-#     set_result(check, "all group names exist", "group existence", not missing_groups)
+    set_result(
+        check, "all group names exist", "group existence", not missing_groups
+    )
 
 
 # TODO Check logic
@@ -176,28 +114,28 @@ def check_module(check):
     set_result(
         check=check,
         name=check.check_name,
-        check_type=f"{check.check_type.capitalize()} Blacklisted",
+        check_type=f"{check.check_type} blacklisted",
         actual=blacklisted_check,
         expected=check.module_blacklisted,
     )
     set_result(
         check=check,
         name=check.check_name,
-        check_type=f"{check.check_type.capitalize()} Denied",
+        check_type=f"{check.check_type} denied",
         actual=denied_check,
         expected=check.module_denied,
     )
     set_result(
         check=check,
         name=check.check_name,
-        check_type=f"{check.check_type.capitalize()} Loadable",
+        check_type=f"{check.check_type} loadable",
         actual=loadable_check,
         expected=check.module_loadable,
     )
     set_result(
         check=check,
         name=check.check_name,
-        check_type=f"{check.check_type.capitalize()} Loaded",
+        check_type=f"{check.check_type} loaded",
         actual=loaded_check,
         expected=check.module_loaded,
     )
@@ -223,7 +161,12 @@ def check_module_blacklisted(module_name):
 def check_module_denied(module_name):
     try:
         install_result = subprocess.run(
-            ["grep", "-r", f"install {module_name} /bin/false", "/etc/modprobe.d/"],
+            [
+                "grep",
+                "-r",
+                f"install {module_name} /bin/false",
+                "/etc/modprobe.d/",
+            ],
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
             text=True,
@@ -267,61 +210,54 @@ def check_mount(check):
     set_result(
         check=check,
         name=check.check_name,
-        check_type=f"{check.check_type.capitalize()} Exists",
+        check_type=f"{check.check_type} exists",
         actual=mount_exists,
         expected=True,
     )
-
     if mount_exists:
         # Check if mounted at boot
         boot_result = check_mount_point_boot(check.path)
         set_result(
             check=check,
             name=check.check_name,
-            check_type=f"{check.check_type.capitalize()} Boot",
+            check_type=f"{check.check_type} boot",
             actual=boot_result,
             expected=check.mount_boot,
         )
-
         # Check if separate partition
         seppart_result = check_mount_point_separate_partition(check.path)
         set_result(
             check=check,
             name=check.check_name,
-            check_type=f"{check.check_type.capitalize()} Separate Partition",
+            check_type=f"{check.check_type} separate partition",
             actual=seppart_result,
             expected=check.separate_partition,
         )
-
         # Check if mounted
         mounted_result = check_mount_point_mounted(check.path)
-
         if mounted_result:
             options_result = get_mount_point_options(check.path)
-
             # Check nodev option
             set_result(
                 check=check,
                 name=check.check_name,
-                check_type=f"{check.check_type.capitalize()} Option: nodev",
+                check_type=f"{check.check_type} Option: nodev",
                 actual="nodev" in options_result,
                 expected=check.nodev,
             )
-
             # Check noexec option
             set_result(
                 check=check,
                 name=check.check_name,
-                check_type=f"{check.check_type.capitalize()} Option: noexec",
+                check_type=f"{check.check_type} Option: noexec",
                 actual="noexec" in options_result,
                 expected=check.noexec,
             )
-
             # Check nosuid option
             set_result(
                 check=check,
                 name=check.check_name,
-                check_type=f"{check.check_type.capitalize()} Option: nosuid",
+                check_type=f"{check.check_type} Option: nosuid",
                 actual="nosuid" in options_result,
                 expected=check.nosuid,
             )
@@ -425,55 +361,71 @@ def check_package(check, current_os, global_config):
                 )
 
         except subprocess.CalledProcessError as e:
-            print(f"Error checking if package {check.package_name} is installed: {e}")
+            print(
+                f"Error checking if package {check.package_name} is installed: {e}"
+            )
     else:
         print(f"No configuration found for OS: {os_name}")
 
 
 def check_path(check):
-    """
-    Checks the existance and permissions of a file or directory.
-
-    Args:
-        check (Check): The check object.
-    """
     path_exists = os.path.exists(check.path)
     expected_exists = check.path_exists
-
     # Permissions check if path exists and is expected to exist
     if path_exists and expected_exists:
-        set_result(
-            check=check,
-            name=check.check_name,
-            check_type=f"{check.check_type.capitalize()} Exists",
-            actual=path_exists,
-            expected=expected_exists,
-        )
+        if os.path.isfile(check.path):
+            # print(f"Path is a file: {check.path}")
+            file_stats = get_permissions(check.path)
+            current_permissions = (
+                file_stats.st_uid,
+                file_stats.st_gid,
+                int(oct(file_stats.st_mode)[-3:]),
+            )
+            set_result(
+                check=check,
+                name=check.check_name,
+                check_type=f"{check.check_type}",
+                actual=current_permissions,
+                expected=tuple(check.expected_perms),
+            )
+        else:
+            if check.check_files == True:
+                all_paths = glob.glob(
+                    os.path.join(check.path, "**", "*"), recursive=True
+                )
+                for path in all_paths:
+                    file_stats = get_permissions(path)
+                    current_permissions = (
+                        file_stats.st_uid,
+                        file_stats.st_gid,
+                        int(oct(file_stats.st_mode)[-3:]),
+                    )
+                    set_result(
+                        check=check,
+                        name=f"{check.check_name} - {path}",
+                        check_type=f"{check.check_type}",
+                        actual=current_permissions,
+                        expected=tuple(check.expected_perms),
+                    )
 
-        file_stats = os.stat(check.path)
-        current_permissions = (
-            file_stats.st_uid,
-            file_stats.st_gid,
-            int(oct(file_stats.st_mode)[-3:]),
-        )
-        expected_permissions = (
-            check.expected_uid,
-            check.expected_gid,
-            check.expected_permissions,
-        )
-
-        set_result(
-            check=check,
-            name=check.check_name,
-            check_type=f"{check.check_type.capitalize()} Permissions",
-            actual=current_permissions,
-            expected=expected_permissions,
-        )
+            dir_stats = get_permissions(check.path)
+            current_permissions = (
+                dir_stats.st_uid,
+                dir_stats.st_gid,
+                int(oct(dir_stats.st_mode)[-3:]),
+            )
+            set_result(
+                check=check,
+                name=check.check_name,
+                check_type=f"{check.check_type}",
+                actual=current_permissions,
+                expected=tuple(check.expected_perms),
+            )
     else:
         set_result(
             check=check,
             name=check.check_name,
-            check_type=f"{check.check_type.capitalize()} Permissions",
+            check_type=f"{check.check_type}",
             actual=False,
             expected=expected_exists,
         )
@@ -527,7 +479,7 @@ def check_service(check):
         set_result(
             check=check,
             name=check.check_name,
-            check_type=f"{check.check_type.capitalize()} {enabled_result.capitalize()}",
+            check_type=f"{check.check_type} {enabled_result}",
             actual=enabled_result == "enabled",
             expected=check.service_enabled,
         )
@@ -537,7 +489,7 @@ def check_service(check):
             set_result(
                 check=check,
                 name=check.check_name,
-                check_type=f"{check.check_type.capitalize()} Active",
+                check_type=f"{check.check_type}",
                 actual=active_result == "active",
                 expected=check.service_active,
             )
@@ -545,7 +497,7 @@ def check_service(check):
         set_result(
             check=check,
             name=check.check_name,
-            check_type=f"{check.check_type.capitalize()} Not Found",
+            check_type=f"{check.check_type}",
             actual=False,
             expected=check.service_enabled,
         )
@@ -554,7 +506,9 @@ def check_service(check):
 def check_ssh_keys(check):
     paths = glob.glob(os.path.join(check.path, "*"))
     files = [
-        f for f in paths if os.path.isfile(f) and detect_openssh_key(f) == check.category
+        f
+        for f in paths
+        if os.path.isfile(f) and detect_openssh_key(f) == check.category
     ]
 
     for file in files:
@@ -675,11 +629,15 @@ def get_mount_point_options(path):
         return []
 
 
+def get_permissions(path):
+    return os.stat(path)
+
+
 def set_result(check, name, check_type, actual, expected=None):
     if expected is not None:
-        result = "PASS" if expected == actual else "FAIL"
+        result = "pass" if expected == actual else "fail"
     elif check.check_type == "regex":
-        result = "PASS" if actual else "FAIL"
+        result = "pass" if actual else "fail"
     else:
-        result = "PASS" if actual else "FAIL"
+        result = "pass" if actual else "fail"
     check.set_result({"name": name, "check": check_type, "result": result})

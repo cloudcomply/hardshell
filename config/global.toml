@@ -13,6 +13,7 @@ crypto_policies = [
     "/etc/crypto-policies/policies",
 ]
 selinux = ["/etc/selinux/config"]
+shell = ["/etc/profile", "/etc/profile.d", "/etc/bashrc"]
 sshd = ["/etc/ssh/test", "/etc/ssh/sshd_config", "/etc/ssh/sshd_config.d"]
 sudo = ["/etc/sudoers", "/etc/sudoers.d"]
 sysctl = [

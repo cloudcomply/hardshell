@@ -134,7 +134,6 @@ def find_pattern_in_file(path, pattern):
     try:
         with open(path, "r") as f:
             for line in f:
-                print(line)
                 if re.search(pattern, line, flags=re.IGNORECASE):
                     pattern_found = True
                     pattern_line = line.strip()
@@ -216,6 +215,7 @@ config_mapping = {
     "coredump": "config_files.coredump",
     "crypto-policies": "config_files.crypto_policies",
     "selinux": "config_files.selinux",
+    "shell": "config_files.shell",
     "sshd": "config_files.sshd",
     "sudo": "config_files.sudo",
     "sysctl": "config_files.sysctl",

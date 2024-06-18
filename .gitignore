@@ -166,3 +166,4 @@ cython_debug/
 .utils
 .docsbackup
 run.sh
+linecount.py

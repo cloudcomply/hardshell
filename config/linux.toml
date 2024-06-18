@@ -1,5 +1,5 @@
 [accounts]
-[accounts.0002a]
+[accounts.0001a]
 check_name = "accounts"
 check_type = "accounts"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
@@ -25,9 +25,7 @@ check_name = "/etc/at.allow"
 check_type = "path"
 path = "/etc/at.allow"
 path_exists = true
-expected_uid = 0
-expected_gid = 0
-expected_permissions = 600
+expected_perms = [0, 0, 600]
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [at.0003a]
@@ -71,35 +69,58 @@ package_name = "authselect"
 package_install = false
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
-[banners]
-[banners.0001a]
+[banner]
+[banner.0001a]
 check_name = "/etc/issue"
 check_type = "path"
 path = "/etc/issue"
 path_exists = true
-expected_uid = 0
-expected_gid = 0
-expected_permissions = 644
+expected_perms = [0, 0, 644]
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
-[banners.0002a]
+[banner.0002a]
 check_name = "/etc/issue.net"
 check_type = "path"
 path = "/etc/issue.net"
 path_exists = true
-expected_uid = 0
-expected_gid = 0
-expected_permissions = 644
+expected_perms = [0, 0, 644]
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
-[banners.0003a]
+[banner.0003a]
 check_name = "/etc/motd"
 check_type = "path"
 path = "/etc/motd"
 path_exists = true
-expected_uid = 0
-expected_gid = 0
-expected_permissions = 644
+expected_perms = [0, 0, 644]
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[bootloader]
+[bootloader.0001a]
+check_name = "bootloader efi"
+check_type = "path"
+check_files = false
+# path = "/boot/efi/EFI"
+path = "/boottest/boottest1"
+path_exists = true
+expected_perms = [0, 0, 700]
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[bootloader.0002a]
+check_name = "bootloader grub2"
+check_type = "path"
+check_files = true
+# path = "/boot/grub2"
+path = "/boottest/boottest2"
+path_exists = true
+expected_perms = [0, 0, 600]
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[bootloader.0003a]
+check_name = "bootloader test file"
+check_type = "path"
+path = "/boottest/boottest3"
+path_exists = true
+expected_perms = [0, 0, 600]
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [chrony]
@@ -140,9 +161,7 @@ check_name = "/etc/cron.allow"
 check_type = "path"
 path = "/etc/cron.allow"
 path_exists = true
-expected_uid = 0
-expected_gid = 0
-expected_permissions = 600
+expected_perms = [0, 0, 600]
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [cron.0004a]
@@ -157,9 +176,7 @@ check_name = "/etc/cron.d"
 check_type = "path"
 path = "/etc/cron.d"
 path_exists = true
-expected_uid = 0
-expected_gid = 0
-expected_permissions = 700
+expected_perms = [0, 0, 700]
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [cron.0006a]
@@ -167,9 +184,7 @@ check_name = "/etc/cron.daily"
 check_type = "path"
 path = "/etc/cron.daily"
 path_exists = true
-expected_uid = 0
-expected_gid = 0
-expected_permissions = 700
+expected_perms = [0, 0, 700]
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [cron.0007a]
@@ -177,9 +192,7 @@ check_name = "/etc/cron.hourly"
 check_type = "path"
 path = "/etc/cron.hourly"
 path_exists = true
-expected_uid = 0
-expected_gid = 0
-expected_permissions = 700
+expected_perms = [0, 0, 700]
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [cron.0008a]
@@ -187,9 +200,7 @@ check_name = "/etc/cron.monthly"
 check_type = "path"
 path = "/etc/cron.monthly"
 path_exists = true
-expected_uid = 0
-expected_gid = 0
-expected_permissions = 700
+expected_perms = [0, 0, 700]
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [cron.0009a]
@@ -197,9 +208,7 @@ check_name = "/etc/cron.weekly"
 check_type = "path"
 path = "/etc/cron.weekly"
 path_exists = true
-expected_uid = 0
-expected_gid = 0
-expected_permissions = 700
+expected_perms = [0, 0, 700]
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [cron.0010a]
@@ -207,9 +216,7 @@ check_name = "/etc/crontab"
 check_type = "path"
 path = "/etc/crontab"
 path_exists = true
-expected_uid = 0
-expected_gid = 0
-expected_permissions = 600
+expected_perms = [0, 0, 600]
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [cron.0011a]
@@ -705,6 +712,21 @@ noexec = true
 nosuid = true
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
+[mta]
+[mta.0001a]
+check_name = "postfix mta local only ipv4"
+check_type = "regex"
+path = "/proc/net/tcp"
+pattern = "^0100007F:0019"
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[mta.0002a]
+check_name = "postfix mta local only ipv6"
+check_type = "regex"
+path = "/proc/net/tcp6"
+pattern = "^00000000000000000000000001000000:0019"
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
 [nftables]
 [nftables.0001a]
 check_name = "nftables package"
@@ -981,6 +1003,20 @@ path = "/etc/login.defs"
 pattern = "^PASS_WARN_AGE\\s+7$"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
+[pam.0019a]
+check_name = "su command restriced"
+check_type = "regex"
+path = "/etc/pam.d/su"
+pattern = "^(.*\b(use_uid\b|group=\\S+)\b.*)$"
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[postfix]
+[postfix.0001a]
+check_name = "postfix package"
+check_type = "package"
+package_name = "postfix"
+package_install = false
+valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [rsyslog]
 [rsyslog.0001a]
@@ -997,6 +1033,22 @@ service_name = "rsyslog"
 service_enabled = true
 service_active = true
 service_masked = false
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[sendmail]
+[sendmail.0001a]
+check_name = "sendmail package"
+check_type = "package"
+package_name = "sendmail"
+package_install = false
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[shell]
+[shell.0001a]
+check_name = "user shell timeout"
+check_type = "regex"
+category = "shell"
+pattern = "^\\s*TMOUT=(\\d+)"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [sshd]
@@ -1169,9 +1221,7 @@ check_name = "/etc/ssh/sshd_config"
 check_type = "path"
 path = "/etc/ssh/sshd_config"
 path_exists = true
-expected_uid = 0
-expected_gid = 0
-expected_permissions = 600
+expected_perms = [0, 0, 600]
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [selinux]
@@ -1310,9 +1360,7 @@ check_name = "/etc/group"
 check_type = "path"
 path = "/etc/group"
 path_exists = true
-expected_uid = 0
-expected_gid = 0
-expected_permissions = 644
+expected_perms = [0, 0, 644]
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [system.0012a]
@@ -1320,9 +1368,7 @@ check_name = "/etc/group-"
 check_type = "path"
 path = "/etc/group-"
 path_exists = true
-expected_uid = 0
-expected_gid = 0
-expected_permissions = 644
+expected_perms = [0, 0, 644]
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [system.0013a]
@@ -1330,9 +1376,7 @@ check_name = "/etc/gshadow"
 check_type = "path"
 path = "/etc/gshadow"
 path_exists = true
-expected_uid = 0
-expected_gid = 0
-expected_permissions = 0
+expected_perms = [0, 0, 0]
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [system.0014a]
@@ -1340,9 +1384,7 @@ check_name = "/etc/gshadow-"
 check_type = "path"
 path = "/etc/gshadow-"
 path_exists = true
-expected_uid = 0
-expected_gid = 0
-expected_permissions = 0
+expected_perms = [0, 0, 0]
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [system.0018a]
@@ -1350,9 +1392,7 @@ check_name = "/etc/passwd"
 check_type = "path"
 path = "/etc/passwd"
 path_exists = true
-expected_uid = 0
-expected_gid = 0
-expected_permissions = 644
+expected_perms = [0, 0, 644]
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [system.0019a]
@@ -1360,9 +1400,7 @@ check_name = "/etc/passwd-"
 check_type = "path"
 path = "/etc/passwd-"
 path_exists = true
-expected_uid = 0
-expected_gid = 0
-expected_permissions = 644
+expected_perms = [0, 0, 644]
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [system.0020a]
@@ -1370,9 +1408,7 @@ check_name = "/etc/shadow"
 check_type = "path"
 path = "/etc/shadow"
 path_exists = true
-expected_uid = 0
-expected_gid = 0
-expected_permissions = 0
+expected_perms = [0, 0, 0]
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [system.0021a]
@@ -1380,9 +1416,7 @@ check_name = "/etc/shadow-"
 check_type = "path"
 path = "/etc/shadow-"
 path_exists = true
-expected_uid = 0
-expected_gid = 0
-expected_permissions = 0
+expected_perms = [0, 0, 0]
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [systemd]
@@ -1401,12 +1435,3 @@ file_extension = ".conf"
 pattern = "^Storage\\s*=\\s*none\\s*$"
 category = "coredump"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
-
-
-# [users_groups.0001a]
-# check_name = "users use shadowed passwords"
-# check_type = "field"
-# field_match = 2
-# field_value = "x"
-# path = "/etc/passwd"
-# valid_os = ["amzn-2023", "ubuntu-22.04"]

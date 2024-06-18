@@ -6,10 +6,6 @@ from src.hardshell.common.checks import create_checks
 from src.hardshell.common.common import detect_os
 from src.hardshell.common.config import GlobalConfig, load_config
 
-# from src.hardshell.scanners.linux import audit_linux
-# import subprocess
-
-
 def start_scanner():
     detected_os = detect_os()
     if detected_os["type"] == "linux":
