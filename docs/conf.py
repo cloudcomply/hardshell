@@ -96,7 +96,7 @@ extensions = [
 ]
 
 # If you need extensions of a certain version or higher, list them here.
-needs_extensions = {"myst_parser": "0.13.7"}
+needs_extensions = {"myst_parser": "3.0.1"}
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ["_templates"]
