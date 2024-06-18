@@ -164,6 +164,7 @@ cython_debug/
 .scripts
 .testing
 .utils
-.docsbackup
+.docsbackup*
+docs/build/*
 run.sh
 linecount.py
