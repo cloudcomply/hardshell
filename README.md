@@ -14,6 +14,11 @@ Release:
 
 ![Codecov branch](https://img.shields.io/codecov/c/github/tomburge/hardshell/release)![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/tomburge/hardshell/release.yaml)
 
+Documentation:
+
+[![Documentation Status](https://readthedocs.org/projects/hardshell/badge/?version=latest)](https://hardshell.readthedocs.io/en/latest/?badge=latest)
+
+
 Config File Locations:
 
 windows admin: C:\Program Files\hardshell\hardshell.toml
