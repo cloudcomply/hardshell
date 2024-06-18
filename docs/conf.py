@@ -34,7 +34,6 @@ def make_pypi_svg(version: str) -> None:
 
 def replace_pr_numbers_with_links(content: str) -> str:
     """Replaces all PR numbers with the corresponding GitHub link."""
-    # return re.sub(r"#(\d+)", r"[#\1](https://github.com/psf/black/pull/\1)", content)
     return re.sub(
         r"#(\d+)",
         r"[#\1](https://github.com/cloudstuffio/hardshell/pull/\1)",
@@ -64,19 +63,19 @@ os.putenv("pythonioencoding", "utf-8")
 
 # -- Project information -----------------------------------------------------
 
-project = "Black"
-copyright = "2018-Present, Łukasz Langa and contributors to Black"
-author = "Łukasz Langa and contributors to Black"
+project = "hardshell"
+copyright = "2023-Present, Tom Burge and contributors to Black"
+author = "Tom Burge and contributors to Black"
 
 # Autopopulate version
 # The version, including alpha/beta/rc tags, but not commit hash and datestamps
-release = version("black").split("+")[0]
+# release = version("black").split("+")[0]
 # The short X.Y version.
-version = release
-for sp in "abcfr":
-    version = version.split(sp)[0]
+# version = release
+# for sp in "abcfr":
+#     version = version.split(sp)[0]
 
-make_pypi_svg(release)
+# make_pypi_svg(release)
 
 
 # -- General configuration ---------------------------------------------------
@@ -147,12 +146,12 @@ myst_enable_extensions = []
 # a list of builtin themes.
 #
 html_theme = "furo"
-html_logo = "_static/logo2-readme.png"
+# html_logo = "_static/logo2-readme.png"
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = ["_static"]
+# html_static_path = ["_static"]
 
 # Custom sidebar templates, must be a dictionary that maps document names
 # to template names.
@@ -168,7 +167,7 @@ html_static_path = ["_static"]
 # -- Options for HTMLHelp output ---------------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = "blackdoc"
+htmlhelp_basename = "hardshelldoc"
 
 
 # -- Options for LaTeX output ------------------------------------------------
@@ -179,9 +178,9 @@ htmlhelp_basename = "blackdoc"
 latex_documents = [
     (
         master_doc,
-        "black.tex",
-        "Documentation for Black",
-        "Łukasz Langa and contributors to Black",
+        "hardshell.tex",
+        "Documentation for hardshell",
+        "Tom Burge and contributors to Black",
         "manual",
     )
 ]
@@ -191,7 +190,9 @@ latex_documents = [
 
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
-man_pages = [(master_doc, "black", "Documentation for Black", [author], 1)]
+man_pages = [
+    (master_doc, "hardshell", "Documentation for hardshell", [author], 1)
+]
 
 
 # -- Options for Texinfo output ----------------------------------------------
@@ -202,11 +203,11 @@ man_pages = [(master_doc, "black", "Documentation for Black", [author], 1)]
 texinfo_documents = [
     (
         master_doc,
-        "Black",
-        "Documentation for Black",
+        "hardshell",
+        "Documentation for hardshell",
         author,
-        "Black",
-        "The uncompromising Python code formatter",
+        "hardshell",
+        "Operating System Hardening Tool",
         "Miscellaneous",
     )
 ]
