@@ -1,3 +1,3 @@
-```{include} ../../CHANGES.md
+```{include} ../../CHANGELOG.md
 
 ```
