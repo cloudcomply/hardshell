@@ -1,0 +1,8 @@
+# Used by ReadTheDocs; pinned requirements for stability.
+
+docutils==0.20.1
+myst-parser==3.0.1
+Sphinx==7.3.7
+sphinxcontrib-programoutput==0.17
+sphinx_copybutton==0.5.2
+furo==2024.5.6
