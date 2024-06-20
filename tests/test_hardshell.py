@@ -1,4 +1,4 @@
-from hardshell import __version__
+from src.hardshell import __version__
 
 
 def test_version():

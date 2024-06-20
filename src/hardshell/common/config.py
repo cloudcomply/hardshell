@@ -1,7 +1,8 @@
+import importlib.resources as pkg_resources
 import os
 import shutil
+
 import toml
-import importlib.resources as pkg_resources
 
 
 class GlobalConfig:

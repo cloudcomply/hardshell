@@ -148,7 +148,7 @@ valid_os = ["amzn-2023", "ubuntu-22.04"]
 [chrony.0003a]
 check_name = "chrony configured"
 check_type = "regex"
-category = "chrony"
+check_subtype =  "chrony"
 file_extension = ".conf"
 pattern = "^\\s*(server|pool)\\s+[^#\\n\\r]+"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
@@ -238,7 +238,7 @@ valid_os = ["amzn-2023", "ubuntu-22.04"]
 check_name = "crypto-policies not legacy"
 check_type = "regex"
 pattern = "^\\s*LEGACY\\s*(#.*)?$"
-category = "crypto-policies"
+check_subtype =  "crypto-policies"
 pattern_exists = false
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
@@ -248,6 +248,14 @@ check_name = "firewalld package"
 check_type = "package"
 package_name = "firewalld"
 package_install = true
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[gpg]
+[gpg.0001a]
+check_name = "gpg enabled globally"
+check_type = "regex"
+check_subtype =  "gpg"
+pattern = "^gpgcheck\\s*=\\s*True"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [journald]
@@ -288,112 +296,123 @@ valid_os = ["amzn-2023", "ubuntu-22.04"]
 [kernel_module]
 [kernel_module.0001a]
 check_name = "cramfs"
-check_type = "kernel-module"
+check_type = "module"
 module_name = "cramfs"
 module_blacklisted = true
 module_denied = true
 module_loadable = false
 module_loaded = false
+module_type = "fs"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [kernel_module.0002a]
 check_name = "dccp"
-check_type = "kernel-module"
+check_type = "module"
 module_name = "dccp"
 module_blacklisted = true
 module_denied = true
 module_loadable = false
 module_loaded = false
+module_type = "net"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [kernel_module.0003a]
 check_name = "freevxfs"
-check_type = "kernel-module"
+check_type = "module"
 module_name = "freevxfs"
 module_blacklisted = true
 module_denied = true
 module_loadable = false
 module_loaded = false
+module_type = "fs"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [kernel_module.0004a]
 check_name = "hfs"
-check_type = "kernel-module"
+check_type = "module"
 module_name = "hfs"
 module_blacklisted = true
 module_denied = true
 module_loadable = false
 module_loaded = false
+module_type = "fs"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [kernel_module.0005a]
 check_name = "hfsplus"
-check_type = "kernel-module"
+check_type = "module"
 module_name = "hfsplus"
 module_blacklisted = true
 module_denied = true
 module_loadable = false
 module_loaded = false
+module_type = "fs"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [kernel_module.0006a]
 check_name = "jffs2"
-check_type = "kernel-module"
+check_type = "module"
 module_name = "jffs2"
 module_blacklisted = true
 module_denied = true
 module_loadable = false
 module_loaded = false
+module_type = "fs"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [kernel_module.0007a]
 check_name = "rds"
-check_type = "kernel-module"
+check_type = "module"
 module_name = "rds"
 module_blacklisted = true
 module_denied = true
 module_loadable = false
 module_loaded = false
+module_type = "net"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [kernel_module.0008a]
 check_name = "sctp"
-check_type = "kernel-module"
+check_type = "module"
 module_name = "sctp"
 module_blacklisted = true
 module_denied = true
 module_loadable = false
 module_loaded = false
+module_type = "net"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [kernel_module.0009a]
 check_name = "squashfs"
-check_type = "kernel-module"
+check_type = "module"
 module_name = "squashfs"
 module_blacklisted = true
 module_denied = true
 module_loadable = false
 module_loaded = false
+module_type = "fs"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [kernel_module.0010a]
 check_name = "tipc"
-check_type = "kernel-module"
+check_type = "module"
 module_name = "tipc"
 module_blacklisted = true
 module_denied = true
 module_loadable = false
 module_loaded = false
+module_type = "net"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [kernel_module.0011a]
 check_name = "udf"
-check_type = "kernel-module"
+check_type = "module"
 module_name = "udf"
 module_blacklisted = true
 module_denied = true
 module_loadable = false
 module_loaded = false
+module_type = "fs"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [kernel_module.0012a]
@@ -404,6 +423,7 @@ module_blacklisted = true
 module_denied = true
 module_loadable = false
 module_loaded = false
+module_type = "drivers"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 # TODO Change parameters to regex
@@ -414,7 +434,7 @@ check_type = "regex"
 file_extension = ".conf"
 parameter = "kernel.randomize_va_space = 2"
 pattern = "^kernel\\.randomize_va_space\\s*=\\s*2\\s*$"
-category = "sysctl"
+check_subtype =  "sysctl"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [kernel_parameters.0002a]
@@ -423,7 +443,7 @@ check_type = "regex"
 file_extension = ".conf"
 parameter = "kernel.yama.ptrace_scope = 1"
 pattern = "^kernel\\.yama\\.ptrace_scope\\s*=\\s*1\\s*$"
-category = "sysctl"
+check_subtype =  "sysctl"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [kernel_parameters.0003a]
@@ -432,7 +452,7 @@ check_type = "regex"
 file_extension = ".conf"
 parameter = "net.ipv4.conf.all.accept_redirects = 0"
 pattern = "^net\\.ipv4\\.conf\\.all\\.accept_redirects\\s*=\\s*0\\s*$"
-category = "sysctl"
+check_subtype =  "sysctl"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [kernel_parameters.0004a]
@@ -441,7 +461,7 @@ check_type = "regex"
 file_extension = ".conf"
 parameter = "net.ipv4.conf.all.accept_source_route = 0"
 pattern = "^net\\.ipv4\\.conf\\.all\\.accept_source_route\\s*=\\s*0\\s*$"
-category = "sysctl"
+check_subtype =  "sysctl"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [kernel_parameters.0005a]
@@ -450,7 +470,7 @@ check_type = "regex"
 file_extension = ".conf"
 parameter = "net.ipv4.conf.all.log_martians = 1"
 pattern = "^net\\.ipv4\\.conf\\.all\\.log_martians\\s*=\\s*1\\s*$"
-category = "sysctl"
+check_subtype =  "sysctl"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [kernel_parameters.0006a]
@@ -459,7 +479,7 @@ check_type = "regex"
 file_extension = ".conf"
 parameter = "net.ipv4.conf.all.rp_filter = 1"
 pattern = "^net\\.ipv4\\.conf\\.all\\.rp_filter\\s*=\\s*1\\s*$"
-category = "sysctl"
+check_subtype =  "sysctl"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [kernel_parameters.0007a]
@@ -468,7 +488,7 @@ check_type = "regex"
 file_extension = ".conf"
 parameter = "net.ipv4.conf.all.secure_redirects = 0"
 pattern = "^net\\.ipv4\\.conf\\.all\\.secure_redirects\\s*=\\s*0\\s*$"
-category = "sysctl"
+check_subtype =  "sysctl"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [kernel_parameters.0008a]
@@ -477,7 +497,7 @@ check_type = "regex"
 file_extension = ".conf"
 parameter = "net.ipv4.conf.all.send_redirects = 0"
 pattern = "^net\\.ipv4\\.conf\\.all\\.send_redirects\\s*=\\s*0\\s*$"
-category = "sysctl"
+check_subtype =  "sysctl"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [kernel_parameters.0009a]
@@ -486,7 +506,7 @@ check_type = "regex"
 file_extension = ".conf"
 parameter = "net.ipv4.conf.default.accept_redirects = 0"
 pattern = "^net\\.ipv4\\.conf\\.default\\.accept_redirects\\s*=\\s*0\\s*$"
-category = "sysctl"
+check_subtype =  "sysctl"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [kernel_parameters.0010a]
@@ -495,7 +515,7 @@ check_type = "regex"
 file_extension = ".conf"
 parameter = "net.ipv4.conf.default.accept_source_route = 0"
 pattern = "^net\\.ipv4\\.conf\\.default\\.accept_source_route\\s*=\\s*0\\s*$"
-category = "sysctl"
+check_subtype =  "sysctl"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [kernel_parameters.0011a]
@@ -504,7 +524,7 @@ check_type = "regex"
 file_extension = ".conf"
 parameter = "net.ipv4.conf.default.log_martians = 1"
 pattern = "^net\\.ipv4\\.conf\\.default\\.log_martians\\s*=\\s*1\\s*$"
-category = "sysctl"
+check_subtype =  "sysctl"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [kernel_parameters.0012a]
@@ -513,7 +533,7 @@ check_type = "regex"
 file_extension = ".conf"
 parameter = "net.ipv4.conf.default.rp_filter = 1"
 pattern = "^net\\.ipv4\\.conf\\.default\\.rp_filter\\s*=\\s*1\\s*$"
-category = "sysctl"
+check_subtype =  "sysctl"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [kernel_parameters.0013a]
@@ -530,7 +550,7 @@ check_type = "regex"
 file_extension = ".conf"
 parameter = "net.ipv4.conf.default.send_redirects = 0"
 pattern = "^net\\.ipv4\\.conf\\.default\\.send_redirects\\s*=\\s*0\\s*$"
-category = "sysctl"
+check_subtype =  "sysctl"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [kernel_parameters.0015a]
@@ -539,7 +559,7 @@ check_type = "regex"
 file_extension = ".conf"
 parameter = "net.ipv4.icmp_echo_ignore_broadcasts = 1"
 pattern = "^net\\.ipv4\\.icmp_echo_ignore_broadcasts\\s*=\\s*1\\s*$"
-category = "sysctl"
+check_subtype =  "sysctl"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [kernel_parameters.0016a]
@@ -548,7 +568,7 @@ check_type = "regex"
 file_extension = ".conf"
 parameter = "net.ipv4.icmp_ignore_bogus_error_responses = 1"
 pattern = "^net\\.ipv4\\.icmp_ignore_bogus_error_responses\\s*=\\s*1\\s*$"
-category = "sysctl"
+check_subtype =  "sysctl"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [kernel_parameters.0017a]
@@ -557,7 +577,7 @@ check_type = "regex"
 file_extension = ".conf"
 parameter = "net.ipv4.ip_forward = 0"
 pattern = "^net\\.ipv4\\.ip_forward\\s*=\\s*0\\s*$"
-category = "sysctl"
+check_subtype =  "sysctl"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [kernel_parameters.0018a]
@@ -566,7 +586,7 @@ check_type = "regex"
 file_extension = ".conf"
 parameter = "net.ipv4.tcp_syncookies = 1"
 pattern = "^net\\.ipv4\\.tcp_syncookies\\s*=\\s*1\\s*$"
-category = "sysctl"
+check_subtype =  "sysctl"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [kernel_parameters.0019a]
@@ -575,7 +595,7 @@ check_type = "regex"
 file_extension = ".conf"
 parameter = "net.ipv6.conf.all.accept_ra = 0"
 pattern = "^net\\.ipv6\\.conf\\.all\\.accept_ra\\s*=\\s*0\\s*$"
-category = "sysctl"
+check_subtype =  "sysctl"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [kernel_parameters.0020a]
@@ -584,7 +604,7 @@ check_type = "regex"
 file_extension = ".conf"
 parameter = "net.ipv6.conf.all.accept_redirects = 0"
 pattern = "^net\\.ipv6\\.conf\\.all\\.accept_redirects\\s*=\\s*0\\s*$"
-category = "sysctl"
+check_subtype =  "sysctl"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [kernel_parameters.0021a]
@@ -593,7 +613,7 @@ check_type = "regex"
 file_extension = ".conf"
 parameter = "net.ipv6.conf.all.accept_source_route = 0"
 pattern = "^net\\.ipv6\\.conf\\.all\\.accept_source_route\\s*=\\s*0\\s*$"
-category = "sysctl"
+check_subtype =  "sysctl"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [kernel_parameters.0022a]
@@ -602,7 +622,7 @@ check_type = "regex"
 file_extension = ".conf"
 parameter = "net.ipv6.conf.all.forwarding = 0"
 pattern = "^net\\.ipv6\\.conf\\.all\\.forwarding\\s*=\\s*0\\s*$"
-category = "sysctl"
+check_subtype =  "sysctl"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [kernel_parameters.0023a]
@@ -611,7 +631,7 @@ check_type = "regex"
 file_extension = ".conf"
 parameter = "net.ipv6.conf.default.accept_ra = 0"
 pattern = "^net\\.ipv6\\.conf\\.default\\.accept_ra\\s*=\\s*0\\s*$"
-category = "sysctl"
+check_subtype =  "sysctl"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [kernel_parameters.0024a]
@@ -620,7 +640,7 @@ check_type = "regex"
 file_extension = ".conf"
 parameter = "net.ipv6.conf.default.accept_redirects = 0"
 pattern = "^net\\.ipv6\\.conf\\.default\\.accept_redirects\\s*=\\s*0\\s*$"
-category = "sysctl"
+check_subtype =  "sysctl"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [kernel_parameters.0025a]
@@ -629,7 +649,7 @@ check_type = "regex"
 file_extension = ".conf"
 parameter = "net.ipv6.conf.default.accept_source_route = 0"
 pattern = "^net\\.ipv6\\.conf\\.default\\.accept_source_route\\s*=\\s*0\\s*$"
-category = "sysctl"
+check_subtype =  "sysctl"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [mount]
@@ -1052,7 +1072,7 @@ valid_os = ["amzn-2023", "ubuntu-22.04"]
 [shell.0001a]
 check_name = "user shell timeout"
 check_type = "regex"
-category = "shell"
+check_subtype =  "shell"
 pattern = "^\\s*TMOUT=(\\d+)"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
@@ -1069,7 +1089,7 @@ check_name = "SSH Access Limited"
 check_type = "regex"
 file_extension = ".conf"
 pattern = "^\\s*(allowusers|allowgroups|denyusers|denygroups)\\s+.+$"
-category = "sshd"
+check_subtype =  "sshd"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [sshd.0003a]
@@ -1077,7 +1097,7 @@ check_name = "SSH AllowTcpForwarding"
 check_type = "regex"
 file_extension = ".conf"
 pattern = "^\\s*AllowTcpForwarding\\s+no"
-category = "sshd"
+check_subtype =  "sshd"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [sshd.0004a]
@@ -1085,7 +1105,7 @@ check_name = "SSH ClientAliveCountMax"
 check_type = "regex"
 file_extension = ".conf"
 pattern = "^\\s*ClientAliveCountMax\\s+[3-9]$"
-category = "sshd"
+check_subtype =  "sshd"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [sshd.0005a]
@@ -1093,7 +1113,7 @@ check_name = "SSH ClientAliveInterval"
 check_type = "regex"
 file_extension = ".conf"
 pattern = "^\\s*ClientAliveInterval\\s+([1-9]|[12][0-9]|30)$"
-category = "sshd"
+check_subtype =  "sshd"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [sshd.0006a]
@@ -1102,7 +1122,7 @@ check_type = "regex"
 file_extension = ".conf"
 pattern = "^\\sCRYPTO_POLICY="
 pattern_exists = false
-category = "sshd"
+check_subtype =  "sshd"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [sshd.0007a]
@@ -1110,7 +1130,7 @@ check_name = "SSH HostbasedAuthentication"
 check_type = "regex"
 file_extension = ".conf"
 pattern = "^\\s*HostbasedAuthentication\\s+no"
-category = "sshd"
+check_subtype =  "sshd"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [sshd.0008a]
@@ -1118,7 +1138,7 @@ check_name = "SSH IgnoreRhosts"
 check_type = "regex"
 file_extension = ".conf"
 pattern = "^\\s*IgnoreRhosts\\s+yes"
-category = "sshd"
+check_subtype =  "sshd"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [sshd.0009a]
@@ -1126,7 +1146,7 @@ check_name = "SSH LoginGraceTime"
 check_type = "regex"
 file_extension = ".conf"
 pattern = "^\\s*LoginGraceTime\\s+(1[6-9]|[2-5][0-9]|60)$"
-category = "sshd"
+check_subtype =  "sshd"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [sshd.0010a]
@@ -1134,7 +1154,7 @@ check_name = "SSH LogLevel"
 check_type = "regex"
 file_extension = ".conf"
 pattern = "^\\s*LogLevel\\s+(VERBOSE|INFO)"
-category = "sshd"
+check_subtype =  "sshd"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [sshd.0011a]
@@ -1142,7 +1162,7 @@ check_name = "SSH MaxAuthTries"
 check_type = "regex"
 file_extension = ".conf"
 pattern = "^\\s*MaxAuthTries\\s+[2-4]$"
-category = "sshd"
+check_subtype =  "sshd"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [sshd.0012a]
@@ -1150,7 +1170,7 @@ check_name = "SSH MaxSessions"
 check_type = "regex"
 file_extension = ".conf"
 pattern = "^\\s*MaxSessions\\s+([1-9]|10)$"
-category = "sshd"
+check_subtype =  "sshd"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [sshd.0013a]
@@ -1158,7 +1178,7 @@ check_name = "SSH MaxStartups"
 check_type = "regex"
 file_extension = ".conf"
 pattern = "^\\s*MaxStartups\\s+10:([0-2]?[0-9]|30):([0-5]?[0-9]|60)$"
-category = "sshd"
+check_subtype =  "sshd"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [sshd.0014a]
@@ -1166,7 +1186,7 @@ check_name = "SSH PermitEmptyPasswords"
 check_type = "regex"
 file_extension = ".conf"
 pattern = "^\\s*PermitEmptyPasswords\\s+no"
-category = "sshd"
+check_subtype =  "sshd"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [sshd.0015a]
@@ -1174,7 +1194,7 @@ check_name = "SSH PermitRootLogin"
 check_type = "regex"
 file_extension = ".conf"
 pattern = "^\\s*PermitRootLogin\\s+no"
-category = "sshd"
+check_subtype =  "sshd"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [sshd.0016a]
@@ -1182,7 +1202,7 @@ check_name = "SSH PermitUserEnvironment"
 check_type = "regex"
 file_extension = ".conf"
 pattern = "^\\s*PermitUserEnvironment\\s+no"
-category = "sshd"
+check_subtype =  "sshd"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [sshd.0017a]
@@ -1190,7 +1210,7 @@ check_name = "SSH UsePAM"
 check_type = "regex"
 file_extension = ".conf"
 pattern = "^\\s*UsePAM\\s+yes"
-category = "sshd"
+check_subtype =  "sshd"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [sshd.0018a]
@@ -1198,7 +1218,7 @@ check_name = "SSH X11Forwarding"
 check_type = "regex"
 file_extension = ".conf"
 pattern = "^\\s*X11Forwarding\\s+no"
-category = "sshd"
+check_subtype =  "sshd"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [sshd.0019a]
@@ -1208,7 +1228,7 @@ expected_uid = 0
 expected_gid = 0
 expected_permissions = 600
 path = "/etc/ssh"
-category = "private"
+check_subtype =  "private"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [sshd.0020a]
@@ -1218,7 +1238,7 @@ expected_uid = 0
 expected_gid = 0
 expected_permissions = 644
 path = "/etc/ssh"
-category = "public"
+check_subtype =  "public"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [sshd.0021a]
@@ -1239,7 +1259,7 @@ valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [selinux.0002a]
 check_name = "selinux boot enabled"
-category = "selinux"
+check_subtype =  "selinux"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [selinux.0003a]
@@ -1247,7 +1267,7 @@ check_name = "selinux enabled"
 check_type = "regex"
 file_extension = ".conf"
 pattern = "^SELINUX=(enforcing|permissive)\\s*$"
-category = "selinux"
+check_subtype =  "selinux"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [selinux.0004a]
@@ -1255,7 +1275,7 @@ check_name = "selinux mode"
 check_type = "regex"
 file_extension = ".conf"
 pattern = "^SELINUX=enforcing\\s*$"
-category = "selinux"
+check_subtype =  "selinux"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [selinux.0005a]
@@ -1263,7 +1283,7 @@ check_name = "selinux policy"
 check_type = "regex"
 file_extension = ".conf"
 pattern = "^SELINUXTYPE=targeted\\s*$"
-category = "selinux"
+check_subtype =  "selinux"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [selinux.0006a]
@@ -1271,7 +1291,7 @@ check_name = "selinux enabled on boot"
 check_type = "regex"
 # file_extension = ".conf"
 pattern = "\b(selinux|enforcing)=0\b"
-# category = "selinux"
+# check_subtype =  "selinux"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [service]
@@ -1350,28 +1370,28 @@ valid_os = ["amzn-2023", "ubuntu-22.04"]
 check_name = "sudo auth timeout"
 check_type = "regex"
 pattern = "^Defaults\\s+timestamp_timeout=15\\s*$"
-category = "sudo"
+check_subtype =  "sudo"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [sudo.0003a]
 check_name = "sudo logging"
 check_type = "regex"
 pattern = "^Defaults\\s+logfile=\"/var/log/sudo.log\"\\s*$"
-category = "sudo"
+check_subtype =  "sudo"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [sudo.0004a]
 check_name = "sudo use_pty"
 check_type = "regex"
 pattern = "^Defaults\\s+use_pty\\s*$"
-category = "sudo"
+check_subtype =  "sudo"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [sudo.0005a]
 check_name = "sudo global re-auth enabled"
 check_type = "regex"
 pattern = "^[^#]*!authenticate"
-category = "sudo"
+check_subtype =  "sudo"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [system]
@@ -1451,7 +1471,7 @@ check_name = "coredump backtraces"
 check_type = "regex"
 file_extension = ".conf"
 pattern = "^ProcessSizeMax\\s*=\\s*0\\s*$"
-category = "coredump"
+check_subtype =  "coredump"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [systemd.0002a]
@@ -1459,7 +1479,7 @@ check_name = "coredump storage"
 check_type = "regex"
 file_extension = ".conf"
 pattern = "^Storage\\s*=\\s*none\\s*$"
-category = "coredump"
+check_subtype =  "coredump"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [systemd.0003a]

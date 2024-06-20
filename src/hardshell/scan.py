@@ -1,10 +1,11 @@
 #########################################################################################
 # Imports
 #########################################################################################
-from src.hardshell.report import Report
 from src.hardshell.common.checks import create_checks
 from src.hardshell.common.common import detect_os
 from src.hardshell.common.config import GlobalConfig, load_config
+from src.hardshell.report import Report
+
 
 def start_scanner():
     detected_os = detect_os()
@@ -26,10 +27,13 @@ def start_scanner():
 
         # Run Checks
         for check in checks:
-            check.run_check(current_os=detected_os, global_config=global_config)
-            if check.check_results:
-                print(f"Check: {check.check_name} - Result: {check.check_results}")
-                report.add_entry(result=check.check_results)
+            # print(f"Running Check: {check.check_name}")
+            # print(check)
+            check.run_check()
+            # check.run_check(current_os=detected_os, global_config=global_config)
+            # if check.check_results:
+            #     print(f"Check: {check.check_name} - Result: {check.check_results}")
+            #     report.add_entry(result=check.check_results)
 
     else:
         print("Unsupported OS")

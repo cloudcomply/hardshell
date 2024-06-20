@@ -15,6 +15,14 @@ classifiers = [
 ]
 keywords = ["hardshell", "harden", "os", "security"]
 
+[tool.black]
+line-length = 88
+
+[tool.isort]
+atomic = true
+profile = "black"
+skip_gitignore = true
+
 [tool.poetry.scripts]
 hardshell = "src.hardshell.main:main"
 
@@ -23,13 +31,15 @@ python = "^3.8"
 click = "^8.1.7"
 toml = "^0.10.2"
 
-[tool.poetry.dev-dependencies]
-pytest = "^7.4"
-
-[tool.poetry.group.dev.dependencies]
+[tool.poetry.group.lint.dependencies]
 black = "^23.9.1"
 isort = "^5.12.0"
+
+[tool.poetry.group.test.dependencies]
+pytest = "^7.4"
 pytest-cov = "^4.1.0"
+pytest-randomly = "^3.15.0"
+tox = "^4.15.1"
 
 [tool.poetry_bumpversion.file."src/hardshell/__init__.py"]
 search = '__version__ = "{current_version}"'
@@ -39,11 +49,9 @@ replace = '__version__ = "{new_version}"'
 search = 'assert __version__ == "{current_version}"'
 replace = 'assert __version__ == "{new_version}"'
 
-[tool.black]
-line-length = 79
+[tool.pytest.ini_options]
 
-[tool.isort]
-profile = "black"
+
 
 [build-system]
 requires = ["poetry-core"]

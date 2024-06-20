@@ -87,13 +87,9 @@ def check_accounts(check):
                     fields = line.strip().split(":")
                     if fields[0] == user:
                         last_change = int(fields[2])
-                        return datetime.fromtimestamp(
-                            last_change * 24 * 60 * 60
-                        )
+                        return datetime.fromtimestamp(last_change * 24 * 60 * 60)
         except Exception as e:
-            print(
-                f"Error retrieving last password change date for {user}: {e}"
-            )
+            print(f"Error retrieving last password change date for {user}: {e}")
         return None
 
     def read_uid_min():
@@ -148,9 +144,7 @@ def check_accounts(check):
                 with open("/etc/shadow", "r") as f:
                     for line in f:
                         fields = line.strip().split(":")
-                        if fields[0] == user and not fields[1].startswith(
-                            ("!", "*")
-                        ):
+                        if fields[0] == user and not fields[1].startswith(("!", "*")):
                             disabled_accounts.append(user)
         except Exception as e:
             print(f"Error checking disabled accounts: {e}")
@@ -207,16 +201,10 @@ def check_accounts(check):
     )
     set_result(check, "user names", "duplicate", not duplicates["user_names"])
     set_result(check, "user uids", "duplicate", not duplicates["user_uids"])
-    set_result(
-        check, "group names", "duplicate", not duplicates["group_names"]
-    )
+    set_result(check, "group names", "duplicate", not duplicates["group_names"])
     set_result(check, "group gids", "duplicate", not duplicates["group_gids"])
-    set_result(
-        check, "root uid unique", "root uid unique", root_uid_count == 1
-    )
-    set_result(
-        check, "all group names exist", "group existence", not missing_groups
-    )
+    set_result(check, "root uid unique", "root uid unique", root_uid_count == 1)
+    set_result(check, "all group names exist", "group existence", not missing_groups)
     set_result(
         check,
         "all users' last password change date is in the past",
@@ -239,108 +227,106 @@ def check_accounts(check):
 
 
 # TODO Check logic
-def check_module(check):
-    blacklisted_check = check_module_blacklisted(check.check_name)
-    denied_check = check_module_denied(check.check_name)
-    loadable_check = check_module_loadable(check.check_name)
-    loaded_check = check_module_loaded(check.check_name)
+# def check_module(check):
+#     blacklisted_check = check_module_blacklisted(check.check_name)
+#     denied_check = check_module_denied(check.check_name)
+#     loadable_check = check_module_loadable(check.check_name)
+#     loaded_check = check_module_loaded(check.check_name)
 
-    set_result(
-        check=check,
-        name=check.check_name,
-        check_type=f"{check.check_type} blacklisted",
-        actual=blacklisted_check,
-        expected=check.module_blacklisted,
-    )
-    set_result(
-        check=check,
-        name=check.check_name,
-        check_type=f"{check.check_type} denied",
-        actual=denied_check,
-        expected=check.module_denied,
-    )
-    set_result(
-        check=check,
-        name=check.check_name,
-        check_type=f"{check.check_type} loadable",
-        actual=loadable_check,
-        expected=check.module_loadable,
-    )
-    set_result(
-        check=check,
-        name=check.check_name,
-        check_type=f"{check.check_type} loaded",
-        actual=loaded_check,
-        expected=check.module_loaded,
-    )
-
-
-# TODO Convert to regex
-def check_module_blacklisted(module_name):
-    try:
-        blacklist_result = subprocess.run(
-            ["grep", "-r", f"blacklist {module_name}", "/etc/modprobe.d/"],
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-            text=True,
-        )
-        blacklist_output = blacklist_result.stdout.lower()
-        return "blacklist" in blacklist_output
-    except subprocess.CalledProcessError as e:
-        print(f"Error checking if module {module_name} is denied: {e.stderr}")
-        return False
+#     set_result(
+#         check=check,
+#         name=check.check_name,
+#         check_type=f"{check.check_type} blacklisted",
+#         actual=blacklisted_check,
+#         expected=check.module_blacklisted,
+#     )
+#     set_result(
+#         check=check,
+#         name=check.check_name,
+#         check_type=f"{check.check_type} denied",
+#         actual=denied_check,
+#         expected=check.module_denied,
+#     )
+#     set_result(
+#         check=check,
+#         name=check.check_name,
+#         check_type=f"{check.check_type} loadable",
+#         actual=loadable_check,
+#         expected=check.module_loadable,
+#     )
+#     set_result(
+#         check=check,
+#         name=check.check_name,
+#         check_type=f"{check.check_type} loaded",
+#         actual=loaded_check,
+#         expected=check.module_loaded,
+#     )
 
 
-# TODO Convert to regex
-def check_module_denied(module_name):
-    try:
-        install_result = subprocess.run(
-            [
-                "grep",
-                "-r",
-                f"install {module_name} /bin/false",
-                "/etc/modprobe.d/",
-            ],
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-            text=True,
-        )
-        install_output = install_result.stdout.lower()
-        return module_name.lower() in install_output
-    except subprocess.CalledProcessError as e:
-        print(f"Error checking if module {module_name} is denied: {e.stderr}")
-        return False
+# # TODO Convert to regex
+# def check_module_blacklisted(module_name):
+#     try:
+#         blacklist_result = subprocess.run(
+#             ["grep", "-r", f"blacklist {module_name}", "/etc/modprobe.d/"],
+#             stdout=subprocess.PIPE,
+#             stderr=subprocess.PIPE,
+#             text=True,
+#         )
+#         blacklist_output = blacklist_result.stdout.lower()
+#         return "blacklist" in blacklist_output
+#     except subprocess.CalledProcessError as e:
+#         print(f"Error checking if module {module_name} is denied: {e.stderr}")
+#         return False
 
 
-def check_module_loadable(module_name):
-    try:
-        result = subprocess.run(
-            # ["sudo", "modprobe", module_name],
-            ["modprobe", module_name],
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-            text=True,
-        )
-        return result.returncode == 0
-    except subprocess.CalledProcessError as e:
-        print(
-            f"Error checking if module {module_name} is loadable: {e.stderr}"
-        )
-        return False
+# # TODO Convert to regex
+# def check_module_denied(module_name):
+#     try:
+#         install_result = subprocess.run(
+#             [
+#                 "grep",
+#                 "-r",
+#                 f"install {module_name} /bin/false",
+#                 "/etc/modprobe.d/",
+#             ],
+#             stdout=subprocess.PIPE,
+#             stderr=subprocess.PIPE,
+#             text=True,
+#         )
+#         install_output = install_result.stdout.lower()
+#         return module_name.lower() in install_output
+#     except subprocess.CalledProcessError as e:
+#         print(f"Error checking if module {module_name} is denied: {e.stderr}")
+#         return False
 
 
-def check_module_loaded(module_name):
-    try:
-        result = subprocess.run(
-            ["lsmod"],
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-            text=True,
-        )
-        return module_name in result.stdout
-    except subprocess.CalledProcessError as e:
-        print(f"Error checking if module {module_name} is loaded: {e.stderr}")
-        return False
+# def check_module_loadable(module_name):
+#     try:
+#         result = subprocess.run(
+#             # ["sudo", "modprobe", module_name],
+#             ["modprobe", module_name],
+#             stdout=subprocess.PIPE,
+#             stderr=subprocess.PIPE,
+#             text=True,
+#         )
+#         return result.returncode == 0
+#     except subprocess.CalledProcessError as e:
+#         print(f"Error checking if module {module_name} is loadable: {e.stderr}")
+#         return False
+
+
+# def check_module_loaded(module_name):
+#     try:
+#         result = subprocess.run(
+#             ["lsmod"],
+#             stdout=subprocess.PIPE,
+#             stderr=subprocess.PIPE,
+#             text=True,
+#         )
+#         return module_name in result.stdout
+#     except subprocess.CalledProcessError as e:
+#         print(f"Error checking if module {module_name} is loaded: {e.stderr}")
+#         return False
 
 
 def check_mount(check):
@@ -507,9 +493,7 @@ def check_package(check, current_os, global_config):
                 )
 
         except subprocess.CalledProcessError as e:
-            print(
-                f"Error checking if package {check.package_name} is installed: {e}"
-            )
+            print(f"Error checking if package {check.package_name} is installed: {e}")
     else:
         print(f"No configuration found for OS: {os_name}")
 
@@ -581,8 +565,7 @@ def check_path(check):
 def check_regex(check, global_config):
     pattern_found = False
     pattern_line = ""
-
-    if check.category is not None:
+    if check.check_subtype is not None:
         paths = get_config_mapping(check, global_config)
         for path in paths:
             if os.path.isfile(path):
@@ -655,7 +638,7 @@ def check_ssh_keys(check):
     files = [
         f
         for f in paths
-        if os.path.isfile(f) and detect_openssh_key(f) == check.category
+        if os.path.isfile(f) and detect_openssh_key(f) == check.check_subtype
     ]
 
     for file in files:
@@ -682,15 +665,12 @@ def check_ssh_keys(check):
 
 def check_unconfined_services(check):
     unconfined_services = []
-
-    # List all process IDs in the /proc directory
     for pid in os.listdir("/proc"):
         if pid.isdigit():
             try:
                 # Read the SELinux security context for the process
                 with open(f"/proc/{pid}/attr/current", "r") as f:
                     selinux_context = f.read().strip()
-
                 # Check if the context contains 'unconfined_service_t'
                 if "unconfined_service_t" in selinux_context:
                     with open(f"/proc/{pid}/comm", "r") as comm_file:
@@ -859,7 +839,3 @@ def check_command(check):
     except FileNotFoundError as e:
         # print(f"Error running command: {e}")
         pass
-
-
-def test_command():
-    pass

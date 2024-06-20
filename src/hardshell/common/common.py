@@ -5,6 +5,7 @@ import platform
 import re
 from pathlib import Path
 from typing import Callable, Dict, Union
+
 from src.hardshell import __name__, __version__
 
 
@@ -143,7 +144,7 @@ def find_pattern_in_file(path, pattern):
 
 
 def get_config_mapping(check, global_config):
-    attribute_path = config_mapping.get(check.category)
+    attribute_path = config_mapping.get(check.check_subtype)
     if attribute_path:
         attrs = attribute_path.split(".")
         value = global_config
@@ -214,6 +215,7 @@ config_mapping = {
     "chrony": "config_files.chrony",
     "coredump": "config_files.coredump",
     "crypto-policies": "config_files.crypto_policies",
+    "gpg": "config_files.gpg",
     "selinux": "config_files.selinux",
     "shell": "config_files.shell",
     "sshd": "config_files.sshd",
