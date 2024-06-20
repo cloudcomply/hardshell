@@ -1,4 +1,4 @@
 # hardshell/__init__.py
 
 __name__ = "hardshell"
-__version__ = "0.1.4"
+__version__ = "0.5.0"

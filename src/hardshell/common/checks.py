@@ -12,6 +12,7 @@ def create_checks(config):
                     check_id=check,
                     check_name=config[system_check][check].get("check_name"),
                     check_type=config[system_check][check].get("check_type"),
+                    command=config[system_check][check].get("command"),
                     depends_on=config[system_check][check].get("depends_on"),
                     expected_gid=config[system_check][check].get(
                         "expected_gid"

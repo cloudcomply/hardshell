@@ -2,6 +2,7 @@ from dataclasses import dataclass, field
 from typing import List, Optional
 from src.hardshell.linux import (
     check_accounts,
+    check_command,
     check_module,
     check_mount,
     check_package,
@@ -9,6 +10,7 @@ from src.hardshell.linux import (
     check_regex,
     check_service,
     check_ssh_keys,
+    check_unconfined_services,
     # check_test,
 )
 
@@ -21,6 +23,7 @@ class SystemCheck:
     check_name: Optional[str] = None
     check_results: List[str] = field(default_factory=list)
     check_type: Optional[str] = None
+    command: Optional[str] = None
     depends_on: Optional[List[str]] = field(default_factory=list)
     expected_gid: Optional[int] = None
     expected_output: Optional[str] = None
@@ -62,45 +65,53 @@ class SystemCheck:
                 # print(f"Check Type: {self.check_type}")
                 if self.check_type == "accounts":
                     # print(self.check_name)
-                    check_accounts(self)
+                    # check_accounts(self)
+                    pass
+                elif self.check_type == "command":
+                    # print(self.check_name)
+                    # check_command(self)
                     pass
                 elif self.check_type == "kernel-module":
                     # FINISHED
                     # print(self.check_name)
-                    check_module(self)
+                    # check_module(self)
                     pass
                 elif self.check_type == "mount":
                     # FINISHED
                     # print(self.check_name)
-                    check_mount(self)
+                    # check_mount(self)
                     pass
                 elif self.check_type == "package":
                     # FINISHED
                     # print(self.check_name)
-                    check_package(self, current_os, global_config)
+                    # check_package(self, current_os, global_config)
                     pass
                 elif self.check_type == "path":
                     # FINISHED
                     # print(self.check_name)
-                    check_path(self)
+                    # check_path(self)
                     pass
                 elif self.check_type == "regex":
                     # FINISHED
                     # print(self.check_name)
-                    check_regex(self, global_config)
+                    # check_regex(self, global_config)
                     pass
                 elif self.check_type == "service":
                     # FINISHED
                     # print(self.check_name)
-                    check_service(self)
+                    # check_service(self)
                     pass
                 elif self.check_type == "ssh-keys":
                     # print(self.check_name)
-                    check_ssh_keys(self)
+                    # check_ssh_keys(self)
                     pass
                 elif self.check_type == "test":
                     # print(self.check_name)
                     # check_test(self)
+                    pass
+                elif self.check_type == "unconfined-services":
+                    # print(self.check_name)
+                    check_unconfined_services(self)
                     pass
             else:
                 print("Check Not Supported")

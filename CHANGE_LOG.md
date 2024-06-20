@@ -1,31 +1,46 @@
 # Change Log
 
+## 0.5.0 (TBD)
+
+### Added
+
+- Added many more checks for Audit mode.
+- Added new docs using readthedocs.io
+
+### Updated
+
+- Updated many functions for how checks are processed.
+
+### Removed
+
+- Hardening (for now. will be added back in a future release.)
+
 ## 0.1.3 (2023-09-29)
 
 ### Added
 
--   Started docs
+- Started docs
 
 ### Updated
 
--   Updated CLI Interface
--   Changed Config to have individual checks instead of groupings
--   Updated Compliance for CIS, MITRE, and Sources
--   Add Check IDs but not final yet
--   Added better output for CLI and logging, Centralized logging
--   Added framework for reporting
+- Updated CLI Interface
+- Changed Config to have individual checks instead of groupings
+- Updated Compliance for CIS, MITRE, and Sources
+- Add Check IDs but not final yet
+- Added better output for CLI and logging, Centralized logging
+- Added framework for reporting
 
 ## 0.1.3 (2023-09-18)
 
 ### Added
 
--   Filesystem Harden Commands
+- Filesystem Harden Commands
 
 ### Updated
 
--   Filesystem Audit Checks
--   Config File
--   Config File Generation
+- Filesystem Audit Checks
+- Config File
+- Config File Generation
 
 ---
 
@@ -33,9 +48,9 @@
 
 ### Added
 
--   Filesystem Audit Checks
--   Config File Generation
--   Config File
+- Filesystem Audit Checks
+- Config File Generation
+- Config File
 
 ---
 
@@ -43,10 +58,10 @@
 
 ### Added
 
--   GitHub Repo
--   GitHub Action for Tests/Coverage
--   GitHub Action for Release to PyPi
--   Initial CLI Configuration
+- GitHub Repo
+- GitHub Action for Tests/Coverage
+- GitHub Action for Release to PyPi
+- Initial CLI Configuration
 
 ---
 

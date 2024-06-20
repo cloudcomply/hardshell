@@ -1,7 +1,7 @@
 import glob
 import os
-import re
 import subprocess
+from datetime import datetime
 from src.hardshell.common.common import (
     find_pattern_in_directory,
     find_pattern_in_file,
@@ -12,7 +12,7 @@ from src.hardshell.common.common import (
 
 def check_accounts(check):
     user_names, user_uids, group_names, group_gids = set(), set(), set(), set()
-    cleartext_pw = {"user_names": []}
+    cleartext_pw_users = []
     duplicates = {
         "group_names": [],
         "user_names": [],
@@ -23,35 +23,56 @@ def check_accounts(check):
     existing_group_names = set()
     shadowed_passwords = set()
     missing_shadowed_passwords = []
+    users_with_future_changes = []
+    missing_groups = []
+    uid_min = 1000  # Default value, to be read from /etc/login.defs
 
-    def process_line(line, is_passwd=True):
+    def process_passwd_line(line):
         nonlocal root_uid_count
-        fields = line.strip().split(":")
-        if is_passwd:
-            user_name, user_pass, user_uid, user_gid = (
-                fields[0],
-                fields[1],
-                fields[2],
-                fields[3],
-            )
-            if user_name == "root":
-                set_result(check, "root uid", "root uid", user_uid == "0")
-                set_result(check, "root gid", "root gid", user_gid == "0")
-            if user_uid == "0":
-                root_uid_count += 1
-            if user_pass not in {"x", "*"}:
-                cleartext_pw["user_names"].append(user_name)
-            check_duplicates(user_name, user_names, duplicates["user_names"])
-            check_duplicates(user_uid, user_uids, duplicates["user_uids"])
+        user_name, user_pass, user_uid, user_gid = line.strip().split(":")[:4]
 
-            if user_gid not in existing_group_names:
-                group_gids.add(user_gid)
-            shadowed_passwords.add(user_name)
-        else:
-            group_name, group_gid = fields[0], fields[2]
-            existing_group_names.add(group_gid)
-            check_duplicates(group_name, group_names, duplicates["group_names"])
-            check_duplicates(group_gid, group_gids, duplicates["group_gids"])
+        if user_name == "root":
+            set_result(check, "root uid", "root uid", user_uid == "0")
+            set_result(check, "root gid", "root gid", user_gid == "0")
+
+        if user_uid == "0":
+            root_uid_count += 1
+
+        if user_pass not in {"x", "*"}:
+            cleartext_pw_users.append(user_name)
+
+        check_duplicates(user_name, user_names, duplicates["user_names"])
+        check_duplicates(user_uid, user_uids, duplicates["user_uids"])
+
+        if user_gid not in existing_group_names:
+            group_gids.add(user_gid)
+
+        shadowed_passwords.add(user_name)
+
+    def process_group_line(line):
+        group_name, group_gid = (
+            line.strip().split(":")[0],
+            line.strip().split(":")[2],
+        )
+        existing_group_names.add(group_gid)
+        check_duplicates(group_name, group_names, duplicates["group_names"])
+        check_duplicates(group_gid, group_gids, duplicates["group_gids"])
+
+    def process_shadow_line(line):
+        user_name, shadowed_pass = line.strip().split(":")[:2]
+
+        if user_name in shadowed_passwords and (
+            not shadowed_pass or shadowed_pass == ""
+        ):
+            missing_shadowed_passwords.append(user_name)
+
+        if (
+            shadowed_pass not in ("!", "*")
+            and user_name not in missing_shadowed_passwords
+        ):
+            last_change_date = get_last_password_change(user_name)
+            if last_change_date and last_change_date > datetime.now():
+                users_with_future_changes.append(user_name)
 
     def check_duplicates(item, item_set, duplicate_list):
         if item in item_set:
@@ -59,34 +80,124 @@ def check_accounts(check):
         else:
             item_set.add(item)
 
+    def get_last_password_change(user):
+        try:
+            with open("/etc/shadow", "r") as f:
+                for line in f:
+                    fields = line.strip().split(":")
+                    if fields[0] == user:
+                        last_change = int(fields[2])
+                        return datetime.fromtimestamp(
+                            last_change * 24 * 60 * 60
+                        )
+        except Exception as e:
+            print(
+                f"Error retrieving last password change date for {user}: {e}"
+            )
+        return None
+
+    def read_uid_min():
+        nonlocal uid_min
+        try:
+            with open("/etc/login.defs", "r") as f:
+                for line in f:
+                    if line.startswith("UID_MIN"):
+                        uid_min = int(line.split()[1])
+                        break
+        except Exception as e:
+            print(f"Error reading UID_MIN from /etc/login.defs: {e}")
+
+    def check_system_accounts():
+        critical_accounts = []
+        try:
+            with open("/etc/passwd", "r") as f:
+                for line in f:
+                    fields = line.strip().split(":")
+                    user_name, user_uid, shell = (
+                        fields[0],
+                        int(fields[2]),
+                        fields[6],
+                    )
+                    if (
+                        user_name
+                        not in {
+                            "root",
+                            "halt",
+                            "sync",
+                            "shutdown",
+                            "nfsnobody",
+                        }
+                        and (user_uid < uid_min or user_uid == 65534)
+                        and not shell.endswith("nologin")
+                    ):
+                        critical_accounts.append(user_name)
+        except Exception as e:
+            print(f"Error checking system accounts: {e}")
+        return critical_accounts
+
+    def check_disabled_accounts():
+        disabled_accounts = []
+        try:
+            with open("/etc/passwd", "r") as f:
+                nologin_users = [
+                    line.split(":")[0]
+                    for line in f
+                    if line.strip().split(":")[6].endswith("nologin")
+                ]
+            for user in nologin_users:
+                with open("/etc/shadow", "r") as f:
+                    for line in f:
+                        fields = line.strip().split(":")
+                        if fields[0] == user and not fields[1].startswith(
+                            ("!", "*")
+                        ):
+                            disabled_accounts.append(user)
+        except Exception as e:
+            print(f"Error checking disabled accounts: {e}")
+        return disabled_accounts
+
+    def check_root_password():
+        try:
+            with open("/etc/shadow", "r") as f:
+                for line in f:
+                    fields = line.strip().split(":")
+                    if fields[0] == "root":
+                        shadowed_pass = fields[1]
+                        if shadowed_pass in ("!", "*", "*LOCK*"):
+                            return True
+                        elif len(shadowed_pass) > 0:
+                            return True
+                        return False
+        except Exception as e:
+            print(f"Error checking root password: {e}")
+            return False
+
+    read_uid_min()
+
     with open("/etc/group", "r") as f:
         for line in f:
-            process_line(line, is_passwd=False)
+            process_group_line(line)
 
-    missing_groups = []
     with open("/etc/passwd", "r") as f:
         for line in f:
-            fields = line.strip().split(":")
-            user_gid = fields[3]
+            user_gid = line.strip().split(":")[3]
             if user_gid not in group_gids:
                 missing_groups.append(user_gid)
-            process_line(line, is_passwd=True)
+            process_passwd_line(line)
 
     with open("/etc/shadow", "r") as f:
         for line in f:
-            fields = line.strip().split(":")
-            user_name = fields[0]
-            shadowed_pass = fields[1]
-            if user_name in shadowed_passwords and (
-                not shadowed_pass or shadowed_pass == ""
-            ):
-                missing_shadowed_passwords.append(user_name)
+            process_shadow_line(line)
+
+    system_accounts = check_system_accounts()
+    disabled_accounts = check_disabled_accounts()
+    root_password_set = check_root_password()
 
     set_result(
         check,
         "user uses shadowed password",
         "password",
-        not cleartext_pw["user_names"],
+        not cleartext_pw_users,
     )
     set_result(
         check,
@@ -96,12 +207,35 @@ def check_accounts(check):
     )
     set_result(check, "user names", "duplicate", not duplicates["user_names"])
     set_result(check, "user uids", "duplicate", not duplicates["user_uids"])
-    set_result(check, "group names", "duplicate", not duplicates["group_names"])
+    set_result(
+        check, "group names", "duplicate", not duplicates["group_names"]
+    )
     set_result(check, "group gids", "duplicate", not duplicates["group_gids"])
-    set_result(check, "root uid unique", "root uid unique", root_uid_count == 1)
+    set_result(
+        check, "root uid unique", "root uid unique", root_uid_count == 1
+    )
     set_result(
         check, "all group names exist", "group existence", not missing_groups
     )
+    set_result(
+        check,
+        "all users' last password change date is in the past",
+        "password change",
+        not users_with_future_changes,
+    )
+    set_result(
+        check,
+        "critical system accounts secured",
+        "system accounts",
+        not system_accounts,
+    )
+    set_result(
+        check,
+        "nologin accounts passwords disabled",
+        "disabled accounts",
+        not disabled_accounts,
+    )
+    set_result(check, "root password set", "root password", root_password_set)
 
 
 # TODO Check logic
@@ -189,14 +323,19 @@ def check_module_loadable(module_name):
         )
         return result.returncode == 0
     except subprocess.CalledProcessError as e:
-        print(f"Error checking if module {module_name} is loadable: {e.stderr}")
+        print(
+            f"Error checking if module {module_name} is loadable: {e.stderr}"
+        )
         return False
 
 
 def check_module_loaded(module_name):
     try:
         result = subprocess.run(
-            ["lsmod"], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True
+            ["lsmod"],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
         )
         return module_name in result.stdout
     except subprocess.CalledProcessError as e:
@@ -267,7 +406,14 @@ def check_mount_point(path):
     """Check if the path is a mount point, including bind mounts."""
     try:
         result = subprocess.run(
-            ["findmnt", "--target", path, "--output", "TARGET", "--noheadings"],
+            [
+                "findmnt",
+                "--target",
+                path,
+                "--output",
+                "TARGET",
+                "--noheadings",
+            ],
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
             text=True,
@@ -431,6 +577,7 @@ def check_path(check):
         )
 
 
+# TODO Maybe logic problem?
 def check_regex(check, global_config):
     pattern_found = False
     pattern_line = ""
@@ -533,6 +680,37 @@ def check_ssh_keys(check):
         )
 
 
+def check_unconfined_services(check):
+    unconfined_services = []
+
+    # List all process IDs in the /proc directory
+    for pid in os.listdir("/proc"):
+        if pid.isdigit():
+            try:
+                # Read the SELinux security context for the process
+                with open(f"/proc/{pid}/attr/current", "r") as f:
+                    selinux_context = f.read().strip()
+
+                # Check if the context contains 'unconfined_service_t'
+                if "unconfined_service_t" in selinux_context:
+                    with open(f"/proc/{pid}/comm", "r") as comm_file:
+                        process_name = comm_file.read().strip()
+                    unconfined_services.append((pid, process_name))
+            except FileNotFoundError:
+                continue
+            except PermissionError:
+                continue
+            except Exception as e:
+                pass
+
+    set_result(
+        check=check,
+        name=check.check_name,
+        check_type=f"{check.check_type}",
+        actual=not unconfined_services,
+    )
+
+
 def detect_openssh_key(path):
     """
     Detect if a file is an OpenSSH private or public key.
@@ -596,7 +774,14 @@ def get_mount_point_device(path):
     """Get the device associated with the mount point."""
     try:
         result = subprocess.run(
-            ["findmnt", "--target", path, "--output", "SOURCE", "--noheadings"],
+            [
+                "findmnt",
+                "--target",
+                path,
+                "--output",
+                "SOURCE",
+                "--noheadings",
+            ],
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
             text=True,
@@ -641,3 +826,40 @@ def set_result(check, name, check_type, actual, expected=None):
     else:
         result = "pass" if actual else "fail"
     check.set_result({"name": name, "check": check_type, "result": result})
+
+
+# TODO Fix this
+def check_command(check):
+    print("Checking command")
+    print(check.command)
+    print(list(check.command.split()))
+
+    cmd = list(check.command.split())
+
+    try:
+        result = subprocess.run(cmd, capture_output=True, text=True)
+
+        print(result)
+
+    # if result.returncode == 0 and len(result.stdout) > 0:
+    #     set_result(
+    #         check=check,
+    #         name=check.check_name,
+    #         check_type=f"{check.check_type}",
+    #         actual=True,
+    #     )
+    # else:
+    #     set_result(
+    #         check=check,
+    #         name=check.check_name,
+    #         check_type=f"{check.check_type}",
+    #         actual=False,
+    #     )
+
+    except FileNotFoundError as e:
+        # print(f"Error running command: {e}")
+        pass
+
+
+def test_command():
+    pass

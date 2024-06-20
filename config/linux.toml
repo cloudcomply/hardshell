@@ -4,6 +4,20 @@ check_name = "accounts"
 check_type = "accounts"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
+[accounts.0002a]
+check_name = "default user inactive setting"
+check_type = "regex"
+path = "/etc/default/useradd"
+pattern = "^INACTIVE\\s+=\\s+30"
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[accounts.0003a]
+check_name = "current user inactive setting"
+check_type = "regex"
+path = "/etc/shadow"
+pattern = "^[^:]+:[^:]*:[^:]*:[^:]*:[^:]*:[^:]*:30:"
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
 [aide]
 [aide.0001a]
 check_name = "aide package"
@@ -99,8 +113,7 @@ valid_os = ["amzn-2023", "ubuntu-22.04"]
 check_name = "bootloader efi"
 check_type = "path"
 check_files = false
-# path = "/boot/efi/EFI"
-path = "/boottest/boottest1"
+path = "/boot/efi/EFI"
 path_exists = true
 expected_perms = [0, 0, 700]
 valid_os = ["amzn-2023", "ubuntu-22.04"]
@@ -109,19 +122,11 @@ valid_os = ["amzn-2023", "ubuntu-22.04"]
 check_name = "bootloader grub2"
 check_type = "path"
 check_files = true
-# path = "/boot/grub2"
-path = "/boottest/boottest2"
+path = "/boot/grub2"
 path_exists = true
 expected_perms = [0, 0, 600]
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
-[bootloader.0003a]
-check_name = "bootloader test file"
-check_type = "path"
-path = "/boottest/boottest3"
-path_exists = true
-expected_perms = [0, 0, 600]
-valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [chrony]
 [chrony.0001a]
@@ -1261,6 +1266,14 @@ pattern = "^SELINUXTYPE=targeted\\s*$"
 category = "selinux"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
+[selinux.0006a]
+check_name = "selinux enabled on boot"
+check_type = "regex"
+# file_extension = ".conf"
+pattern = "\b(selinux|enforcing)=0\b"
+# category = "selinux"
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
 [service]
 [service.0003a]
 check_name = "avahi-daemon.service"
@@ -1354,6 +1367,13 @@ pattern = "^Defaults\\s+use_pty\\s*$"
 category = "sudo"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
+[sudo.0005a]
+check_name = "sudo global re-auth enabled"
+check_type = "regex"
+pattern = "^[^#]*!authenticate"
+category = "sudo"
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
 [system]
 [system.0011a]
 check_name = "/etc/group"
@@ -1419,6 +1439,12 @@ path_exists = true
 expected_perms = [0, 0, 0]
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
+[system.0022a]
+check_name = "unconfined services"
+check_type = "unconfined-services"
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+
 [systemd]
 [systemd.0001a]
 check_name = "coredump backtraces"
@@ -1434,4 +1460,15 @@ check_type = "regex"
 file_extension = ".conf"
 pattern = "^Storage\\s*=\\s*none\\s*$"
 category = "coredump"
+valid_os = ["amzn-2023", "ubuntu-22.04"]
+
+[systemd.0003a]
+check_name = "system reboot required"
+check_type = "command"
+command = "needs-restarting -r"
+# command = "apt-get -s upgrade"
+# command = "wget"
+# command = "which"
+# command = "echo needs-restarting -r"
+pattern = "^(?!.*0 upgraded).*"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
