@@ -14,7 +14,13 @@ crypto_policies = [
 ]
 gpg = [
     "/etc/dnf/dnf.conf",
-    "/etc/yum.repos.d/",
+    "/etc/yum.repos.d",
+]
+kernel = [
+    "/etc/modprobe.d/*.conf",
+    "/lib/modprobe.d/*.conf",
+    "/run/modprobe.d/*.conf",
+    "/usr/local/lib/modprobe.d/*.conf",
 ]
 selinux = ["/etc/selinux/config"]
 shell = ["/etc/profile", "/etc/profile.d", "/etc/bashrc"]

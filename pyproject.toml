@@ -27,9 +27,13 @@ skip_gitignore = true
 hardshell = "src.hardshell.main:main"
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = ">=3.8,<3.13"
 click = "^8.1.7"
 toml = "^0.10.2"
+pystemd = "^0.13.2"
+
+[tool.poetry.group.exe.dependencies]
+pyinstaller = "^6.8.0"
 
 [tool.poetry.group.lint.dependencies]
 black = "^23.9.1"
@@ -50,8 +54,6 @@ search = 'assert __version__ == "{current_version}"'
 replace = 'assert __version__ == "{new_version}"'
 
 [tool.pytest.ini_options]
-
-
 
 [build-system]
 requires = ["poetry-core"]

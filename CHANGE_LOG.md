@@ -5,11 +5,14 @@
 ### Added
 
 - Added many more checks for Audit mode.
-- Added new docs using readthedocs.io
+- Added new docs using readthedocs.io.
+- Added basic logging.
+- Added basic reporting.
 
 ### Updated
 
 - Updated many functions for how checks are processed.
+- Changed to classes for checks instead of raw functions.
 
 ### Removed
 
