@@ -168,3 +168,4 @@ cython_debug/
 docs/build/*
 run.sh
 linecount.py
+report.txt
