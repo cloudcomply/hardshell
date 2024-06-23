@@ -1,12 +1,15 @@
 from dataclasses import dataclass
-
-import apt
-
-# import dnf
-
 from src.hardshell.checks.base import BaseCheck
 from src.hardshell.common.common import log_and_print
-from src.hardshell.common.dnf import installed
+import distro
+
+pkg_mgr_apt = ["ubuntu"]
+pkg_mgr_dnf = ["amzn"]
+
+if distro.id() in pkg_mgr_apt:
+    import apt
+elif distro.id() in pkg_mgr_dnf:
+    from src.hardshell.common.dnf import installed
 
 
 @dataclass
@@ -47,9 +50,10 @@ class PackageCheck(BaseCheck):
 
     def check_dnf(self):
         try:
-            pkg_installed = installed(self.package_name)
+            pass
+            # pkg_installed = installed(self.package_name)
 
-            print(pkg_installed)
+            # print(pkg_installed)
         except Exception as e:
             log_and_print(f"An error occurred: {str(e)}")
         # except KeyError:
@@ -59,8 +63,14 @@ class PackageCheck(BaseCheck):
 
     def run_check(self, current_os, global_config):
         log_and_print(f"Checking package {self.package_name}")
-        pkg_mgr_apt = ["ubuntu"]
-        pkg_mgr_dnf = ["amzn"]
+
+        # result = distro.id()  # ubuntu
+        # result = distro.name() # Ubuntu
+        # result = distro.version()  # 22.04
+        # result = distro.like() # debian
+        # result = (
+        #     distro.info()
+        # )  # {'id': 'ubuntu', 'version': '22.04', 'version_parts': {'major': '22', 'minor': '04', 'build_number': ''}, 'like': 'debian', 'codename': 'jammy'}
 
         if current_os["id"] in pkg_mgr_apt:
             log_and_print(f"Package manager is apt")
