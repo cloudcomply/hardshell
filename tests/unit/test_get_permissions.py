@@ -1,5 +1,7 @@
-import pytest
 from unittest.mock import patch
+
+import pytest
+
 from src.hardshell.linux import get_permissions as get_permissions_linux
 
 

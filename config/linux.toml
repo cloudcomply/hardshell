@@ -86,7 +86,7 @@ check_name = "authselect package"
 check_type = "package"
 package_name = "authselect"
 package_installed = false
-valid_os = ["amzn-2023", "ubuntu-22.04"]
+valid_os = ["amzn-2023"]
 
 [banner]
 [banner.0001a]
@@ -166,7 +166,7 @@ check_name = "cronie package"
 check_type = "package"
 package_name = "cronie"
 package_installed = true
-valid_os = ["amzn-2023", "ubuntu-22.04"]
+valid_os = ["amzn-2023"]
 
 [cron.0002a]
 check_name = "crond"
@@ -1097,7 +1097,7 @@ check_name = "libselinux package"
 check_type = "package"
 package_name = "libselinux"
 package_installed = true
-valid_os = ["amzn-2023", "ubuntu-22.04"]
+valid_os = ["amzn-2023"]
 
 [selinux.0002a]
 check_name = "selinux boot enabled"

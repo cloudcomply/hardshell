@@ -2,7 +2,7 @@
 # Imports
 #########################################################################################
 from src.hardshell.common.checks import create_checks
-from src.hardshell.common.common import detect_os
+from src.hardshell.common.common import detect_os, log_and_print
 from src.hardshell.common.config import GlobalConfig, load_config
 from src.hardshell.common.report import Report
 
@@ -20,18 +20,19 @@ def start_scanner():
         # checks_config = Config.from_toml(checks_config_path)
 
         # Create Checks
-        checks = create_checks(checks_config)
+        checks = create_checks(checks_config, current_os=detected_os)
 
         # Create Report
         report = Report("Hardshell Report")
 
         # Run Checks
         for check in checks:
-            print(f"Running Check: {check.check_name}")
-            # print(check)
+            log_and_print(f"Running Check: {check.check_name}")
             check.run_check(current_os=detected_os, global_config=global_config)
             if check.check_results:
-                print(f"Check: {check.check_name} - Result: {check.check_results}")
+                log_and_print(
+                    f"Check: {check.check_name} - Result: {check.check_results}"
+                )
                 for result in check.check_results:
                     report.add_entry(result=result)
 
@@ -39,5 +40,5 @@ def start_scanner():
         report.export_to_txt("report.txt")
 
     else:
-        print("Unsupported OS")
+        log_and_print("Unsupported OS")
         exit(1)

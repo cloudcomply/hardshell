@@ -1,18 +1,26 @@
-from src.hardshell.checks.system import SystemCheck
+import imp
+from hardshell.checks.linux.unit import UnitCheck
 from src.hardshell.checks.linux.module import ModuleCheck
 from src.hardshell.checks.linux.mount import MountCheck
 from src.hardshell.checks.linux.package import PackageCheck
 from src.hardshell.checks.linux.path import PathCheck
 from src.hardshell.checks.linux.regex import RegexCheck
-from hardshell.checks.linux.unit import UnitCheck
-from src.hardshell.common.logging import logger
+from src.hardshell.common.common import log_and_print
 
 
-def create_checks(config):
+def create_checks(config, current_os):
     checks = []
     for system_check in config:
         for check in config[system_check]:
-            if not config[system_check][check].get("check_skip"):
+            if not config[system_check][check].get(
+                "check_skip"
+            ) and f"{current_os['id']}-{current_os['version_id']}" in config[
+                system_check
+            ][
+                check
+            ].get(
+                "valid_os", []
+            ):
                 category = config[system_check][check].get("category")
                 check_id = check
                 check_name = config[system_check][check].get("check_name")
@@ -22,8 +30,9 @@ def create_checks(config):
                 valid_os = config[system_check][check].get("valid_os", [])
 
                 if config[system_check][check].get("check_type") == "module":
-                    # logger.info(
-                    #     f"Creating Check: {config[system_check][check].get('check_name')}"
+                    # log_and_print(
+                    #     f"Creating Check: {config[system_check][check].get('check_name')}",
+                    #     log_only=True,
                     # )
                     # new_check = ModuleCheck(
                     #     category=category,
@@ -45,8 +54,9 @@ def create_checks(config):
                     # checks.append(new_check)
                     pass
                 elif config[system_check][check].get("check_type") == "mount":
-                    # logger.info(
-                    #     f"Creating Check: {config[system_check][check].get('check_name')}"
+                    # log_and_print(
+                    #     f"Creating Check: {config[system_check][check].get('check_name')}",
+                    #     log_only=True,
                     # )
                     # new_check = ModuleCheck(
                     #     category=category,
@@ -60,27 +70,29 @@ def create_checks(config):
                     # checks.append(new_check)
                     pass
                 elif config[system_check][check].get("check_type") == "package":
-                    # logger.info(
-                    #     f"Creating Check: {config[system_check][check].get('check_name')}"
-                    # )
-                    # new_check = PackageCheck(
-                    #     category=category,
-                    #     check_id=check_id,
-                    #     check_name=check_name,
-                    #     check_subtype=check_subtype,
-                    #     check_type=check_type,
-                    #     depends_on=depends_on,
-                    #     package_name=config[system_check][check].get("package_name"),
-                    #     package_installed=config[system_check][check].get(
-                    #         "package_installed"
-                    #     ),
-                    #     valid_os=valid_os,
-                    # )
-                    # checks.append(new_check)
+                    log_and_print(
+                        f"Creating Check: {config[system_check][check].get('check_name')}",
+                        log_only=True,
+                    )
+                    new_check = PackageCheck(
+                        category=category,
+                        check_id=check_id,
+                        check_name=check_name,
+                        check_subtype=check_subtype,
+                        check_type=check_type,
+                        depends_on=depends_on,
+                        package_name=config[system_check][check].get("package_name"),
+                        package_installed=config[system_check][check].get(
+                            "package_installed"
+                        ),
+                        valid_os=valid_os,
+                    )
+                    checks.append(new_check)
                     pass
                 elif config[system_check][check].get("check_type") == "path":
-                    # logger.info(
-                    #     f"Creating Check: {config[system_check][check].get('check_name')}"
+                    # log_and_print(
+                    #     f"Creating Check: {config[system_check][check].get('check_name')}",
+                    #     log_only=True,
                     # )
                     # new_check = PathCheck(
                     #     category=category,
@@ -98,8 +110,9 @@ def create_checks(config):
                     # checks.append(new_check)
                     pass
                 elif config[system_check][check].get("check_type") == "regex":
-                    # logger.info(
-                    #     f"Creating Check: {config[system_check][check].get('check_name')}"
+                    # log_and_print(
+                    #     f"Creating Check: {config[system_check][check].get('check_name')}",
+                    #     log_only=True,
                     # )
                     # new_check = RegexCheck(
                     #     category=category,
@@ -123,8 +136,9 @@ def create_checks(config):
                     # checks.append(new_check)
                     pass
                 elif config[system_check][check].get("check_type") == "unit":
-                    logger.info(
-                        f"Creating Check: {config[system_check][check].get('check_name')}"
+                    log_and_print(
+                        f"Creating Check: {config[system_check][check].get('check_name')}",
+                        log_only=True,
                     )
                     new_check = UnitCheck(
                         category=category,
@@ -144,7 +158,8 @@ def create_checks(config):
                 else:
                     pass
             else:
-                logger.info(
-                    f"Skipping Check: {config[system_check][check].get('check_name')}"
+                log_and_print(
+                    f"Creating Check: {config[system_check][check].get('check_name')}",
+                    log_only=True,
                 )
     return checks

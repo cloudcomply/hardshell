@@ -1,36 +1,39 @@
 import os
 from dataclasses import dataclass, field
 from typing import List
-from src.hardshell.checks.base import BaseCheck
-from src.hardshell.common.logging import logger
+
 import pystemd
 from pystemd.systemd1 import Manager, Unit
+
+from src.hardshell.checks.base import BaseCheck
+from src.hardshell.common.common import log_and_print
+from src.hardshell.common.logging import logger
 
 
 @dataclass
 class UnitCheck(BaseCheck):
-    unit_active: bool = False  # active | inactive # checked with ActiveState
-    unit_loaded: bool = False  # loaded | masked | not-found # checked with LoadState
+    unit_active: bool = False  # active | inactive
+    unit_loaded: bool = False  # loaded | masked | not-found
     unit_name: str = None
-    unit_state: str = "masked"  # disabled | enabled | enabled-runtime | masked # checked with UnitFileState
-
-    def log_and_print(self, message, level="info"):
-        print(message)
-        getattr(logger, level)(message)
+    unit_state: str = "masked"  # disabled | enabled | enabled-runtime | masked
 
     def check_unit_state(self, unit_name, expected_state, actual_state, state_type):
         if actual_state == expected_state:
-            self.log_and_print(
+            log_and_print(
                 f"Unit {unit_name} is {actual_state} and supposed to be {expected_state}."
             )
         else:
-            self.log_and_print(
+            log_and_print(
                 f"Unit {unit_name} is {actual_state} and supposed to be {expected_state}.",
                 level="error",
             )
 
     def run_check(self, current_os, global_config):
-        print("Running unit check")
+        log_and_print("Running unit check")
+        self.run_check_systemd()
+
+    def run_check_systemd(self):
+        log_and_print("Running unit check for systemd")
         try:
             manager = Manager()
             manager.load()
@@ -38,12 +41,12 @@ class UnitCheck(BaseCheck):
             unit_exists = manager.GetUnit(self.unit_name.encode("utf-8"))
             unit_exists_decoded = unit_exists.decode("utf-8")
 
-            self.log_and_print(f"Unit Exists: {unit_exists_decoded}")
+            log_and_print(f"Unit Exists: {unit_exists_decoded}")
 
             if unit_exists and os.path.exists(
                 f"/usr/lib/systemd/system/{self.unit_name}"
             ):
-                self.log_and_print(f"Unit {self.unit_name} exists")
+                log_and_print(f"Unit {self.unit_name} exists")
 
                 unit = Unit(self.unit_name.encode("utf-8"))
                 unit.load()
@@ -53,7 +56,7 @@ class UnitCheck(BaseCheck):
                 unit_file_state = unit.UnitFileState.decode("utf-8")
 
                 if load_state == "not-found":
-                    self.log_and_print(
+                    log_and_print(
                         f"Unit {self.unit_name} does not exist.", level="error"
                     )
                     return
@@ -74,8 +77,8 @@ class UnitCheck(BaseCheck):
                     self.unit_name, self.unit_state, unit_file_state, "UnitFileState"
                 )
             else:
-                self.log_and_print(f"Unit {self.unit_name} does not exist")
+                log_and_print(f"Unit {self.unit_name} does not exist")
 
         except pystemd.dbusexc.DBusNoSuchUnitError as e:
-            self.log_and_print(f"Unit {self.unit_name} does not exist", level="error")
+            log_and_print(f"Unit {self.unit_name} does not exist", level="error")
             logger.error(e)

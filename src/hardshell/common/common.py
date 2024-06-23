@@ -5,6 +5,7 @@ import platform
 import re
 from pathlib import Path
 from typing import Callable, Dict, Union
+
 from src.hardshell import __name__, __version__
 from src.hardshell.common.logging import logger
 
@@ -155,16 +156,10 @@ def get_config_mapping(config_name, global_config):
         return value
 
 
-def get_pkgmgr_mapping(global_config, os_name):
-    attribute_path = pkgmgr_mapping.get(os_name)
-    if attribute_path:
-        attrs = attribute_path.split(".")
-        value = global_config
-        for attr in attrs:
-            value = getattr(value, attr, None)
-            if value is None:
-                break
-        return value
+def log_and_print(message, level="info", log_only=False):
+    if not log_only:
+        print(message)
+    getattr(logger, level)(message)
 
 
 def path_exists(path):
@@ -225,15 +220,25 @@ config_mapping = {
     "umask": "config_files.umask",
 }
 
-pkgmgr_mapping = {
-    "amzn": "pkgmgr.amzn",
-    # "debian": "pkgmgr.debian",
-    # "fedora": "pkgmgr.fedora",
-    # "kali": "pkgmgr.kali",
-    # "rhel": "pkgmgr.rhel",
-    # "rocky": "pkgmgr.rocky",
-    "ubuntu": "pkgmgr.ubuntu",
-}
-
 
 # Old Code
+# def get_pkgmgr_mapping(global_config, os_name):
+#     attribute_path = pkgmgr_mapping.get(os_name)
+#     if attribute_path:
+#         attrs = attribute_path.split(".")
+#         value = global_config
+#         for attr in attrs:
+#             value = getattr(value, attr, None)
+#             if value is None:
+#                 break
+#         return value
+
+# pkgmgr_mapping = {
+#     "amzn": "pkgmgr.amzn",
+#     # "debian": "pkgmgr.debian",
+#     # "fedora": "pkgmgr.fedora",
+#     # "kali": "pkgmgr.kali",
+#     # "rhel": "pkgmgr.rhel",
+#     # "rocky": "pkgmgr.rocky",
+#     "ubuntu": "pkgmgr.ubuntu",
+# }
