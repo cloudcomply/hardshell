@@ -41,11 +41,11 @@ valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [at.0002a]
 check_name = "atd.service"
-check_type = "service"
-service_name = "atd.service"
-service_enabled = true
-service_active = true
-service_masked = false
+check_type = "unit"
+unit_active = true
+unit_loaded = true
+unit_name = "atd.service"
+unit_state = "enabled"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [at.0003a]
@@ -73,11 +73,11 @@ valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [audit.0002a]
 check_name = "auditd"
-check_type = "service"
-service_name = "auditd"
-service_enabled = true
-service_active = true
-service_masked = false
+check_type = "unit"
+unit_active = true
+unit_loaded = true
+unit_name = "auditd.service"
+unit_state = "enabled"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [authselect]
@@ -142,11 +142,11 @@ valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [chrony.0002a]
 check_name = "chrony service"
-check_type = "service"
-service_name = "chronyd.service"
-service_enabled = true
-service_active = true
-service_masked = false
+check_type = "unit"
+unit_active = true
+unit_loaded = true
+unit_name = "chronyd.service"
+unit_state = "enabled"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [chrony.0003a]
@@ -170,11 +170,11 @@ valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [cron.0002a]
 check_name = "crond"
-check_type = "service"
-service_name = "crond"
-service_enabled = true
-service_active = true
-service_masked = false
+check_type = "unit"
+unit_active = true
+unit_loaded = true
+unit_name = "cron.service"
+unit_state = "enabled"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [cron.0003a]
@@ -280,29 +280,29 @@ valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [journald.0012a]
 check_name = "systemd-journald.service"
-check_type = "service"
-service_name = "systemd-journald.service"
-service_enabled = true
-service_active = true
-service_masked = false
+check_type = "unit"
+unit_active = true
+unit_loaded = true
+unit_name = "systemd-journald.service"
+unit_state = "static"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [journald.0013a]
 check_name = "systemd-journal-remote.socket"
-check_type = "service"
-service_name = "systemd-journal-remote.socket"
-service_enabled = false
-service_active = false
-service_masked = false
+check_type = "unit"
+unit_active = false
+unit_loaded = false
+unit_name = "systemd-journal-remote.socket"
+unit_state = "masked"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [journald.0014a]
-check_name = "systemd-journal-upload.service"
-check_type = "service"
-service_name = "systemd-journal-upload.service"
-service_enabled = false
-service_active = false
-service_masked = false
+check_name = "systemd-journal-upload service"
+check_type = "unit"
+unit_active = false
+unit_loaded = false
+unit_name = "systemd-journal-upload.service"
+unit_state = "masked"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [module]
@@ -1072,12 +1072,12 @@ package_installed = true
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [rsyslog.0002a]
-check_name = "rsyslog"
-check_type = "service"
-service_name = "rsyslog"
-service_enabled = true
-service_active = true
-service_masked = false
+check_name = "rsyslog service"
+check_type = "unit"
+unit_active = true
+unit_loaded = true
+unit_name = "rsyslogd.service"
+unit_state = "masked"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [shell]
@@ -1165,11 +1165,11 @@ valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [sshd.0002a]
 check_name = "sshd service"
-check_type = "service"
-service_name = "sshd"
-service_enabled = true
-service_active = true
-service_masked = false
+check_type = "unit"
+unit_active = true
+unit_loaded = true
+unit_name = "sshd.service"
+unit_state = "enabled"
 valid_os = ["amzn-2023", "ubuntu-22.04"]
 
 [sshd.0003a]

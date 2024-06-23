@@ -4,7 +4,7 @@ from src.hardshell.checks.linux.mount import MountCheck
 from src.hardshell.checks.linux.package import PackageCheck
 from src.hardshell.checks.linux.path import PathCheck
 from src.hardshell.checks.linux.regex import RegexCheck
-from src.hardshell.checks.linux.service import ServiceCheck
+from hardshell.checks.linux.unit import UnitCheck
 from src.hardshell.common.logging import logger
 
 
@@ -122,17 +122,21 @@ def create_checks(config):
                     # )
                     # checks.append(new_check)
                     pass
-                elif config[system_check][check].get("check_type") == "service":
+                elif config[system_check][check].get("check_type") == "unit":
                     logger.info(
                         f"Creating Check: {config[system_check][check].get('check_name')}"
                     )
-                    new_check = ServiceCheck(
+                    new_check = UnitCheck(
                         category=category,
                         check_id=check_id,
                         check_name=check_name,
                         check_subtype=check_subtype,
                         check_type=check_type,
                         depends_on=depends_on,
+                        unit_active=config[system_check][check].get("unit_active"),
+                        unit_loaded=config[system_check][check].get("unit_loaded"),
+                        unit_name=config[system_check][check].get("unit_name"),
+                        unit_state=config[system_check][check].get("unit_state"),
                         valid_os=valid_os,
                     )
                     checks.append(new_check)
