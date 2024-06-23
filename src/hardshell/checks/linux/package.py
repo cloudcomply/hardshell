@@ -1,10 +1,9 @@
 from dataclasses import dataclass
 from src.hardshell.checks.base import BaseCheck
-from src.hardshell.common.common import log_and_print
+from src.hardshell.common.common import log_and_print, pkg_mgr_apt, pkg_mgr_dnf
+
 import distro
 
-pkg_mgr_apt = ["ubuntu"]
-pkg_mgr_dnf = ["amzn"]
 
 if distro.id() in pkg_mgr_apt:
     import apt

@@ -221,6 +221,9 @@ config_mapping = {
 }
 
 
+pkg_mgr_apt = ["ubuntu"]
+pkg_mgr_dnf = ["amzn"]
+
 # Old Code
 # def get_pkgmgr_mapping(global_config, os_name):
 #     attribute_path = pkgmgr_mapping.get(os_name)
