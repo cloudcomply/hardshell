@@ -2,10 +2,6 @@
 
 ## Contents
 
-```{contents} Contents
-:depth: 3
-```
-
 ## Overview
 
 ## Common Attributes
