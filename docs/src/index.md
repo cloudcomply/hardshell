@@ -4,7 +4,7 @@
 
 ```{toctree}
 ---
-maxdepth: 3
+maxdepth: 2
 includehidden:
 caption: User Guide
 ---
@@ -35,8 +35,3 @@ caption: Project Links
 GitHub <https://github.com/cloudstuffio/hardshell>
 PyPI <https://pypi.org/project/hardshell>
 ```
-
-## Indices and tables
-
-- {ref}`genindex`
-- {ref}`search`
