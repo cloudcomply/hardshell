@@ -1,6 +1,6 @@
 # Issue triage
 
-## The basics
+## Basics
 
 ## Labelling
 

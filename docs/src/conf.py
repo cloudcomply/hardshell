@@ -296,31 +296,31 @@ html4_writer = False
 
 # -- Options for QtHelp output --------------------------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-qthelp-output
-qthelp_basename = project
-qthelp_namespace = "org.sphinx.<project_name>.<project_version>"
-qthelp_theme = "nonav"
-qthelp_theme_options = {}
+# qthelp_basename = project
+# qthelp_namespace = "org.sphinx.<project_name>.<project_version>"
+# qthelp_theme = "nonav"
+# qthelp_theme_options = {}
 
 # -- Options for Linkcheck Builder ----------------------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-the-linkcheck-builder
-linkcheck_allow_unauthorized = False
-linkcheck_allowed_redirects = {}
-linkcheck_anchors = True
-linkcheck_anchors_ignore = ["^!"]
-linkcheck_anchors_ignore_for_url = ()
-linkcheck_auth = []
-linkcheck_exclude_documents = []
-linkcheck_ignore = []
-linkcheck_rate_limit_timeout = 300
-linkcheck_report_timeouts_as_broken = False
-linkcheck_request_headers = {}
-linkcheck_retries = 1
-linkcheck_timeout = 30
-linkcheck_workers = 5
+# linkcheck_allow_unauthorized = False
+# linkcheck_allowed_redirects = {}
+# linkcheck_anchors = True
+# linkcheck_anchors_ignore = ["^!"]
+# linkcheck_anchors_ignore_for_url = ()
+# linkcheck_auth = []
+# linkcheck_exclude_documents = []
+# linkcheck_ignore = []
+# linkcheck_rate_limit_timeout = 300
+# linkcheck_report_timeouts_as_broken = False
+# linkcheck_request_headers = {}
+# linkcheck_retries = 1
+# linkcheck_timeout = 30
+# linkcheck_workers = 5
 
 # -- Options for XML Builder ----------------------------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-the-xml-builder
-xml_pretty = True
+# xml_pretty = True
 
 # -- Options for C Domain -------------------------------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-the-c-domain

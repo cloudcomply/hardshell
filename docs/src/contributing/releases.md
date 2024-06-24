@@ -1,4 +1,4 @@
-# Release process
+# Releases
 
 _hardshell_ has had a lot of work done into standardizing and automating its release
 process. This document sets out to explain how everything works and how to release
