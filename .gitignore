@@ -167,5 +167,6 @@ cython_debug/
 .docsbackup*
 docs/build/*
 run.sh
+fed-run.sh
 linecount.py
 report.txt

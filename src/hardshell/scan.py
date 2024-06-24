@@ -23,15 +23,17 @@ def start_scanner():
         checks = create_checks(checks_config, current_os=detected_os)
 
         # Create Report
-        report = Report("Hardshell Report")
+        report = Report("hardshell report")
 
         # Run Checks
         for check in checks:
-            log_and_print(f"Running Check: {check.check_name}")
+            log_and_print(
+                f"running {check.check_type} check: {check.check_name}", log_only=True
+            )
             check.run_check(current_os=detected_os, global_config=global_config)
             if check.check_results:
                 log_and_print(
-                    f"Check: {check.check_name} - Result: {check.check_results}"
+                    f"check: {check.check_name} - result: {check.check_results}"
                 )
                 for result in check.check_results:
                     report.add_entry(result=result)
@@ -40,5 +42,5 @@ def start_scanner():
         report.export_to_txt("report.txt")
 
     else:
-        log_and_print("Unsupported OS")
+        log_and_print("unsupported os")
         exit(1)

@@ -10,6 +10,7 @@ caption: User Guide
 ---
 
 getting_started
+config/index
 faq
 ```
 

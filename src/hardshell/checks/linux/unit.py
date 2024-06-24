@@ -29,11 +29,11 @@ class UnitCheck(BaseCheck):
             )
 
     def run_check(self, current_os, global_config):
-        log_and_print("Running unit check")
+        log_and_print("running unit check")
         self.run_check_systemd()
 
     def run_check_systemd(self):
-        log_and_print("Running unit check for systemd")
+        log_and_print("running unit check for systemd")
         try:
             manager = Manager()
             manager.load()
@@ -41,7 +41,7 @@ class UnitCheck(BaseCheck):
             unit_exists = manager.GetUnit(self.unit_name.encode("utf-8"))
             unit_exists_decoded = unit_exists.decode("utf-8")
 
-            log_and_print(f"Unit Exists: {unit_exists_decoded}")
+            log_and_print(f"unit Exists: {unit_exists_decoded}")
 
             if unit_exists and os.path.exists(
                 f"/usr/lib/systemd/system/{self.unit_name}"
@@ -57,7 +57,7 @@ class UnitCheck(BaseCheck):
 
                 if load_state == "not-found":
                     log_and_print(
-                        f"Unit {self.unit_name} does not exist.", level="error"
+                        f"unit {self.unit_name} does not exist.", level="error"
                     )
                     return
 
@@ -77,8 +77,11 @@ class UnitCheck(BaseCheck):
                     self.unit_name, self.unit_state, unit_file_state, "UnitFileState"
                 )
             else:
-                log_and_print(f"Unit {self.unit_name} does not exist")
+                log_and_print(f"unit {self.unit_name} does not exist")
 
+        except pystemd.dbusexc.DBusFileNotFoundError as e:
+            log_and_print(f"unit {self.unit_name} does not exist", level="error")
+            logger.error(e)
         except pystemd.dbusexc.DBusNoSuchUnitError as e:
-            log_and_print(f"Unit {self.unit_name} does not exist", level="error")
+            log_and_print(f"unit {self.unit_name} does not exist", level="error")
             logger.error(e)
