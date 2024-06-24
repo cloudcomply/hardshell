@@ -4,9 +4,9 @@ build:
     python: "3.12" 
 
 formats:
-  # - epub
+  - epub
   - htmlzip
-  # - pdf
+  - pdf
 
 python:
   install:
