@@ -5,8 +5,8 @@ CURRENT_DIR = Path(__file__).parent
 # Global Variables
 author_name = "Tom Burge"
 project_name = "hardshell"
-release_name = "0.1.4"
-version_name = "0.1.4"
+release_name = "0.5.0"
+version_name = "0.5.0"
 
 # -- Options for Project Configuration ------------------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
@@ -18,9 +18,9 @@ version = version_name
 
 # -- Options for General Configuration ------------------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
-add_function_parentheses = True
-add_module_names = True
-default_role = None
+## add_function_parentheses = True
+## add_module_names = True
+## default_role = None
 exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 extensions = [
     # 1st Party Extensions
@@ -46,85 +46,85 @@ extensions = [
     "sphinx_copybutton",  # A small sphinx extension to add a "copy" button to code blocks.
     "sphinxcontrib.programoutput",  # Include program output (e.g. console output) in Sphinx documentation.
 ]
-highlight_language = "default"
-highlight_options = {}  # https://pygments.org/docs/lexers/
+##highlight_language = "default"
+##highlight_options = {}  # https://pygments.org/docs/lexers/
 # include_patterns = []
-keep_warnings = False
+##keep_warnings = False
 # manpages_url = ""
-maximum_signature_line_length = None
+##maximum_signature_line_length = None
 # modindex_common_prefix = []
 # needs_extensions = {}
-needs_sphinx = "7.3.7"
-nitpicky = False
+## needs_sphinx = "7.3.7"
+## nitpicky = False
 # nitpicky_ignore = ()
 # nitpicky_ignore_regex = ()
-numfig = False
-numfig_format = {
-    "figure": "Fig. %s",
-    "listing": "Listing %s",
-    "table": "Table %s",
-}
-numfig_secnum_depth = 1
+## numfig = False
+## numfig_format = {
+##     "figure": "Fig. %s",
+##     "listing": "Listing %s",
+##     "table": "Table %s",
+## }
+## numfig_secnum_depth = 1
 # option_emphasise_placeholders = False
-primary_domain = "py"
-pygments_style = "sphinx"
+## primary_domain = "py"
+## pygments_style = "sphinx"
 # rst_epilog = ""
 # rst_prolog = ""
-root_doc = "index"
-show_authors = True
-show_warning_types = False
-smartquotes = True
-smartquotes_action = "qDe"
-smartquotes_excludes = {"languages": ["ja"], "builders": ["man", "text"]}
-source_encoding = "utf-8-sig"
-# source_parsers = None
-source_suffix = {".rst": "restructuredtext", ".md": "markdown"}
-strip_signature_backslash = False
-suppress_warnings = [
-    # Sphinx core warnings
-    # "app.add_node",
-    # "app.add_directive",
-    # "app.add_role",
-    # "app.add_generic_role",
-    # "app.add_source_parser",
-    # "config.cache",
-    # "download.not_readable",
-    # "epub.unknown_project_files",
-    # "epub.duplicated_toc_entry",
-    # "i18n.inconsistent_references",
-    # "image.not_readable",
-    # "index",
-    # "misc.highlighting_failure",
-    # "ref.term",
-    # "ref.ref",
-    # "ref.numref",
-    # "ref.keyword",
-    # "ref.option",
-    # "ref.citation",
-    # "ref.footnote",
-    # "ref.doc",
-    # "ref.python",
-    # "toc.circular",
-    # "toc.excluded",
-    # "toc.not_readable",
-    # "toc.secnum",
-    # Sphinx 1st party warnings
-    # "autodoc",
-    # "autodoc.import_object",
-    # "autosectionlabel.<document name>",
-    # "autosummary",
-    # "intersphinx.external",
-]
+## root_doc = "index"
+## show_authors = True
+## show_warning_types = False
+## smartquotes = True
+## smartquotes_action = "qDe"
+## smartquotes_excludes = {"languages": ["ja"], "builders": ["man", "text"]}
+## source_encoding = "utf-8-sig"
+## source_parsers = None
+## source_suffix = {".rst": "restructuredtext", ".md": "markdown"}
+## strip_signature_backslash = False
+##suppress_warnings = [
+# Sphinx core warnings
+# "app.add_node",
+# "app.add_directive",
+# "app.add_role",
+# "app.add_generic_role",
+# "app.add_source_parser",
+# "config.cache",
+# "download.not_readable",
+# "epub.unknown_project_files",
+# "epub.duplicated_toc_entry",
+# "i18n.inconsistent_references",
+# "image.not_readable",
+# "index",
+# "misc.highlighting_failure",
+# "ref.term",
+# "ref.ref",
+# "ref.numref",
+# "ref.keyword",
+# "ref.option",
+# "ref.citation",
+# "ref.footnote",
+# "ref.doc",
+# "ref.python",
+# "toc.circular",
+# "toc.excluded",
+# "toc.not_readable",
+# "toc.secnum",
+# Sphinx 1st party warnings
+# "autodoc",
+# "autodoc.import_object",
+# "autosectionlabel.<document name>",
+# "autosummary",
+# "intersphinx.external",
+##]
 # templates_bridge = ""
 templates_path = ["_templates"]
 # tls_cacerts = "/path/to/cacert.pem"
-tls_verify = True
-toc_object_entries = True
-toc_object_entries_show_parents = "domain"  # all | domain | hide
-trim_doctest_flags = True
-# trim_footnote_reference_space = True
+## tls_verify = True
+## toc_object_entries = True
+## toc_object_entries_show_parents = "domain"  # all | domain | hide
+## trim_doctest_flags = True
+## trim_footnote_reference_space = True
 # today = None
-today_fmt = "%b %d, %Y"
+## today_fmt = "%b %d, %Y"
 # user_agent = "Sphinx/X.Y.Z requests/X.Y.Z python/X.Y.Z"
 
 # -- Options for Internationalization Configuration -----------------------------------------------
@@ -136,15 +136,15 @@ today_fmt = "%b %d, %Y"
 # gettext_compact = False
 # gettext_location = True
 # gettext_uuid = False
-language = "en"
+## language = "en"
 # locale_dirs = []
 # translation_progress_classes = False
 
 # -- Options for Math Configuration ---------------------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-math
 # math_eqref_format = ""
-math_number_all = False
-math_numfig = True
+## math_number_all = False
+## math_numfig = True
 
 # -- Options for Apple Help output ----------------------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-apple-help-output
@@ -201,47 +201,47 @@ math_numfig = True
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 # html_additional_pages = {}
 # html_baseurl = ""
-html_codeblock_linenos_style = "inline"
-html_compact_lists = True
+## html_codeblock_linenos_style = "inline"
+## html_compact_lists = True
 # html_context = {}
-html_copy_source = True
+## html_copy_source = True
 # html_css_files = []
 # html_domain_indices = True
-html_experimental_html5_writer = False
+## html_experimental_html5_writer = False
 # html_extra_path = []
 # html_favicon = None
-html_file_suffix = None
+## html_file_suffix = None
 # html_js_files = []
-html_last_updated_fmt = "%b %d, %Y"
-html_link_suffix = html_file_suffix
+## html_last_updated_fmt = "%b %d, %Y"
+## html_link_suffix = html_file_suffix
 # html_logo = None
-html_math_renderer = "mathjax"
-html_output_encoding = "utf-8"
-html_permalinks = True
-html_permalinks_icon = "¶"
-html_scaled_image_link = True
-html_search_language = "en"
-# html_search_options = {}
+## html_math_renderer = "mathjax"
+## html_output_encoding = "utf-8"
+## html_permalinks = True
+## html_permalinks_icon = "¶"
+## html_scaled_image_link = True
+## html_search_language = "en"
+## html_search_options = {}
 # html_search_scorer = ""
-html_secnumber_suffix = ". "
+## html_secnumber_suffix = ". "
 # html_short_title = html_title
-html_show_copyright = True
-html_show_search_summary = True
-html_show_sourcelink = True
-html_show_sphinx = False
+## html_show_copyright = True
+## html_show_search_summary = True
+## html_show_sourcelink = True
+## html_show_sphinx = False
 # html_sidebars = {}
-html_sourcelink_suffix = ".txt"
-html_split_index = False
+## html_sourcelink_suffix = ".txt"
+## html_split_index = False
 html_static_path = ["_static"]
 # html_style = ""
 html_theme = "furo"
-html_theme_options = {}
+## html_theme_options = {}
 # html_theme_path = []
 # html_title = "<project> v<revision> documentation"
-html_use_index = True
+## html_use_index = True
 # html_use_opensearch = ""
-html_use_smartypants = True
-html4_writer = False
+## html_use_smartypants = True
+## html4_writer = False
 
 ### HTML Help Output
 # htmlhelp_basename = "hardshelldoc"
