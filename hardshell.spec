@@ -12,6 +12,8 @@ a = Analysis(
         "pystemd.base",
         "pystemd.dbusexc",
         "pystemd.dbuslib",
+        "apt",
+        "dnf",
     ],
     hookspath=[],
     hooksconfig={},

@@ -20,20 +20,22 @@ class UnitCheck(BaseCheck):
     def check_unit_state(self, unit_name, expected_state, actual_state, state_type):
         if actual_state == expected_state:
             log_and_print(
-                f"Unit {unit_name} is {actual_state} and supposed to be {expected_state}."
+                f"Unit {unit_name} is {actual_state} and supposed to be {expected_state}.",
+                log_only=True,
             )
         else:
             log_and_print(
                 f"Unit {unit_name} is {actual_state} and supposed to be {expected_state}.",
                 level="error",
+                log_only=True,
             )
 
     def run_check(self, current_os, global_config):
-        log_and_print("running unit check")
+        log_and_print("running unit check", log_only=True)
         self.run_check_systemd()
 
     def run_check_systemd(self):
-        log_and_print("running unit check for systemd")
+        log_and_print("running unit check for systemd", log_only=True)
         try:
             manager = Manager()
             manager.load()
@@ -41,7 +43,7 @@ class UnitCheck(BaseCheck):
             unit_exists = manager.GetUnit(self.unit_name.encode("utf-8"))
             unit_exists_decoded = unit_exists.decode("utf-8")
 
-            log_and_print(f"unit exists: {unit_exists_decoded}")
+            log_and_print(f"unit exists: {unit_exists_decoded}", log_only=True)
 
             if unit_exists and os.path.exists(
                 f"/usr/lib/systemd/system/{self.unit_name}"
@@ -77,11 +79,15 @@ class UnitCheck(BaseCheck):
                     self.unit_name, self.unit_state, unit_file_state, "UnitFileState"
                 )
             else:
-                log_and_print(f"unit {self.unit_name} does not exist")
+                log_and_print(f"unit {self.unit_name} does not exist", log_only=True)
 
         except pystemd.dbusexc.DBusFileNotFoundError as e:
-            log_and_print(f"unit {self.unit_name} does not exist", level="error")
+            log_and_print(
+                f"unit {self.unit_name} does not exist", level="error", log_only=True
+            )
             logger.error(e)
         except pystemd.dbusexc.DBusNoSuchUnitError as e:
-            log_and_print(f"unit {self.unit_name} does not exist", level="error")
+            log_and_print(
+                f"unit {self.unit_name} does not exist", level="error", log_only=True
+            )
             logger.error(e)

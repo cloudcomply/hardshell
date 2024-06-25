@@ -156,7 +156,7 @@ class ModuleCheck(BaseCheck):
                         return False
 
     def run_check(self, current_os, global_config):
-        log_and_print(f"checking module {self.module_name}")
+        log_and_print(f"checking module {self.module_name}", log_only=True)
 
         boot_config_path = f"/boot/config-{os.uname().release}"
         boot_config_module_name = (
