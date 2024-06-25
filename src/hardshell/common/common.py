@@ -222,7 +222,7 @@ config_mapping = {
 
 
 pkg_mgr_apt = ["ubuntu"]
-pkg_mgr_dnf = ["fedora"]
+pkg_mgr_dnf = ["fedora", "amzn"]
 
 # Old Code
 # def get_pkgmgr_mapping(global_config, os_name):
