@@ -41,12 +41,12 @@ class UnitCheck(BaseCheck):
             unit_exists = manager.GetUnit(self.unit_name.encode("utf-8"))
             unit_exists_decoded = unit_exists.decode("utf-8")
 
-            log_and_print(f"unit Exists: {unit_exists_decoded}")
+            log_and_print(f"unit exists: {unit_exists_decoded}")
 
             if unit_exists and os.path.exists(
                 f"/usr/lib/systemd/system/{self.unit_name}"
             ):
-                log_and_print(f"Unit {self.unit_name} exists")
+                log_and_print(f"unit {self.unit_name} exists")
 
                 unit = Unit(self.unit_name.encode("utf-8"))
                 unit.load()

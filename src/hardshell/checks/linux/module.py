@@ -1,14 +1,10 @@
-import glob
 import os
-import re
+import subprocess
 from dataclasses import dataclass
-from typing import Optional
-
 from src.hardshell.checks.base import BaseCheck
-from src.hardshell.common.logging import logger
+from src.hardshell.common.common import log_and_print
 
 
-# TODO FIX ALL OF THIS...UGH
 @dataclass
 class ModuleCheck(BaseCheck):
     module_name: str = None
@@ -18,139 +14,175 @@ class ModuleCheck(BaseCheck):
     module_loadable: bool = None
     module_loaded: bool = None
 
-    def __post_init__(self):
-        if self.module_path:
-            self.module_path = (
-                f"/lib/modules/{os.uname().release}/kernel/{self.module_path}"
-            )
-
-    def check_deny(self, global_config):
-        is_denied = False
-        for search_path in global_config.config_files.kernel:
-            for conf_file in glob.glob(search_path):
-                config = self.read_file(conf_file)
-                if config and re.search(
-                    r"^\s*blacklist\s+{}\b".format(self.module_name),
-                    config,
-                    re.MULTILINE,
-                ):
-                    logger.info(
-                        f"Module {self.module_name} is denied due to being in {conf_file}"
-                    )
-                    is_denied = True
-                    break
-                else:
-                    logger.info(
-                        f"Module {self.module_name} is not denied due to not being in {conf_file}"
-                    )
-        # self.set_result(
-        #     self.check_id,
-        #     self.check_name,
-        #     "pass" if self.module_denied == is_denied else "fail",
-        # )
-
-    def check_loadable(self):
-        is_loadable = False
-        # Simulate modprobe -n -v
-        print(
-            f"/lib/modules/{os.uname().release}/kernel/{self.module_path}/{self.module_name}.ko"
+    def check_bin_true_entries(self, modprobe_dir, module_name):
+        log_and_print(
+            f"checking for /bin/true entries for module {module_name}", log_only=True
         )
-        loadable = self.read_file(
-            f"/lib/modules/{os.uname().release}/kernel/{self.module_path}/{self.module_name}.ko"
+        bin_true = False
+        for filename in os.listdir(modprobe_dir):
+            filepath = os.path.join(modprobe_dir, filename)
+            if os.path.isfile(filepath):
+                with open(filepath, "r") as file:
+                    lines = file.readlines()
+                    for line in lines:
+                        if (
+                            f"install {module_name} /bin/true" in line
+                            and line.startswith("#") == False
+                        ):
+                            log_and_print(
+                                f"found /bin/true entry in {filepath}",
+                                log_only=True,
+                            )
+                            bin_true = True
+                            break
+            if bin_true:
+                break
+        self.set_result(
+            self.check_id,
+            self.check_name,
+            "pass" if bin_true == self.module_loadable else "fail",
+            "module /bin/true entry",
+            self.check_type,
         )
-        print(loadable)
-        logger.info(f"Checking if module {self.module_name} is loadable: {loadable}")
-        if loadable:
-            if len(loadable.splitlines()) > 1:
-                loadable = re.findall(
-                    r"(^\s*install|\b{}\b)".format(self.module_name), loadable
-                )
-            if re.search(r"^\s*install /bin/(true|false)", loadable):
-                logger.info(
-                    f"Module {self.module_name} is not loadable due to dependency on /bin/true or /bin/false"
-                )
-                is_loadable = False
-            else:
-                logger.info(
-                    f"Module {self.module_name} is loadable due to no dependencies"
-                )
-                is_loadable = True
-        else:
-            logger.info(
-                f"Module {self.module_name} is not loadable due to not being found"
-            )
-            is_loadable = False
-        # self.set_result(
-        #     self.check_id,
-        #     self.check_name,
-        #     "pass" if self.module_loadable == is_loadable else "fail",
-        # )
+        return bin_true
 
-    def check_loaded(self):
-        is_loaded = False
-        # Simulate lsmod
-        loaded = self.read_file("/proc/modules")
-        if loaded and self.module_name in loaded:
-            logger.info(
-                f"Module {self.module_name} is loaded due to being in /proc/modules"
-            )
-            is_loaded = True
-        else:
-            logger.info(
-                f"Module {self.module_name} is not loaded due to not being in /proc/modules"
-            )
-            is_loaded = False
-        # self.set_result(
-        #     self.check_id,
-        #     self.check_name,
-        #     "pass" if self.module_loaded == is_loaded else "fail",
-        # )
+    def check_bin_false_entries(self, modprobe_dir, module_name):
+        log_and_print(
+            f"checking if module {module_name} has a /bin/false entry", log_only=True
+        )
+        bin_false = False
+        for filename in os.listdir(modprobe_dir):
+            filepath = os.path.join(modprobe_dir, filename)
+            if os.path.isfile(filepath):
+                with open(filepath, "r") as file:
+                    lines = file.readlines()
+                    for line in lines:
+                        if (
+                            f"install {module_name} /bin/false" in line
+                            and line.startswith("#") == False
+                        ):
+                            log_and_print(
+                                f"found /bin/false entry in {filepath}",
+                                log_only=True,
+                            )
+                            bin_false = True
+                            break
+            if bin_false:
+                break
+        self.set_result(
+            self.check_id,
+            self.check_name,
+            "pass" if bin_false == self.module_loadable else "fail",
+            "module /bin/false entry",
+            self.check_type,
+        )
+        return bin_false
 
-    def read_file(self, path):
+    def check_deny_listed(self, modprobe_dir, module_name):
+        log_and_print(f"checking if module {module_name} is deny listed", log_only=True)
+        deny_listed = False
+        for filename in os.listdir(modprobe_dir):
+            filepath = os.path.join(modprobe_dir, filename)
+            if os.path.isfile(filepath):
+                with open(filepath, "r") as file:
+                    lines = file.readlines()
+                    for line in lines:
+                        if (
+                            f"blacklist {module_name}" in line
+                            and line.startswith("#") == False
+                        ):
+                            log_and_print(
+                                f"found blacklist entry in {filepath}",
+                                log_only=True,
+                            )
+                            deny_listed = True
+                            break
+            if deny_listed:
+                break
+        self.set_result(
+            self.check_id,
+            self.check_name,
+            "pass" if deny_listed == self.module_denied else "fail",
+            "module deny listed",
+            self.check_type,
+        )
+        return deny_listed
+
+    def is_module_available(self, module_name, module_path):
+        log_and_print(f"checking if module {module_name} is available", log_only=True)
+        available = False
+        for root, dirs, files in os.walk(module_path):
+            if f"{module_name}.ko" in files:
+                available = True
+                break
+        log_and_print(f"module {module_name} is available: {available}", log_only=True)
+        return available
+
+    def is_module_loaded(self, module_name):
+        log_and_print(f"checking if module {module_name} is loaded", log_only=True)
         try:
-            with open(path, "r") as file:
-                return file.read()
-        except FileNotFoundError:
-            return None
+            lsmod_output = subprocess.check_output(["lsmod"], text=True)
+            is_module_in_lsmod = module_name in lsmod_output
+            log_and_print(
+                f"module {module_name} is {'loaded' if is_module_in_lsmod else 'not loaded'}",
+                log_only=True,
+            )
+            self.set_result(
+                self.check_id,
+                self.check_name,
+                ("pass" if is_module_in_lsmod == self.module_loaded else "fail"),
+                "module loaded",
+                self.check_type,
+            )
+            return module_name in lsmod_output
+        except subprocess.CalledProcessError:
+            return False
+
+    def is_module_precompiled(self, boot_config_path, module_name):
+        log_and_print(f"checking if module {module_name} is precompiled", log_only=True)
+        if os.path.isfile(boot_config_path):
+            with open(boot_config_path, "r") as file:
+                lines = file.readlines()
+                for line in lines:
+                    if line.startswith(f"CONFIG_{module_name.upper()}=y"):
+                        log_and_print(
+                            f"module {module_name} is precompiled", log_only=True
+                        )
+                        return True
+                    else:
+                        log_and_print(
+                            f"module {module_name} is not precompiled", log_only=True
+                        )
+                        return False
 
     def run_check(self, current_os, global_config):
-        logger.info(f"Checking module {self.module_name}")
-        # print(self.module_path)
-        # print(
-        #     f"/lib/modules/{os.uname().release}/kernel/{self.module_path}/{self.module_name}.ko"
-        # )
+        log_and_print(f"checking module {self.module_name}")
 
-        print(glob.glob(self.module_path))
-        # print(glob.glob(os.path.join()))
+        boot_config_path = f"/boot/config-{os.uname().release}"
+        boot_config_module_name = (
+            self.module_name.replace("-", "_").replace("/", "_").upper()
+        )
+        modprobe_dir = "/etc/modprobe.d/"
+        module_path = f"/lib/modules/{os.uname().release}/kernel"
 
-        for path in glob.glob(self.module_path):
-            print(path)
+        # check if module is precompiled
+        precompiled = self.is_module_precompiled(
+            boot_config_path, boot_config_module_name
+        )
 
-            # self.check_deny(global_config=global_config)
-            # self.check_loadable()
-            # self.check_loaded()
+        if not precompiled:
+            # check if module is available
+            available = self.is_module_available(self.module_name, module_path)
 
-            module_dir = os.path.join(path, self.module_path)
-            print(module_dir)
+            if available:
+                # check if module is loaded
+                self.is_module_loaded(self.module_name)
 
-            print(os.path.isdir(module_dir))
+                # check if module is deny listed
+                self.check_deny_listed(modprobe_dir, self.module_name)
 
-            if os.path.isdir(module_dir) and os.listdir(module_dir):
-                # self.module_exists = True
-                # self.set_result(
-                #     self.check_id, self.check_name, self.module_exists == True
-                # )
-                # if self.module_denied is None:
-                self.check_deny(global_config=global_config)
-                # if (
-                #     moddir
-                #     == f"/lib/modules/{os.uname().release}/kernel/{self.module_path}"
-                # ):
-                self.check_loadable()
-                self.check_loaded()
-            else:
-                logger.info(f"Module {self.module_name} does not exist in {module_dir}")
-                self.module_exists = False
-                # self.set_result(
-                #     self.check_id, self.check_name, self.module_exists == False
-                # )
+                # check if module has /bin/true entries
+                self.check_bin_true_entries(modprobe_dir, self.module_name)
+
+                # check if module has /bin/false entries
+                self.check_bin_false_entries(modprobe_dir, self.module_name)

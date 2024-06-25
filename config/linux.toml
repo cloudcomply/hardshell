@@ -480,7 +480,7 @@ check_name = "usb-storage"
 check_type = "module"
 module_name = "usb-storage"
 module_blacklisted = true
-module_denied = true
+module_denied = false
 module_loadable = false
 module_loaded = false
 module_path = "drivers/usb/storage"
@@ -498,96 +498,94 @@ module_loaded = false
 module_path = "net/netfilter"
 valid_os = ["amzn-2023", "fedora-40", "ubuntu-22.04"]
 
+[module.001333333333333b]
+category = "module"
+check_name = "amd76x_edac (TESTING)"
+check_type = "module"
+module_name = "amd76x_edac"
+module_blacklisted = true
+module_denied = true
+module_loadable = false
+module_loaded = false
+module_path = "net/netfilter"
+valid_os = ["amzn-2023", "fedora-40", "ubuntu-22.04"]
+
 [mount]
 [mount.0001a]
 category = "mount"
 check_name = "/dev/shm"
 check_type = "mount"
-path = "/dev/shm"
 mount_boot = true
 mount_exists = true
+mount_options = ["nodev", "noexec", "nosuid"]
+path = "/dev/shm"
 separate_partition = true
-nodev = true
-noexec = true
-nosuid = true
 valid_os = ["amzn-2023", "fedora-40", "ubuntu-22.04"]
 
 [mount.0002a]
 category = "mount"
 check_name = "/home"
 check_type = "mount"
-path = "/home"
 mount_boot = true
 mount_exists = true
+mount_options = ["nodev", "nosuid"]
+path = "/home"
 separate_partition = true
-nodev = true
-noexec = false
-nosuid = true
 valid_os = ["amzn-2023", "fedora-40", "ubuntu-22.04"]
 
 [mount.0003a]
 category = "mount"
 check_name = "/tmp"
 check_type = "mount"
-path = "/tmp"
 mount_boot = true
 mount_exists = true
+mount_options = ["nodev", "noexec", "nosuid"]
+path = "/tmp"
 separate_partition = true
-nodev = true
-noexec = true
-nosuid = true
 valid_os = ["amzn-2023", "fedora-40", "ubuntu-22.04"]
 
 [mount.0004a]
 category = "mount"
 check_name = "/var"
 check_type = "mount"
-path = "/var"
 mount_boot = true
 mount_exists = true
+mount_options = ["nodev", "nosuid"]
+path = "/var"
 separate_partition = true
-nodev = true
-noexec = false
-nosuid = true
 valid_os = ["amzn-2023", "fedora-40", "ubuntu-22.04"]
 
 [mount.0005a]
 category = "mount"
 check_name = "/var/log"
 check_type = "mount"
-path = "/var/log"
 mount_boot = true
 mount_exists = true
+mount_options = ["nodev", "noexec", "nosuid"]
+path = "/var/log"
 separate_partition = true
-nodev = true
-noexec = true
-nosuid = true
 valid_os = ["amzn-2023", "fedora-40", "ubuntu-22.04"]
 
 [mount.0006a]
 category = "mount"
 check_name = "/var/log/audit"
 check_type = "mount"
-path = "/var/log/audit"
 mount_boot = true
 mount_exists = true
+mount_options = ["nodev", "noexec", "nosuid"]
+path = "/var/log/audit"
 separate_partition = true
-nodev = true
-noexec = true
-nosuid = true
 valid_os = ["amzn-2023", "fedora-40", "ubuntu-22.04"]
 
 [mount.0007a]
 category = "mount"
 check_name = "/var/tmp"
 check_type = "mount"
-path = "/var/tmp"
 mount_boot = true
 mount_exists = true
+mount_options = ["nodev", "noexec", "nosuid"]
+path = "/var/tmp"
 separate_partition = true
-nodev = true
-noexec = true
-nosuid = true
 valid_os = ["amzn-2023", "fedora-40", "ubuntu-22.04"]
 
 [mta]
