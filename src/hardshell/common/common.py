@@ -223,25 +223,3 @@ config_mapping = {
 
 pkg_mgr_apt = ["ubuntu"]
 pkg_mgr_dnf = ["fedora", "amzn"]
-
-# Old Code
-# def get_pkgmgr_mapping(global_config, os_name):
-#     attribute_path = pkgmgr_mapping.get(os_name)
-#     if attribute_path:
-#         attrs = attribute_path.split(".")
-#         value = global_config
-#         for attr in attrs:
-#             value = getattr(value, attr, None)
-#             if value is None:
-#                 break
-#         return value
-
-# pkgmgr_mapping = {
-#     "amzn": "pkgmgr.amzn",
-#     # "debian": "pkgmgr.debian",
-#     # "fedora": "pkgmgr.fedora",
-#     # "kali": "pkgmgr.kali",
-#     # "rhel": "pkgmgr.rhel",
-#     # "rocky": "pkgmgr.rocky",
-#     "ubuntu": "pkgmgr.ubuntu",
-# }

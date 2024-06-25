@@ -29,7 +29,7 @@ valid_os = ["amzn-2023", "fedora-40", "ubuntu-22.04"]
 [aide]
 [aide.0001a]
 category = "aide"
-check_name = "aide"
+check_name = "aide package"
 check_type = "package"
 package_name = "aide"
 package_installed = true
@@ -38,7 +38,7 @@ valid_os = ["amzn-2023", "fedora-40", "ubuntu-22.04"]
 [at]
 [at.0001a]
 category = "at"
-check_name = "at"
+check_name = "at package"
 check_type = "package"
 package_name = "at"
 package_installed = true
@@ -74,7 +74,7 @@ valid_os = ["amzn-2023", "fedora-40", "ubuntu-22.04"]
 [audit]
 [audit.0001a]
 category = "audit"
-check_name = "audit"
+check_name = "audit package"
 check_type = "package"
 package_name = "audit"
 package_installed = false
@@ -93,7 +93,7 @@ valid_os = ["amzn-2023", "fedora-40", "ubuntu-22.04"]
 [authselect]
 [authselect.0001a]
 category = "authselect"
-check_name = "authselect"
+check_name = "authselect package"
 check_type = "package"
 package_name = "authselect"
 package_installed = false
@@ -151,7 +151,7 @@ valid_os = ["amzn-2023", "fedora-40", "ubuntu-22.04"]
 [chrony]
 [chrony.0001a]
 category = "chrony"
-check_name = "chrony"
+check_name = "chrony package"
 check_type = "package"
 package_name = "chrony"
 package_installed = true
@@ -182,7 +182,7 @@ valid_os = ["amzn-2023", "fedora-40", "ubuntu-22.04"]
 [cron]
 [cron.0001a]
 category = "cron"
-check_name = "cronie"
+check_name = "cronie package"
 check_type = "package"
 package_name = "cronie"
 package_installed = true
@@ -284,7 +284,7 @@ valid_os = ["amzn-2023", "fedora-40", "ubuntu-22.04"]
 [firewalld]
 [firewalld.0001a]
 category = "firewalld"
-check_name = "firewalld"
+check_name = "firewalld package"
 check_type = "package"
 package_name = "firewalld"
 package_installed = true
@@ -305,7 +305,7 @@ valid_os = ["amzn-2023", "fedora-40", "ubuntu-22.04"]
 [journald]
 [journald.0002a]
 category = "systemd-journald"
-check_name = "systemd-journal-remote"
+check_name = "systemd-journal-remote package"
 check_type = "package"
 package_name = "systemd-journal-remote"
 package_installed = true
@@ -614,7 +614,7 @@ valid_os = ["amzn-2023", "fedora-40", "ubuntu-22.04"]
 [nftables]
 [nftables.0001a]
 category = "nftables"
-check_name = "nftables"
+check_name = "nftables package"
 check_type = "package"
 package_name = "nftables"
 package_installed = true
@@ -1159,7 +1159,7 @@ valid_os = ["amzn-2023", "fedora-40", "ubuntu-22.04"]
 [postfix]
 [postfix.0001a]
 category = "postfix"
-check_name = "postfix"
+check_name = "postfix package"
 check_type = "package"
 package_name = "postfix"
 package_installed = false
@@ -1168,7 +1168,7 @@ valid_os = ["amzn-2023", "fedora-40", "ubuntu-22.04"]
 [rsyslog]
 [rsyslog.0001a]
 category = "rsyslog"
-check_name = "rsyslog"
+check_name = "rsyslog package"
 check_type = "package"
 package_name = "rsyslog"
 package_installed = true
@@ -1199,7 +1199,7 @@ valid_os = ["amzn-2023", "fedora-40", "ubuntu-22.04"]
 [selinux]
 [selinux.0001a]
 category = "selinux"
-check_name = "libselinux"
+check_name = "libselinux package"
 check_type = "package"
 package_name = "libselinux"
 package_installed = true
@@ -1261,16 +1261,24 @@ valid_os = ["amzn-2023", "fedora-40"]
 [sendmail]
 [sendmail.0001a]
 category = "sendmail"
-check_name = "sendmail"
+check_name = "sendmail package"
 check_type = "package"
 package_name = "sendmail"
 package_installed = false
 valid_os = ["amzn-2023", "fedora-40", "ubuntu-22.04"]
 
 [sshd]
+[sshd.0000a]
+category = "openssh"
+check_name = "openssh package"
+check_type = "package"
+package_name = "openssh"
+package_installed = true
+valid_os = ["amzn-2023", "fedora-40", "ubuntu-22.04"]
+
 [sshd.0001a]
 category = "openssh"
-check_name = "openssh-server"
+check_name = "openssh-server package"
 check_type = "package"
 package_name = "openssh-server"
 package_installed = true
@@ -1524,7 +1532,7 @@ valid_os = ["amzn-2023", "fedora-40", "ubuntu-22.04"]
 [sudo]
 [sudo.0001a]
 category = "sudo"
-check_name = "sudo"
+check_name = "sudo package"
 check_type = "package"
 package_name = "sudo"
 package_installed = true
