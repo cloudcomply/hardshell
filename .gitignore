@@ -170,10 +170,4 @@ run.sh
 fed-run.sh
 linecount.py
 report.txt
-
-# vitepress
-node_modules/
-docs2/.vitepress/dist
-docs2/.vitepress/cache
-package*.json
-docs2
+~*.xlsx

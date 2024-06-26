@@ -1,10 +1,12 @@
 [config_files]
-chrony = ["/etc/chrony.conf", "/etc/chrony.d", "/run/chrony.d"]
+aide = [
+    "/etc/aide.conf",
+    "/etc/aide.conf.d/"
+]
+chrony = ["/etc/chrony.conf", "/etc/chrony.d",]
 coredump = [
     "/etc/systemd/coredump.conf",
     "/etc/systemd/coredump.conf.d",
-    "/run/systemd/coredump.conf.d",
-    "/usr/lib/systemd/coredump.conf.d",
 ]
 crypto_policies = [
     "/etc/crypto-policies/config",
