@@ -1,6 +1,11 @@
 from dataclasses import dataclass
 from src.hardshell.checks.base import BaseCheck
-from src.hardshell.common.common import log_and_print, pkg_mgr_apt, pkg_mgr_dnf
+from src.hardshell.common.common import (
+    log_and_print,
+    pkg_mgr_apt,
+    pkg_mgr_dnf,
+    log_status,
+)
 
 import distro
 
@@ -151,3 +156,12 @@ class PackageCheck(BaseCheck):
             self.check_dnf()
         else:
             log_and_print(f"unsupported os: {current_os['id']}", log_only=True)
+
+        # for result in self.check_results:
+        #     log_status(
+        #         message=f"{result.get('id')} - {result.get('name')}",
+        #         message_color="yellow",
+        #         status=f"{result['result'].upper()}",
+        #         status_color=("green" if result["result"] == "pass" else "red"),
+        #         # log_level="",
+        #     )

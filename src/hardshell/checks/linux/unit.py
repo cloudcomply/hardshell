@@ -81,6 +81,11 @@ class UnitCheck(BaseCheck):
             else:
                 log_and_print(f"unit {self.unit_name} does not exist", log_only=True)
 
+        except AttributeError as e:
+            log_and_print(
+                f"unit {self.unit_name} does not exist", level="error", log_only=True
+            )
+            logger.error(e)
         except pystemd.dbusexc.DBusFileNotFoundError as e:
             log_and_print(
                 f"unit {self.unit_name} does not exist", level="error", log_only=True

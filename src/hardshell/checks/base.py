@@ -1,7 +1,7 @@
+import click
 from dataclasses import dataclass, field
 from typing import List, Optional
-
-from src.hardshell.common.logging import logger
+from src.hardshell.common.common import log_status
 
 
 @dataclass
@@ -29,3 +29,14 @@ class BaseCheck:
                 "type": check_type,
             }
         )
+
+        # click.echo(click.style("#" * 90, fg="blue"))
+        # click.echo(click.style(f"# {self.category}", fg="blue"))
+
+        for result in self.check_results:
+            log_status(
+                message=f"{result.get('id')} - {result.get('name')}",
+                message_color="yellow",
+                status=f"{result['result'].upper()}",
+                status_color=("green" if result["result"] == "pass" else "red"),
+            )

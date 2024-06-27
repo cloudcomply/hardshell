@@ -28,13 +28,7 @@ class AccountsCheck(BaseCheck):
                 dupe_gids += 1
             group_names.add(group["name"])
             group_gids.add(group["gid"])
-        self.set_result(
-            self.check_id,
-            self.check_name,
-            "pass" if dupe_gids < 1 and dupe_names < 1 else "fail",
-            "duplicate groups",
-            self.check_type,
-        )
+        return dupe_gids, dupe_names
 
     def check_groups_exist(self, groups, users):
         log_and_print("checking all groups exist", log_only=True)
@@ -52,13 +46,7 @@ class AccountsCheck(BaseCheck):
                 )
                 groups.append({"name": user["name"], "gid": user["gid"], "members": []})
                 group_exists += 1
-        self.set_result(
-            self.check_id,
-            self.check_name,
-            "pass" if group_exists > 1 else "fail",
-            "all groups exist",
-            self.check_type,
-        )
+        return group_exists
 
     def check_users(self, users):
         log_and_print("checking users", log_only=True)
@@ -83,35 +71,18 @@ class AccountsCheck(BaseCheck):
                 shadowed_password += 1
             user_names.add(user["name"])
             user_uids.add(user["uid"])
-        self.set_result(
-            self.check_id,
-            self.check_name,
-            "pass" if dupe_names < 1 and dupe_uids < 1 else "fail",
-            "duplicate users",
-            self.check_type,
-        )
-        self.set_result(
-            self.check_id,
-            self.check_name,
-            "pass" if shadowed_password < 1 else "fail",
-            "shadowed passwords",
-            self.check_type,
-        )
+        return dupe_names, dupe_uids, shadowed_password
 
     def check_root(self, users):
         log_and_print("checking root", log_only=True)
-        root_users = [user for user in users if user["uid"] == 0]
-        if len(root_users) != 1 or root_users[0]["name"] != "root":
+        root_gid = [user for user in users if user["name"] == "root"]
+        root_gid_status = True if root_gid[0]["gid"] == 0 else False
+        root_uids = [user for user in users if user["uid"] == 0]
+        if len(root_uids) != 1:
             log_and_print(
                 "error: there should be exactly one root user with uid 0", log_only=True
             )
-        self.set_result(
-            self.check_id,
-            self.check_name,
-            "pass" if len(root_users) == 1 else "fail",
-            "root user",
-            self.check_type,
-        )
+        return root_gid_status, root_uids
 
     def get_groups(self):
         all_groups = grp.getgrall()
@@ -151,11 +122,64 @@ class AccountsCheck(BaseCheck):
         users = self.get_users()
 
         # check users and groups
-        self.check_groups(groups)
-        self.check_users(users)
+        dupe_gids, dupe_names = self.check_groups(groups)
+        dupe_names, dupe_uids, shadowed_password = self.check_users(users)
 
         # check all groups exist
-        self.check_groups_exist(groups, users)
+        group_exists = self.check_groups_exist(groups, users)
 
         # check root user
-        self.check_root(users)
+        root_gid_status, root_uids = self.check_root(users)
+
+        # Set Results
+        # Duplicate Groups
+        self.set_result(
+            self.check_id,
+            self.check_name,
+            "pass" if dupe_gids < 1 and dupe_names < 1 else "fail",
+            "duplicate groups",
+            self.check_type,
+        )
+
+        # Duplicate Users
+        self.set_result(
+            self.check_id,
+            self.check_name,
+            "pass" if dupe_names < 1 and dupe_uids < 1 else "fail",
+            "duplicate users",
+            self.check_type,
+        )
+
+        # Shadowed Passwords
+        self.set_result(
+            self.check_id,
+            self.check_name,
+            "pass" if shadowed_password < 1 else "fail",
+            "shadowed passwords",
+            self.check_type,
+        )
+
+        # Group Exists
+        self.set_result(
+            self.check_id,
+            self.check_name,
+            "pass" if group_exists < 1 else "fail",
+            "all groups exist",
+            self.check_type,
+        )
+
+        # Root User
+        self.set_result(
+            self.check_id,
+            self.check_name,
+            "pass" if root_gid_status else "fail",
+            "root user gid 0",
+            self.check_type,
+        )
+        self.set_result(
+            self.check_id,
+            self.check_name,
+            "pass" if len(root_uids) == 1 else "fail",
+            "root user uid 0",
+            self.check_type,
+        )

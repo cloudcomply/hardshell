@@ -33,6 +33,7 @@ valid_os      = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 [aide.0001a]
 category          = "aide"
 check_name        = "aide package"
+check_skip        = false
 check_type        = "package"
 package_installed = true
 package_name      = "aide"
@@ -41,6 +42,7 @@ valid_os          = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 [aide.0002a]
 category    = "aide"
 check_name  = "aidecheck service"
+check_skip  = false
 check_type  = "unit"
 unit_active = false
 unit_loaded = true
@@ -51,6 +53,7 @@ valid_os    = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 [aide.0003a]
 category    = "aide"
 check_name  = "aidecheck timer"
+check_skip  = false
 check_type  = "unit"
 unit_active = true
 unit_loaded = true
@@ -61,6 +64,7 @@ valid_os    = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 [aide.0004a]
 category    = "aide"
 check_name  = "aidecheck service file"
+check_skip  = false
 check_type  = "path"
 path        = "/etc/systemd/system/aidecheck.service"
 path_exists = true
@@ -70,6 +74,7 @@ valid_os    = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 [aide.0005a]
 category    = "aide"
 check_name  = "aidecheck timer file"
+check_skip  = false
 check_type  = "path"
 path        = "/etc/systemd/system/aidecheck.timer"
 path_exists = true
@@ -79,6 +84,7 @@ valid_os    = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 [aide.0006a]
 category      = "aide"
 check_name    = "aide.conf integrity"
+check_skip    = false
 check_subtype = "aide"
 check_type    = "regex"
 ignore_case   = true
@@ -91,6 +97,7 @@ valid_os      = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 [at.0001a]
 category          = "at"
 check_name        = "at package"
+check_skip        = false
 check_type        = "package"
 package_installed = true
 package_name      = "at"
@@ -98,7 +105,8 @@ valid_os          = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 
 [at.0002a]
 category    = "at"
-check_name  = "atd.service"
+check_name  = "atd service"
+check_skip  = false
 check_type  = "unit"
 unit_active = true
 unit_loaded = true
@@ -109,6 +117,7 @@ valid_os    = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 [at.0003a]
 category    = "at"
 check_name  = "atd service file"
+check_skip  = false
 check_type  = "path"
 path        = "/etc/systemd/system/atd.service"
 path_exists = true
@@ -118,6 +127,7 @@ valid_os    = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 [at.0004a]
 category    = "at"
 check_name  = "at allow list"
+check_skip  = false
 check_type  = "path"
 path        = "/etc/at.allow"
 path_exists = true
@@ -127,6 +137,7 @@ valid_os    = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 [at.0005a]
 category    = "at"
 check_name  = "at deny list"
+check_skip  = false
 check_type  = "path"
 path        = "/etc/at.deny"
 path_exists = false
@@ -137,6 +148,7 @@ valid_os    = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 [audit.0001a]
 category          = "audit"
 check_name        = "audit package"
+check_skip        = false
 check_type        = "package"
 package_installed = true
 package_name      = "audit"
@@ -144,7 +156,8 @@ valid_os          = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 
 [audit.0002a]
 category    = "audit"
-check_name  = "auditd"
+check_name  = "auditd service"
+check_skip  = false
 check_type  = "unit"
 unit_active = true
 unit_loaded = true
@@ -155,6 +168,7 @@ valid_os    = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 [audit.0003a]
 category    = "audit"
 check_name  = "auditd service file"
+check_skip  = false
 check_type  = "path"
 path        = "/etc/systemd/system/auditd.service"
 path_exists = true
@@ -165,6 +179,7 @@ valid_os    = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 [authselect.0001a]
 category          = "authselect"
 check_name        = "authselect package"
+check_skip        = false
 check_type        = "package"
 package_installed = true
 package_name      = "authselect"
@@ -174,6 +189,7 @@ valid_os          = ["amzn-2023"]
 [avahi.0001a]
 category          = "avahi"
 check_name        = "avahi package"
+check_skip        = false
 check_type        = "package"
 package_installed = false
 package_name      = "avahi"
@@ -182,6 +198,7 @@ valid_os          = ["amzn-2023", "ubuntu-22.04"]
 [avahi.0002a]
 category        = "avahi"
 check_name      = "avahi daemon service"
+check_skip      = false
 check_type      = "service"
 service_active  = false
 service_enabled = false
@@ -192,6 +209,7 @@ valid_os        = ["amzn-2023", "ubuntu-22.04"]
 [avahi.0003a]
 category        = "avahi"
 check_name      = "avahi daemon socket"
+check_skip      = false
 check_type      = "service"
 service_active  = false
 service_enabled = false
@@ -202,6 +220,7 @@ valid_os        = ["amzn-2023", "ubuntu-22.04"]
 [avahi.0004a]
 category    = "avahi"
 check_name  = "avahi daemon service file"
+check_skip  = false
 check_type  = "path"
 path        = "/etc/systemd/system/avahi-daemon.service"
 path_exists = true
@@ -211,6 +230,7 @@ valid_os    = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 [avahi.0005a]
 category    = "avahi"
 check_name  = "avahi daemon socket file"
+check_skip  = false
 check_type  = "path"
 path        = "/etc/systemd/system/avahi-daemon.socket"
 path_exists = true
@@ -220,7 +240,8 @@ valid_os    = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 [banner]
 [banner.0001a]
 category    = "banner"
-check_name  = "/etc/issue"
+check_name  = "issue file"
+check_skip  = false
 check_type  = "path"
 path        = "/etc/issue"
 path_exists = true
@@ -229,7 +250,8 @@ valid_os    = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 
 [banner.0002a]
 category    = "banner"
-check_name  = "/etc/issue.net"
+check_name  = "issue.net file"
+check_skip  = false
 check_type  = "path"
 path        = "/etc/issue.net"
 path_exists = true
@@ -238,7 +260,8 @@ valid_os    = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 
 [banner.0003a]
 category    = "banner"
-check_name  = "/etc/motd"
+check_name  = "motd file"
+check_skip  = false
 check_type  = "path"
 path        = "/etc/motd"
 path_exists = true
@@ -249,6 +272,7 @@ valid_os    = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 [bind.0001a]
 category          = "bind"
 check_name        = "bind package"
+check_skip        = false
 check_type        = "package"
 package_installed = false
 package_name      = "bind"
@@ -259,6 +283,7 @@ valid_os          = ["amzn-2023", "ubuntu-22.04"]
 category    = "bootloader"
 check_files = true
 check_name  = "bootloader bios files"
+check_skip  = false
 check_type  = "path"
 path        = "/boot/grub2"
 path_exists = true
@@ -269,6 +294,7 @@ valid_os    = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 category    = "bootloader"
 check_files = false
 check_name  = "bootloader efi files"
+check_skip  = false
 check_type  = "path"
 path        = "/boot/efi/EFI"
 path_exists = true
@@ -279,6 +305,7 @@ valid_os    = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 [chrony.0001a]
 category          = "chrony"
 check_name        = "chrony package"
+check_skip        = false
 check_type        = "package"
 package_installed = true
 package_name      = "chrony"
@@ -287,6 +314,7 @@ valid_os          = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 [chrony.0002a]
 category    = "chrony"
 check_name  = "chronyd service"
+check_skip  = false
 check_type  = "unit"
 unit_active = true
 unit_loaded = true
@@ -297,6 +325,7 @@ valid_os    = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 [chrony.0003a]
 category    = "chrony"
 check_name  = "chronyd service file"
+check_skip  = false
 check_type  = "path"
 path        = "/etc/systemd/system/chronyd.service"
 path_exists = true
@@ -306,6 +335,7 @@ valid_os    = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 [chrony.0004a]
 category      = "chrony"
 check_name    = "chrony configured"
+check_skip    = false
 check_subtype = "chrony"
 check_type    = "regex"
 file_ext      = ".conf"
@@ -318,7 +348,8 @@ valid_os      = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 [coredump]
 [coredump.0001a]
 category      = "coredump"
-check_name    = "coredump backtraces"
+check_name    = "coredump backtraces disabled"
+check_skip    = false
 check_subtype = "coredump"
 check_type    = "regex"
 file_ext      = ".conf"
@@ -330,7 +361,8 @@ valid_os      = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 
 [coredump.0002a]
 category      = "coredump"
-check_name    = "coredump storage"
+check_name    = "coredump storage disabled"
+check_skip    = false
 check_subtype = "coredump"
 check_type    = "regex"
 file_ext      = ".conf"
@@ -344,6 +376,7 @@ valid_os      = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 [cron.0001a]
 category          = "cron"
 check_name        = "cronie package"
+check_skip        = false
 check_type        = "package"
 package_installed = true
 package_name      = "cronie"
@@ -352,6 +385,7 @@ valid_os          = ["amzn-2023"]
 [cron.0002a]
 category    = "cron"
 check_name  = "crond service"
+check_skip  = false
 check_type  = "unit"
 unit_active = true
 unit_loaded = true
@@ -362,6 +396,7 @@ valid_os    = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 [cron.0003a]
 category    = "cron"
 check_name  = "crond service file"
+check_skip  = false
 check_type  = "path"
 path        = "/etc/systemd/system/crond.service"
 path_exists = true
@@ -371,6 +406,7 @@ valid_os    = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 [cron.0004a]
 category    = "cron"
 check_name  = "cron allow list"
+check_skip  = false
 check_type  = "path"
 path        = "/etc/cron.allow"
 path_exists = true
@@ -380,6 +416,7 @@ valid_os    = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 [cron.0005a]
 category    = "cron"
 check_name  = "cron deny list"
+check_skip  = false
 check_type  = "path"
 path        = "/etc/cron.deny"
 path_exists = false
@@ -389,6 +426,7 @@ valid_os    = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 [cron.0006a]
 category    = "cron"
 check_name  = "cron.d directory"
+check_skip  = false
 check_type  = "path"
 path        = "/etc/cron.d"
 path_exists = true
@@ -397,7 +435,8 @@ valid_os    = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 
 [cron.0007a]
 category    = "cron"
-check_name  = "/etc/cron.daily"
+check_name  = "cron.daily directory"
+check_skip  = false
 check_type  = "path"
 path        = "/etc/cron.daily"
 path_exists = true
@@ -406,7 +445,8 @@ valid_os    = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 
 [cron.0008a]
 category    = "cron"
-check_name  = "/etc/cron.hourly"
+check_name  = "cron.hourly directory"
+check_skip  = false
 check_type  = "path"
 path        = "/etc/cron.hourly"
 path_exists = true
@@ -415,7 +455,8 @@ valid_os    = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 
 [cron.0009a]
 category    = "cron"
-check_name  = "/etc/cron.monthly"
+check_name  = "cron.monthly directory"
+check_skip  = false
 check_type  = "path"
 path        = "/etc/cron.monthly"
 path_exists = true
@@ -424,7 +465,8 @@ valid_os    = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 
 [cron.0010a]
 category    = "cron"
-check_name  = "/etc/cron.weekly"
+check_name  = "cron.weekly directory"
+check_skip  = false
 check_type  = "path"
 path        = "/etc/cron.weekly"
 path_exists = true
@@ -433,7 +475,8 @@ valid_os    = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 
 [cron.0011a]
 category    = "cron"
-check_name  = "/etc/crontab"
+check_name  = "crontab file"
+check_skip  = false
 check_type  = "path"
 path        = "/etc/crontab"
 path_exists = true
@@ -444,6 +487,8 @@ valid_os    = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 [crypto.0001a]
 category      = "crypto"
 check_name    = "system-wide crypto policy not legacy"
+check_skip    = false
+check_subtype = "crypto"
 check_type    = "regex"
 ignore_case   = true
 multi_line    = false
@@ -455,6 +500,7 @@ valid_os      = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 [cups.0001a]
 category          = "cups"
 check_name        = "cups package"
+check_skip        = false
 check_type        = "package"
 package_installed = false
 package_name      = "cups"
@@ -464,6 +510,7 @@ valid_os          = ["amzn-2023", "ubuntu-22.04"]
 [dnsmasq.0001a]
 category          = "dnsmasq"
 check_name        = "dnsmasq package"
+check_skip        = false
 check_type        = "package"
 package_installed = false
 package_name      = "dnsmasq"
@@ -473,6 +520,7 @@ valid_os          = ["amzn-2023", "ubuntu-22.04"]
 [dovecot.0001a]
 category          = "dovecot"
 check_name        = "dovecot package"
+check_skip        = false
 check_type        = "package"
 package_installed = false
 package_name      = "dovecot"
@@ -482,6 +530,7 @@ valid_os          = ["amzn-2023", "ubuntu-22.04"]
 [firewalld.0001a]
 category          = "firewalld"
 check_name        = "firewalld package"
+check_skip        = false
 check_type        = "package"
 package_installed = true
 package_name      = "firewalld"
@@ -490,6 +539,7 @@ valid_os          = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 [firewalld.0002a]
 category    = "firewalld"
 check_name  = "firewalld service"
+check_skip  = false
 check_type  = "unit"
 unit_active = true
 unit_loaded = true
@@ -500,6 +550,7 @@ valid_os    = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 [firewalld.0003a]
 category    = "firewalld"
 check_name  = "firewalld service file"
+check_skip  = false
 check_type  = "path"
 path        = "/etc/systemd/system/firewalld.service"
 path_exists = true
@@ -510,6 +561,7 @@ valid_os    = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 [gpg.0001a]
 category      = "gpg"
 check_name    = "gpgcheck enabled globally"
+check_skip    = false
 check_subtype = "gpg"
 check_type    = "regex"
 ignore_case   = true
@@ -522,6 +574,7 @@ valid_os      = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 [httpd.0001a]
 category          = "httpd"
 check_name        = "httpd package"
+check_skip        = false
 check_type        = "package"
 package_installed = false
 package_name      = "httpd"
@@ -529,8 +582,9 @@ valid_os          = ["amzn-2023", "ubuntu-22.04"]
 
 [ipv4]
 [ipv4.0001a]
-category      = "parameter"
+category      = "ipv4"
 check_name    = "ipv4 bogus icmp responses ignored"
+check_skip    = false
 check_subtype = "sysctl"
 check_type    = "regex"
 file_ext      = ".conf"
@@ -542,8 +596,9 @@ pattern_match = true
 valid_os      = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 
 [ipv4.0002a]
-category      = "parameter"
+category      = "ipv4"
 check_name    = "ipv4 broadcast icmp requests ignored"
+check_skip    = false
 check_subtype = "sysctl"
 check_type    = "regex"
 file_ext      = ".conf"
@@ -555,8 +610,9 @@ pattern_match = true
 valid_os      = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 
 [ipv4.0003a]
-category      = "parameter"
-check_name    = "net.ipv4.conf.all.accept_redirects"
+category      = "ipv4"
+check_name    = "ipv4 icmp redirects not accepted (all)"
+check_skip    = false
 check_subtype = "sysctl"
 check_type    = "regex"
 file_ext      = ".conf"
@@ -568,8 +624,9 @@ pattern_match = true
 valid_os      = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 
 [ipv4.0004a]
-category      = "parameter"
-check_name    = "net.ipv4.conf.default.accept_redirects"
+category      = "ipv4"
+check_name    = "ipv4 icmp redirects not accepted (default)"
+check_skip    = false
 check_subtype = "sysctl"
 check_type    = "regex"
 file_ext      = ".conf"
@@ -581,8 +638,9 @@ pattern_match = true
 valid_os      = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 
 [ipv4.0005a]
-category      = "parameter"
-check_name    = "net.ipv4.ip_forward"
+category      = "ipv4"
+check_name    = "ipv4 ip forwarding disabled"
+check_skip    = false
 check_subtype = "sysctl"
 check_type    = "regex"
 file_ext      = ".conf"
@@ -594,8 +652,9 @@ pattern_match = true
 valid_os      = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 
 [ipv4.0006a]
-category      = "parameter"
-check_name    = "net.ipv4.conf.all.send_redirects"
+category      = "ipv4"
+check_name    = "ipv4 packet redirect sending disabled (all)"
+check_skip    = false
 check_subtype = "sysctl"
 check_type    = "regex"
 file_ext      = ".conf"
@@ -607,8 +666,9 @@ pattern_match = true
 valid_os      = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 
 [ipv4.0007a]
-category      = "parameter"
-check_name    = "net.ipv4.conf.default.send_redirects"
+category      = "ipv4"
+check_name    = "ipv4 packet redirect sending disabled (default)"
+check_skip    = false
 check_subtype = "sysctl"
 check_type    = "regex"
 file_ext      = ".conf"
@@ -620,8 +680,9 @@ pattern_match = true
 valid_os      = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 
 [ipv4.0008a]
-category      = "parameter"
-check_name    = "net.ipv4.conf.all.rp_filter"
+category      = "ipv4"
+check_name    = "ipv4 reverse path filtering enabled (all)"
+check_skip    = false
 check_subtype = "sysctl"
 check_type    = "regex"
 file_ext      = ".conf"
@@ -633,8 +694,9 @@ pattern_match = true
 valid_os      = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 
 [ipv4.0009a]
-category      = "parameter"
-check_name    = "net.ipv4.conf.default.rp_filter"
+category      = "ipv4"
+check_name    = "ipv4 reverse path filtering enabled (default)"
+check_skip    = false
 check_subtype = "sysctl"
 check_type    = "regex"
 file_ext      = ".conf"
@@ -646,8 +708,9 @@ pattern_match = true
 valid_os      = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 
 [ipv4.0010a]
-category      = "parameter"
-check_name    = "net.ipv4.conf.all.secure_redirects"
+category      = "ipv4"
+check_name    = "ipv4 secure icmp redirects not accepted (all)"
+check_skip    = false
 check_subtype = "sysctl"
 check_type    = "regex"
 file_ext      = ".conf"
@@ -659,8 +722,9 @@ pattern_match = true
 valid_os      = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 
 [ipv4.0011a]
-category      = "parameter"
-check_name    = "net.ipv4.conf.default.secure_redirects"
+category      = "ipv4"
+check_name    = "ipv4 secure icmp redirects not accepted (default)"
+check_skip    = false
 check_subtype = "sysctl"
 check_type    = "regex"
 file_ext      = ".conf"
@@ -672,8 +736,9 @@ pattern_match = true
 valid_os      = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 
 [ipv4.0012a]
-category      = "parameter"
-check_name    = "net.ipv4.conf.all.accept_source_route"
+category      = "ipv4"
+check_name    = "ipv4 source routed packets not accepted (all)"
+check_skip    = false
 check_subtype = "sysctl"
 check_type    = "regex"
 file_ext      = ".conf"
@@ -685,8 +750,9 @@ pattern_match = true
 valid_os      = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 
 [ipv4.0013a]
-category      = "parameter"
-check_name    = "net.ipv4.conf.default.accept_source_route"
+category      = "ipv4"
+check_name    = "ipv4 source routed packets not accepted (default)"
+check_skip    = false
 check_subtype = "sysctl"
 check_type    = "regex"
 file_ext      = ".conf"
@@ -698,8 +764,9 @@ pattern_match = true
 valid_os      = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 
 [ipv4.0014a]
-category      = "parameter"
-check_name    = "net.ipv4.conf.all.log_martians"
+category      = "ipv4"
+check_name    = "ipv4 suspicious packets logged (all)"
+check_skip    = false
 check_subtype = "sysctl"
 check_type    = "regex"
 file_ext      = ".conf"
@@ -711,8 +778,9 @@ pattern_match = true
 valid_os      = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 
 [ipv4.0015a]
-category      = "parameter"
-check_name    = "net.ipv4.conf.default.log_martians"
+category      = "ipv4"
+check_name    = "ipv4 suspicious packets logged (default)"
+check_skip    = false
 check_subtype = "sysctl"
 check_type    = "regex"
 file_ext      = ".conf"
@@ -724,8 +792,9 @@ pattern_match = true
 valid_os      = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 
 [ipv4.0016a]
-category      = "parameter"
-check_name    = "net.ipv4.tcp_syncookies"
+category      = "ipv4"
+check_name    = "ipv4 tcp syn cookies enabled"
+check_skip    = false
 check_subtype = "sysctl"
 check_type    = "regex"
 file_ext      = ".conf"
@@ -738,8 +807,9 @@ valid_os      = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 
 [ipv6]
 [ipv6.0001a]
-category      = "parameter"
-check_name    = "net.ipv6.conf.all.accept_redirects"
+category      = "ipv6"
+check_name    = "ipv6 icmp redirects not accepted (all)"
+check_skip    = false
 check_subtype = "sysctl"
 check_type    = "regex"
 file_ext      = ".conf"
@@ -751,8 +821,9 @@ pattern_match = true
 valid_os      = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 
 [ipv6.0002a]
-category      = "parameter"
-check_name    = "net.ipv6.conf.default.accept_redirects"
+category      = "ipv6"
+check_name    = "ipv6 icmp redirects not accepted (default)"
+check_skip    = false
 check_subtype = "sysctl"
 check_type    = "regex"
 file_ext      = ".conf"
@@ -764,8 +835,9 @@ pattern_match = true
 valid_os      = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 
 [ipv6.0003a]
-category      = "parameter"
-check_name    = "net.ipv6.conf.all.forwarding"
+category      = "ipv6"
+check_name    = "ipv6 ip forwarding disabled"
+check_skip    = false
 check_subtype = "sysctl"
 check_type    = "regex"
 file_ext      = ".conf"
@@ -777,8 +849,9 @@ pattern_match = true
 valid_os      = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 
 [ipv6.0004a]
-category       = "parameter"
-check_name     = "net.ipv6.conf.all.accept_ra"
+category       = "ipv6"
+check_name     = "ipv6 router advertisements not accepted (all)"
+check_skip     = false
 check_subtype  = "sysctl"
 check_type     = "regex"
 file_extension = ".conf"
@@ -790,8 +863,9 @@ pattern_match  = true
 valid_os       = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 
 [ipv6.0005a]
-category      = "parameter"
-check_name    = "net.ipv6.conf.default.accept_ra"
+category      = "ipv6"
+check_name    = "ipv6 router advertisements not accepted (all)"
+check_skip    = false
 check_subtype = "sysctl"
 check_type    = "regex"
 file_ext      = ".conf"
@@ -803,8 +877,9 @@ pattern_match = true
 valid_os      = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 
 [ipv6.0006a]
-category      = "parameter"
-check_name    = "net.ipv6.conf.all.accept_source_route"
+category      = "ipv6"
+check_name    = "ipv6 source routed packets not accepted (all)"
+check_skip    = false
 check_subtype = "sysctl"
 check_type    = "regex"
 file_ext      = ".conf"
@@ -816,8 +891,9 @@ pattern_match = true
 valid_os      = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 
 [ipv6.0007a]
-category      = "parameter"
-check_name    = "net.ipv6.conf.default.accept_source_route"
+category      = "ipv6"
+check_name    = "ipv6 source routed packets not accepted (default)"
+check_skip    = false
 check_subtype = "sysctl"
 check_type    = "regex"
 file_ext      = ".conf"
@@ -832,7 +908,7 @@ valid_os      = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 [journald.0001a]
 category          = "journald"
 check_name        = "systemd journal remote package"
-check_skip        = "false"
+check_skip        = false
 check_type        = "package"
 package_installed = true
 package_name      = "systemd-journal-remote"
@@ -841,7 +917,7 @@ valid_os          = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 [journald.0002a]
 category    = "journald"
 check_name  = "systemd journald service"
-check_skip  = "false"
+check_skip  = false
 check_type  = "unit"
 unit_active = true
 unit_loaded = true
@@ -852,7 +928,7 @@ valid_os    = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 [journald.0003a]
 category    = "journald"
 check_name  = "systemd journal remote service"
-check_skip  = "false"
+check_skip  = false
 check_type  = "unit"
 unit_active = false
 unit_loaded = false
@@ -863,7 +939,7 @@ valid_os    = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 [journald.0004a]
 category    = "journald"
 check_name  = "systemd journal upload service"
-check_skip  = "false"
+check_skip  = false
 check_type  = "unit"
 unit_active = false
 unit_loaded = false
@@ -874,7 +950,7 @@ valid_os    = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 [journald.0005a]
 category    = "journald"
 check_name  = "systemd journald service file"
-check_skip  = "false"
+check_skip  = false
 check_type  = "path"
 path        = "/etc/systemd/system/systemd-journald.service"
 path_exists = true
@@ -884,7 +960,7 @@ valid_os    = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 [journald.0006a]
 category    = "journald"
 check_name  = "systemd journal remote service file"
-check_skip  = "false"
+check_skip  = false
 check_type  = "path"
 path        = "/etc/systemd/system/systemd-journal-remote.service"
 path_exists = true
@@ -894,7 +970,7 @@ valid_os    = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 [journald.0007a]
 category    = "journald"
 check_name  = "systemd journal upload service file"
-check_skip  = "false"
+check_skip  = false
 check_type  = "path"
 path        = "/etc/systemd/system/systemd-journal-upload.service"
 path_exists = true
@@ -905,6 +981,7 @@ valid_os    = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 [lftp.0001a]
 category          = "lftp"
 check_name        = "lftp package"
+check_skip        = false
 check_type        = "package"
 package_installed = false
 package_name      = "lftp"
@@ -913,7 +990,8 @@ valid_os          = ["amzn-2023", "ubuntu-22.04"]
 [module]
 [module.0001a]
 category           = "module"
-check_name         = "cramfs"
+check_name         = "cramfs module"
+check_skip         = false
 check_type         = "module"
 module_blacklisted = true
 module_denied      = true
@@ -925,7 +1003,8 @@ valid_os           = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 
 [module.0002a]
 category           = "module"
-check_name         = "dccp"
+check_name         = "dccp module"
+check_skip         = false
 check_type         = "module"
 module_blacklisted = true
 module_denied      = true
@@ -937,7 +1016,8 @@ valid_os           = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 
 [module.0003a]
 category           = "module"
-check_name         = "freevxfs"
+check_name         = "freevxfs module"
+check_skip         = false
 check_type         = "module"
 module_blacklisted = true
 module_denied      = true
@@ -949,7 +1029,8 @@ valid_os           = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 
 [module.0004a]
 category           = "module"
-check_name         = "hfs"
+check_name         = "hfs module"
+check_skip         = false
 check_type         = "module"
 module_blacklisted = true
 module_denied      = true
@@ -961,7 +1042,8 @@ valid_os           = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 
 [module.0005a]
 category           = "module"
-check_name         = "hfsplus"
+check_name         = "hfsplus module"
+check_skip         = false
 check_type         = "module"
 module_blacklisted = true
 module_denied      = true
@@ -973,7 +1055,8 @@ valid_os           = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 
 [module.0006a]
 category           = "module"
-check_name         = "jffs2"
+check_name         = "jffs2 module"
+check_skip         = false
 check_type         = "module"
 module_blacklisted = true
 module_denied      = true
@@ -985,7 +1068,8 @@ valid_os           = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 
 [module.0007a]
 category           = "module"
-check_name         = "rds"
+check_name         = "rds module"
+check_skip         = false
 check_type         = "module"
 module_blacklisted = true
 module_denied      = true
@@ -997,7 +1081,8 @@ valid_os           = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 
 [module.0008a]
 category           = "module"
-check_name         = "sctp"
+check_name         = "sctp module"
+check_skip         = false
 check_type         = "module"
 module_blacklisted = true
 module_denied      = true
@@ -1009,7 +1094,8 @@ valid_os           = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 
 [module.0009a]
 category           = "module"
-check_name         = "squashfs"
+check_name         = "squashfs module"
+check_skip         = false
 check_type         = "module"
 module_blacklisted = true
 module_denied      = true
@@ -1021,7 +1107,8 @@ valid_os           = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 
 [module.0010a]
 category           = "module"
-check_name         = "tipc"
+check_name         = "tipc module"
+check_skip         = false
 check_type         = "module"
 module_blacklisted = true
 module_denied      = true
@@ -1033,7 +1120,8 @@ valid_os           = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 
 [module.0011a]
 category           = "module"
-check_name         = "udf"
+check_name         = "udf module"
+check_skip         = false
 check_type         = "module"
 module_blacklisted = true
 module_denied      = true
@@ -1045,7 +1133,8 @@ valid_os           = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 
 [module.0012a]
 category           = "module"
-check_name         = "usb-storage"
+check_name         = "usb-storage module"
+check_skip         = false
 check_type         = "module"
 module_blacklisted = true
 module_denied      = false
@@ -1082,7 +1171,8 @@ valid_os           = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 [mount]
 [mount.0001a]
 category           = "mount"
-check_name         = "/dev/shm"
+check_name         = "/dev/shm mount"
+check_skip         = false
 check_type         = "mount"
 mount_boot         = true
 mount_exists       = true
@@ -1093,7 +1183,8 @@ valid_os           = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 
 [mount.0002a]
 category           = "mount"
-check_name         = "/home"
+check_name         = "/home mount"
+check_skip         = false
 check_type         = "mount"
 mount_boot         = true
 mount_exists       = true
@@ -1104,7 +1195,8 @@ valid_os           = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 
 [mount.0003a]
 category           = "mount"
-check_name         = "/tmp"
+check_name         = "/tmp mount"
+check_skip         = false
 check_type         = "mount"
 mount_boot         = true
 mount_exists       = true
@@ -1115,7 +1207,8 @@ valid_os           = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 
 [mount.0004a]
 category           = "mount"
-check_name         = "/var"
+check_name         = "/var mount"
+check_skip         = false
 check_type         = "mount"
 mount_boot         = true
 mount_exists       = true
@@ -1126,7 +1219,8 @@ valid_os           = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 
 [mount.0005a]
 category           = "mount"
-check_name         = "/var/log"
+check_name         = "/var/log mount"
+check_skip         = false
 check_type         = "mount"
 mount_boot         = true
 mount_exists       = true
@@ -1137,7 +1231,8 @@ valid_os           = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 
 [mount.0006a]
 category           = "mount"
-check_name         = "/var/log/audit"
+check_name         = "/var/log/audit mount"
+check_skip         = false
 check_type         = "mount"
 mount_boot         = true
 mount_exists       = true
@@ -1148,7 +1243,8 @@ valid_os           = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 
 [mount.0007a]
 category           = "mount"
-check_name         = "/var/tmp"
+check_name         = "/var/tmp mount"
+check_skip         = false
 check_type         = "mount"
 mount_boot         = true
 mount_exists       = true
@@ -1160,7 +1256,8 @@ valid_os           = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 [mta]
 [mta.0001a]
 category      = "mta"
-check_name    = "postfix mta local only ipv4"
+check_name    = "ipv4 local-only configured"
+check_skip    = false
 check_type    = "regex"
 ignore_case   = true
 multi_line    = false
@@ -1171,7 +1268,8 @@ valid_os      = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 
 [mta.0002a]
 category      = "mta"
-check_name    = "postfix mta local only ipv6"
+check_name    = "ipv6 local-only configured"
+check_skip    = false
 check_type    = "regex"
 ignore_case   = true
 multi_line    = false
@@ -1184,14 +1282,16 @@ valid_os      = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 [nfs.0001a]
 category          = "nfs"
 check_name        = "nfs-utils package"
+check_skip        = false
 check_type        = "package"
-package_installed = false
+package_installed = true
 package_name      = "nfs-utils"
 valid_os          = ["amzn-2023", "ubuntu-22.04"]
 
 [nfs.0002a]
 category        = "nfs"
 check_name      = "nfs server service"
+check_skip      = false
 check_type      = "unit"
 service_active  = false
 service_enabled = false
@@ -1202,6 +1302,7 @@ valid_os        = ["amzn-2023", "ubuntu-22.04"]
 [nfs.0003a]
 category    = "nfs"
 check_name  = "nfs server service file"
+check_skip  = false
 check_type  = "path"
 path        = "/etc/systemd/system/nfs-server.service"
 path_exists = true
@@ -1212,6 +1313,7 @@ valid_os    = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 [nftables.0001a]
 category          = "nftables"
 check_name        = "nftables package"
+check_skip        = false
 check_type        = "package"
 package_installed = true
 package_name      = "nftables"
@@ -1220,6 +1322,7 @@ valid_os          = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 [nftables.0002a]
 category    = "nftables"
 check_name  = "nftables service"
+check_skip  = false
 check_type  = "unit"
 unit_active = true
 unit_loaded = true
@@ -1230,6 +1333,7 @@ valid_os    = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 [nftables.0003a]
 category    = "nftables"
 check_name  = "nftables service file"
+check_skip  = false
 check_type  = "path"
 path        = "/etc/systemd/system/nftables.service"
 path_exists = true
@@ -1240,8 +1344,9 @@ valid_os    = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 [nginx.0001a]
 category          = "nginx"
 check_name        = "nginx package"
+check_skip        = false
 check_type        = "package"
-package_installed = false
+package_installed = true
 package_name      = "nginx"
 valid_os          = ["amzn-2023", "ubuntu-22.04"]
 
@@ -1249,15 +1354,17 @@ valid_os          = ["amzn-2023", "ubuntu-22.04"]
 [openldap.0001a]
 category          = "openldap"
 check_name        = "openldap-clients package"
+check_skip        = false
 check_type        = "package"
-package_installed = false
+package_installed = true
 package_name      = "openldap-clients"
 valid_os          = ["amzn-2023", "ubuntu-22.04"]
 
 [parameters]
 [parameters.0001a]
 category      = "parameter"
-check_name    = "kernel.randomize_va_space"
+check_name    = "address space layout randomization enabled"
+check_skip    = false
 check_subtype = "sysctl"
 check_type    = "regex"
 file_ext      = ".conf"
@@ -1270,7 +1377,8 @@ valid_os      = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 
 [parameters.0002a]
 category      = "parameter"
-check_name    = "kernel.yama.ptrace_scope"
+check_name    = "ptrace_scope restricted"
+check_skip    = false
 check_subtype = "sysctl"
 check_type    = "regex"
 file_ext      = ".conf"
@@ -1284,194 +1392,8 @@ valid_os      = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 [pam]
 [pam.0001a]
 category      = "pam"
-check_name    = "password quality password-auth"
-check_type    = "regex"
-ignore_case   = true
-multi_line    = false
-path          = "/etc/pam.d/password-auth"
-pattern       = "^password\\s+requisite\\s+pam_pwquality\\.so\\b.*$"
-pattern_match = true
-valid_os      = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
-
-[pam.0002a]
-category      = "pam"
-check_name    = "password quality system-auth"
-check_type    = "regex"
-ignore_case   = true
-multi_line    = false
-path          = "/etc/pam.d/system-auth"
-pattern       = "^password\\s+requisite\\s+pam_pwquality\\.so\\b.*$"
-pattern_match = true
-valid_os      = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
-
-[pam.0003a]
-category      = "pam"
-check_name    = "password hashing password-auth"
-check_type    = "regex"
-ignore_case   = true
-multi_line    = false
-path          = "/etc/pam.d/password-auth"
-pattern       = ""
-pattern_match = true
-valid_os      = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
-
-[pam.0004a]
-category      = "pam"
-check_name    = "password hashing system-auth"
-check_type    = "regex"
-ignore_case   = true
-multi_line    = false
-path          = "/etc/pam.d/system-auth"
-pattern       = ""
-pattern_match = true
-valid_os      = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
-
-[pam.0005a]
-category      = "pam"
-check_name    = "password history password-auth 1"
-check_type    = "regex"
-ignore_case   = true
-multi_line    = false
-path          = "/etc/pam.d/password-auth"
-pattern       = "^password\\s+requisite\\s+pam_pwhistory\\.so\\b.*\\bremember=5\\b.*$"
-pattern_match = true
-valid_os      = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
-
-[pam.0006a]
-category      = "pam"
-check_name    = "password history system-auth 1"
-check_type    = "regex"
-ignore_case   = true
-multi_line    = false
-path          = "/etc/pam.d/system-auth"
-pattern       = "^password\\s+requisite\\s+pam_pwhistory\\.so\\b.*\\bremember=5\\b.*$"
-pattern_match = true
-valid_os      = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
-
-[pam.0007a]
-category      = "pam"
-check_name    = "password history password-auth 2"
-check_type    = "regex"
-ignore_case   = true
-multi_line    = false
-path          = "/etc/pam.d/password-auth"
-pattern       = "^password\\s+required\\s+pam_unix\\.so\\b.*\\bremember=5\\b.*$"
-pattern_match = true
-valid_os      = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
-
-[pam.0008a]
-category      = "pam"
-check_name    = "password history system-auth 2"
-check_type    = "regex"
-ignore_case   = true
-multi_line    = false
-path          = "/etc/pam.d/system-auth"
-pattern       = "^password\\s+required\\s+pam_unix\\.so\\b.*\\bremember=5\\b.*$"
-pattern_match = true
-valid_os      = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
-
-[pam.0009a]
-category      = "pam"
-check_name    = "password class 1"
-check_type    = "regex"
-ignore_case   = true
-multi_line    = false
-path          = "/etc/security/pwquality.conf"
-pattern       = "^minclass\\s*=\\s*4$"
-pattern_match = true
-valid_os      = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
-
-[pam.0010a]
-category      = "pam"
-check_name    = "password class 2"
-check_type    = "regex"
-ignore_case   = true
-multi_line    = false
-path          = "/etc/security/pwquality.conf"
-pattern       = "^[duol]credit\\s*=\\s*-1$"
-pattern_match = true
-valid_os      = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
-
-[pam.0011a]
-category      = "pam"
-check_name    = "password length"
-check_type    = "regex"
-ignore_case   = true
-multi_line    = false
-path          = "/etc/security/pwquality.conf"
-pattern       = "^minlen\\s*=\\s*14$"
-pattern_match = true
-valid_os      = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
-
-[pam.0012a]
-category      = "pam"
-check_name    = "password lockout tries"
-check_type    = "regex"
-ignore_case   = true
-multi_line    = false
-path          = "/etc/security/faillock.conf"
-pattern       = "^deny\\s*=\\s*(0|[6-9]|[1-9][0-9]*)$"
-pattern_match = true
-valid_os      = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
-
-[pam.0013a]
-category      = "pam"
-check_name    = "password unlock time"
-check_type    = "regex"
-ignore_case   = true
-multi_line    = false
-path          = "/etc/security/faillock.conf"
-pattern       = "^unlock_time\\s*=\\s*(0|[9-9][0-9]{2,}|[1-9][0-9]{3,})$"
-pattern_match = true
-valid_os      = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
-
-[pam.0014a]
-category      = "pam"
-check_name    = "password hashing libuser.conf"
-check_type    = "regex"
-ignore_case   = true
-multi_line    = false
-path          = "/etc/libuser.conf"
-pattern       = "^crypt_style\\s*=\\s*(sha512|yescrypt)$"
-pattern_match = true
-valid_os      = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
-
-[pam.0015a]
-category      = "pam"
-check_name    = "password hashing login.defs"
-check_type    = "regex"
-ignore_case   = true
-multi_line    = false
-path          = "/etc/login.defs"
-pattern       = "^ENCRYPT_METHOD\\s+(SHA512|YESCRYPT)$"
-pattern_match = true
-valid_os      = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
-
-[pam.0016a]
-category      = "pam"
-check_name    = "password max age login.defs"
-check_type    = "regex"
-ignore_case   = true
-multi_line    = false
-path          = "/etc/login.defs"
-pattern       = "^PASS_MAX_DAYS\\s+365$"
-pattern_match = true
-valid_os      = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
-
-[pam.0017a]
-category      = "pam"
-check_name    = "password min age login.defs"
-check_type    = "regex"
-ignore_case   = true
-multi_line    = false
-path          = "/etc/login.defs"
-pattern       = "^PASS_MIN_DAYS\\s+1$"
-pattern_match = true
-valid_os      = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
-
-[pam.0018a]
-category      = "pam"
 check_name    = "password age warning login.defs"
+check_skip    = false
 check_type    = "regex"
 ignore_case   = true
 multi_line    = false
@@ -1480,9 +1402,214 @@ pattern       = "^PASS_WARN_AGE\\s+7$"
 pattern_match = true
 valid_os      = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 
+[pam.0002a]
+category      = "pam"
+check_name    = "password class 1"
+check_skip    = false
+check_type    = "regex"
+ignore_case   = true
+multi_line    = false
+path          = "/etc/security/pwquality.conf"
+pattern       = "^minclass\\s*=\\s*4$"
+pattern_match = true
+valid_os      = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
+
+[pam.0003a]
+category      = "pam"
+check_name    = "password class 2"
+check_skip    = false
+check_type    = "regex"
+ignore_case   = true
+multi_line    = false
+path          = "/etc/security/pwquality.conf"
+pattern       = "^[duol]credit\\s*=\\s*-1$"
+pattern_match = true
+valid_os      = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
+
+[pam.0004a]
+category      = "pam"
+check_name    = "password hashing libuser.conf"
+check_skip    = false
+check_type    = "regex"
+ignore_case   = true
+multi_line    = false
+path          = "/etc/libuser.conf"
+pattern       = "^crypt_style\\s*=\\s*(sha512|yescrypt)$"
+pattern_match = true
+valid_os      = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
+
+[pam.0005a]
+category      = "pam"
+check_name    = "password hashing login.defs"
+check_skip    = false
+check_type    = "regex"
+ignore_case   = true
+multi_line    = false
+path          = "/etc/login.defs"
+pattern       = "^ENCRYPT_METHOD\\s+(SHA512|YESCRYPT)$"
+pattern_match = true
+valid_os      = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
+
+[pam.0006a]
+category      = "pam"
+check_name    = "password hashing password-auth"
+check_skip    = false
+check_type    = "regex"
+ignore_case   = true
+multi_line    = false
+path          = "/etc/pam.d/password-auth"
+pattern       = ""
+pattern_match = true
+valid_os      = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
+
+[pam.0007a]
+category      = "pam"
+check_name    = "password hashing system-auth"
+check_skip    = false
+check_type    = "regex"
+ignore_case   = true
+multi_line    = false
+path          = "/etc/pam.d/system-auth"
+pattern       = ""
+pattern_match = true
+valid_os      = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
+
+[pam.0008a]
+category      = "pam"
+check_name    = "password history password-auth 1"
+check_skip    = false
+check_type    = "regex"
+ignore_case   = true
+multi_line    = false
+path          = "/etc/pam.d/password-auth"
+pattern       = "^password\\s+requisite\\s+pam_pwhistory\\.so\\b.*\\bremember=5\\b.*$"
+pattern_match = true
+valid_os      = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
+
+[pam.0009a]
+category      = "pam"
+check_name    = "password history password-auth 2"
+check_skip    = false
+check_type    = "regex"
+ignore_case   = true
+multi_line    = false
+path          = "/etc/pam.d/password-auth"
+pattern       = "^password\\s+required\\s+pam_unix\\.so\\b.*\\bremember=5\\b.*$"
+pattern_match = true
+valid_os      = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
+
+[pam.0010a]
+category      = "pam"
+check_name    = "password history system-auth 1"
+check_skip    = false
+check_type    = "regex"
+ignore_case   = true
+multi_line    = false
+path          = "/etc/pam.d/system-auth"
+pattern       = "^password\\s+requisite\\s+pam_pwhistory\\.so\\b.*\\bremember=5\\b.*$"
+pattern_match = true
+valid_os      = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
+
+[pam.0011a]
+category      = "pam"
+check_name    = "password history system-auth 2"
+check_skip    = false
+check_type    = "regex"
+ignore_case   = true
+multi_line    = false
+path          = "/etc/pam.d/system-auth"
+pattern       = "^password\\s+required\\s+pam_unix\\.so\\b.*\\bremember=5\\b.*$"
+pattern_match = true
+valid_os      = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
+
+[pam.0012a]
+category      = "pam"
+check_name    = "password length"
+check_skip    = false
+check_type    = "regex"
+ignore_case   = true
+multi_line    = false
+path          = "/etc/security/pwquality.conf"
+pattern       = "^minlen\\s*=\\s*14$"
+pattern_match = true
+valid_os      = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
+
+[pam.0013a]
+category      = "pam"
+check_name    = "password lockout tries"
+check_skip    = false
+check_type    = "regex"
+ignore_case   = true
+multi_line    = false
+path          = "/etc/security/faillock.conf"
+pattern       = "^deny\\s*=\\s*(0|[6-9]|[1-9][0-9]*)$"
+pattern_match = true
+valid_os      = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
+
+[pam.0014a]
+category      = "pam"
+check_name    = "password max age login.defs"
+check_skip    = false
+check_type    = "regex"
+ignore_case   = true
+multi_line    = false
+path          = "/etc/login.defs"
+pattern       = "^PASS_MAX_DAYS\\s+365$"
+pattern_match = true
+valid_os      = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
+
+[pam.0015a]
+category      = "pam"
+check_name    = "password min age login.defs"
+check_skip    = false
+check_type    = "regex"
+ignore_case   = true
+multi_line    = false
+path          = "/etc/login.defs"
+pattern       = "^PASS_MIN_DAYS\\s+1$"
+pattern_match = true
+valid_os      = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
+
+[pam.0016a]
+category      = "pam"
+check_name    = "password quality password-auth"
+check_skip    = false
+check_type    = "regex"
+ignore_case   = true
+multi_line    = false
+path          = "/etc/pam.d/password-auth"
+pattern       = "^password\\s+requisite\\s+pam_pwquality\\.so\\b.*$"
+pattern_match = true
+valid_os      = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
+
+[pam.0017a]
+category      = "pam"
+check_name    = "password quality system-auth"
+check_skip    = false
+check_type    = "regex"
+ignore_case   = true
+multi_line    = false
+path          = "/etc/pam.d/system-auth"
+pattern       = "^password\\s+requisite\\s+pam_pwquality\\.so\\b.*$"
+pattern_match = true
+valid_os      = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
+
+[pam.0018a]
+category      = "pam"
+check_name    = "password unlock time"
+check_skip    = false
+check_type    = "regex"
+ignore_case   = true
+multi_line    = false
+path          = "/etc/security/faillock.conf"
+pattern       = "^unlock_time\\s*=\\s*(0|[9-9][0-9]{2,}|[1-9][0-9]{3,})$"
+pattern_match = true
+valid_os      = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
+
 [pam.0019a]
 category      = "pam"
 check_name    = "su command restriced"
+check_skip    = false
 check_type    = "regex"
 ignore_case   = true
 multi_line    = false
@@ -1495,6 +1622,7 @@ valid_os      = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 [postfix.0001a]
 category          = "postfix"
 check_name        = "postfix package"
+check_skip        = false
 check_type        = "package"
 package_installed = true
 package_name      = "postfix"
@@ -1504,6 +1632,7 @@ valid_os          = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 [rpcbind.0001a]
 category          = "rpcbind"
 check_name        = "rpcbind package"
+check_skip        = false
 check_type        = "package"
 package_installed = false
 package_name      = "rpcbind"
@@ -1512,6 +1641,7 @@ valid_os          = ["amzn-2023", "ubuntu-22.04"]
 [rpcbind.0002a]
 category        = "rpcbind"
 check_name      = "rpcbind service"
+check_skip      = false
 check_type      = "service"
 service_active  = false
 service_enabled = false
@@ -1522,6 +1652,7 @@ valid_os        = ["amzn-2023", "ubuntu-22.04"]
 [rpcbind.0003a]
 category        = "rpcbind"
 check_name      = "rpcbind socket"
+check_skip      = false
 check_type      = "service"
 service_active  = false
 service_enabled = false
@@ -1532,6 +1663,7 @@ valid_os        = ["amzn-2023", "ubuntu-22.04"]
 [rpcbind.0004a]
 category    = "rpcbind"
 check_name  = "rpcbind service file"
+check_skip  = false
 check_type  = "path"
 path        = "/etc/systemd/system/rpcbind.service"
 path_exists = true
@@ -1541,6 +1673,7 @@ valid_os    = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 [rpcbind.0005a]
 category    = "rpcbind"
 check_name  = "rpcbind socket file"
+check_skip  = false
 check_type  = "path"
 path        = "/etc/systemd/system/rpcbind.socket"
 path_exists = true
@@ -1551,24 +1684,38 @@ valid_os    = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 [rsync.0001a]
 category          = "rsync"
 check_name        = "rsync-daemon package"
+check_skip        = false
 check_type        = "package"
 package_installed = false
 package_name      = "rsync-daemon"
 valid_os          = ["amzn-2023", "ubuntu-22.04"]
 
 [rsync.0002a]
-check_name      = "rsyncd"
-check_type      = "service"
+category        = "rsync"
+check_name      = "rsyncd service"
+check_skip      = false
+check_type      = "unit"
 service_active  = false
 service_enabled = false
 service_masked  = true
 service_name    = "rsyncd"
 valid_os        = ["amzn-2023", "ubuntu-22.04"]
 
+[rsync.0003a]
+category    = "rsync"
+check_name  = "rsyncd service file"
+check_skip  = false
+check_type  = "path"
+path        = "/etc/systemd/system/rsyncd.service"
+path_exists = true
+permissions = [0, 0, 644]
+valid_os    = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
+
 [rsyslog]
 [rsyslog.0001a]
 category          = "rsyslog"
 check_name        = "rsyslog package"
+check_skip        = false
 check_type        = "package"
 package_installed = true
 package_name      = "rsyslog"
@@ -1577,6 +1724,7 @@ valid_os          = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 [rsyslog.0002a]
 category    = "rsyslog"
 check_name  = "rsyslog service"
+check_skip  = false
 check_type  = "unit"
 unit_active = true
 unit_loaded = true
@@ -1587,8 +1735,19 @@ valid_os    = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 [rsyslog.0003a]
 category    = "rsyslog"
 check_name  = "rsyslog service file"
+check_skip  = false
 check_type  = "path"
 path        = "/etc/systemd/system/rsyslog.service"
+path_exists = true
+permissions = [0, 0, 644]
+valid_os    = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
+
+[rsyslog.0004a]
+category    = "rsyslog"
+check_name  = "rsyslog.conf file"
+check_skip  = false
+check_type  = "path"
+path        = "/etc/rsyslog.conf"
 path_exists = true
 permissions = [0, 0, 644]
 valid_os    = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
@@ -1597,6 +1756,7 @@ valid_os    = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 [samba.0001a]
 category          = "samba"
 check_name        = "samba package"
+check_skip        = false
 check_type        = "package"
 package_installed = false
 package_name      = "samba"
@@ -1605,7 +1765,8 @@ valid_os          = ["amzn-2023", "ubuntu-22.04"]
 [shell]
 [shell.0001a]
 category      = "shell"
-check_name    = "user shell timeout"
+check_name    = "user shell timeout"                                       # TODO
+check_skip    = false
 check_subtype = "shell"
 check_type    = "regex"
 ignore_case   = true
@@ -1618,27 +1779,25 @@ valid_os      = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 [selinux.0001a]
 category          = "selinux"
 check_name        = "libselinux package"
+check_skip        = false
 check_type        = "package"
 package_installed = true
 package_name      = "libselinux"
 valid_os          = ["amzn-2023", "fedora-40"]
 
 [selinux.0002a]
+category          = "selinux"
 check_name        = "mcstrans package"
+check_skip        = false
 check_type        = "package"
-package_installed = false
+package_installed = true
 package_name      = "mcstrans"
 valid_os          = ["amzn-2023", "ubuntu-22.04"]
 
 [selinux.0003a]
 category      = "selinux"
-check_name    = "selinux boot enabled"
-check_subtype = "selinux"
-valid_os      = ["amzn-2023", "fedora-40"]
-
-[selinux.0004a]
-category      = "selinux"
 check_name    = "selinux enabled"
+check_skip    = false
 check_subtype = "selinux"
 check_type    = "regex"
 file_ext      = ".conf"
@@ -1648,9 +1807,10 @@ pattern       = "^SELINUX=(enforcing|permissive)\\s*$"
 pattern_match = true
 valid_os      = ["amzn-2023", "fedora-40"]
 
-[selinux.0005a]
+[selinux.0004a]
 category      = "selinux"
-check_name    = "selinux mode"
+check_name    = "selinux mode is enforcing"
+check_skip    = false
 check_subtype = "selinux"
 check_type    = "regex"
 file_ext      = ".conf"
@@ -1660,9 +1820,9 @@ pattern       = "^SELINUX=enforcing\\s*$"
 pattern_match = true
 valid_os      = ["amzn-2023", "fedora-40"]
 
-[selinux.0006a]
+[selinux.0005a]
 category      = "selinux"
-check_name    = "selinux policy"
+check_name    = "selinux policy configured"
 check_subtype = "selinux"
 check_type    = "regex"
 file_ext      = ".conf"
@@ -1672,9 +1832,10 @@ pattern       = "^SELINUXTYPE=targeted\\s*$"
 pattern_match = true
 valid_os      = ["amzn-2023", "fedora-40"]
 
-[selinux.0007a]
+[selinux.0006a]
 category      = "selinux"
 check_name    = "selinux enabled on boot"
+check_skip    = false
 check_subtype = "selinux"
 check_type    = "regex"
 ignore_case   = true
@@ -1687,21 +1848,26 @@ valid_os      = ["amzn-2023", "fedora-40"]
 [sendmail.0001a]
 category          = "sendmail"
 check_name        = "sendmail package"
+check_skip        = false
 check_type        = "package"
-package_installed = true
+package_installed = false
 package_name      = "sendmail"
 valid_os          = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 
 [snmp]
-[snmp.0009a]
+[snmp.0001a]
+category          = "snmp"
 check_name        = "net-snmp package"
+check_skip        = false
 check_type        = "package"
 package_installed = false
 package_name      = "net-snmp"
 valid_os          = ["amzn-2023", "ubuntu-22.04"]
 
-[snmp.0011a]
+[snmp.0002a]
+category        = "snmp"
 check_name      = "snmpd"
+check_skip      = false
 check_type      = "service"
 service_active  = false
 service_enabled = false
@@ -1709,10 +1875,21 @@ service_masked  = true
 service_name    = "snmpd"
 valid_os        = ["ubuntu-22.04"]
 
+[snmp.0003a]
+category    = "snmp"
+check_name  = "snmpd service file"
+check_skip  = false
+check_type  = "path"
+path        = "/etc/systemd/system/snmpd.service"
+path_exists = true
+permissions = [0, 0, 644]
+valid_os    = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
+
 [squid]
 [squid.0001a]
 category          = "squid"
 check_name        = "squid package"
+check_skip        = false
 check_type        = "package"
 package_installed = false
 package_name      = "squid"
@@ -1720,8 +1897,9 @@ valid_os          = ["amzn-2023", "ubuntu-22.04"]
 
 [ssh]
 [ssh.0001a]
-category          = "openssh"
+category          = "ssh"
 check_name        = "openssh package"
+check_skip        = false
 check_type        = "package"
 package_installed = true
 package_name      = "openssh"
@@ -1729,16 +1907,18 @@ valid_os          = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 
 [sshd]
 [sshd.0001a]
-category          = "openssh"
+category          = "sshd"
 check_name        = "openssh-server package"
+check_skip        = false
 check_type        = "package"
 package_installed = true
 package_name      = "openssh-server"
 valid_os          = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 
 [sshd.0002a]
-category    = "openssh"
+category    = "sshd"
 check_name  = "sshd service"
+check_skip  = false
 check_type  = "unit"
 unit_active = true
 unit_loaded = true
@@ -1747,8 +1927,53 @@ unit_state  = "enabled"
 valid_os    = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 
 [sshd.0003a]
-category      = "openssh"
-check_name    = "SSHD Access Limited"
+category    = "sshd"
+check_name  = "sshd service file"
+check_skip  = false
+check_type  = "path"
+path        = "/etc/systemd/system/sshd.service"
+path_exists = true
+permissions = [0, 0, 644]
+valid_os    = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
+
+[sshd.0004a]
+category    = "sshd"
+check_name  = "/etc/ssh/sshd_config"
+check_skip  = false
+check_type  = "path"
+path        = "/etc/ssh/sshd_config"
+path_exists = true
+permissions = [0, 0, 600]
+valid_os    = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
+
+[sshd.0005a]
+category             = "sshd"
+check_name           = "private host key files"
+check_skip           = false
+check_subtype        = "private"
+check_type           = "ssh-keys"
+expected_gid         = 0
+expected_permissions = 600
+expected_uid         = 0
+path                 = "/etc/ssh"
+valid_os             = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
+
+[sshd.0006a]
+category             = "sshd"
+check_name           = "public host key files"
+check_skip           = false
+check_subtype        = "public"
+check_type           = "ssh-keys"
+expected_gid         = 0
+expected_permissions = 644
+expected_uid         = 0
+path                 = "/etc/ssh"
+valid_os             = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
+
+[sshd.0007a]
+category      = "sshd"
+check_name    = "access limited"
+check_skip    = false
 check_subtype = "sshd"
 check_type    = "regex"
 file_ext      = ".conf"
@@ -1758,9 +1983,10 @@ pattern       = "^\\s*(allowusers|allowgroups|denyusers|denygroups)\\s+.+$"
 pattern_match = true
 valid_os      = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 
-[sshd.0004a]
-category      = "openssh"
-check_name    = "SSH AllowTcpForwarding"
+[sshd.0008a]
+category      = "sshd"
+check_name    = "allowtcpforwarded disabled"
+check_skip    = false
 check_subtype = "sshd"
 check_type    = "regex"
 file_ext      = ".conf"
@@ -1770,9 +1996,10 @@ pattern       = "^\\s*AllowTcpForwarding\\s+no"
 pattern_match = true
 valid_os      = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 
-[sshd.0005a]
-category      = "openssh"
-check_name    = "SSH ClientAliveCountMax"
+[sshd.0009a]
+category      = "sshd"
+check_name    = "clientalivecountmax less than 10"
+check_skip    = false
 check_subtype = "sshd"
 check_type    = "regex"
 file_ext      = ".conf"
@@ -1782,9 +2009,10 @@ pattern       = "^\\s*ClientAliveCountMax\\s+[3-9]$"
 pattern_match = true
 valid_os      = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 
-[sshd.0006a]
-category      = "openssh"
-check_name    = "SSH ClientAliveInterval"
+[sshd.0010a]
+category      = "sshd"
+check_name    = "clientaliveinterval 60 secs or less"
+check_skip    = false
 check_subtype = "sshd"
 check_type    = "regex"
 file_ext      = ".conf"
@@ -1794,9 +2022,10 @@ pattern       = "^\\s*ClientAliveInterval\\s+([1-9]|[12][0-9]|30)$"
 pattern_match = true
 valid_os      = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 
-[sshd.0007a]
-category      = "openssh"
-check_name    = "SSH Crypto Policy"
+[sshd.0011a]
+category      = "sshd"
+check_name    = "system-wide crypto policy not overridden"
+check_skip    = false
 check_subtype = "sshd"
 check_type    = "regex"
 file_ext      = ".conf"
@@ -1806,9 +2035,10 @@ pattern       = "^\\sCRYPTO_POLICY="
 pattern_match = false
 valid_os      = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 
-[sshd.0008a]
-category      = "openssh"
-check_name    = "SSH HostbasedAuthentication"
+[sshd.0012a]
+category      = "sshd"
+check_name    = "hostbasedauthentication disabled"
+check_skip    = false
 check_subtype = "sshd"
 check_type    = "regex"
 file_ext      = ".conf"
@@ -1818,9 +2048,10 @@ pattern       = "^\\s*HostbasedAuthentication\\s+no"
 pattern_match = true
 valid_os      = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 
-[sshd.0009a]
-category      = "openssh"
-check_name    = "SSH IgnoreRhosts"
+[sshd.0013a]
+category      = "sshd"
+check_name    = "ignorerhosts enabled"
+check_skip    = false
 check_subtype = "sshd"
 check_type    = "regex"
 file_ext      = ".conf"
@@ -1830,9 +2061,10 @@ pattern       = "^\\s*IgnoreRhosts\\s+yes"
 pattern_match = true
 valid_os      = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 
-[sshd.0010a]
-category      = "openssh"
-check_name    = "SSH LoginGraceTime"
+[sshd.0014a]
+category      = "sshd"
+check_name    = "logingracetime 60 secs or less"
+check_skip    = false
 check_subtype = "sshd"
 check_type    = "regex"
 file_ext      = ".conf"
@@ -1842,9 +2074,10 @@ pattern       = "^\\s*LoginGraceTime\\s+(1[6-9]|[2-5][0-9]|60)$"
 pattern_match = true
 valid_os      = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 
-[sshd.0011a]
-category      = "openssh"
-check_name    = "SSH LogLevel"
+[sshd.0015a]
+category      = "sshd"
+check_name    = "loglevel configured"
+check_skip    = false
 check_subtype = "sshd"
 check_type    = "regex"
 file_ext      = ".conf"
@@ -1854,9 +2087,10 @@ pattern       = "^\\s*LogLevel\\s+(VERBOSE|INFO)"
 pattern_match = true
 valid_os      = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 
-[sshd.0012a]
-category      = "openssh"
-check_name    = "SSH MaxAuthTries"
+[sshd.0016a]
+category      = "sshd"
+check_name    = "maxauthtries 4 of less"
+check_skip    = false
 check_subtype = "sshd"
 check_type    = "regex"
 file_ext      = ".conf"
@@ -1866,9 +2100,10 @@ pattern       = "^\\s*MaxAuthTries\\s+[2-4]$"
 pattern_match = true
 valid_os      = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 
-[sshd.0013a]
-category      = "openssh"
-check_name    = "SSH MaxSessions"
+[sshd.0017a]
+category      = "sshd"
+check_name    = "maxsessions 10 or less"
+check_skip    = false
 check_subtype = "sshd"
 check_type    = "regex"
 file_ext      = ".conf"
@@ -1878,9 +2113,10 @@ pattern       = "^\\s*MaxSessions\\s+([1-9]|10)$"
 pattern_match = true
 valid_os      = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 
-[sshd.0014a]
-category      = "openssh"
-check_name    = "SSH MaxStartups"
+[sshd.0018a]
+category      = "sshd"
+check_name    = "maxstartups configured"
+check_skip    = false
 check_subtype = "sshd"
 check_type    = "regex"
 file_ext      = ".conf"
@@ -1890,45 +2126,10 @@ pattern       = "^\\s*MaxStartups\\s+10:([0-2]?[0-9]|30):([0-5]?[0-9]|60)$"
 pattern_match = true
 valid_os      = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 
-[sshd.0015a]
-category      = "openssh"
-check_name    = "SSH PermitEmptyPasswords"
-check_subtype = "sshd"
-check_type    = "regex"
-file_ext      = ".conf"
-ignore_case   = true
-multi_line    = false
-pattern       = "^\\s*PermitEmptyPasswords\\s+no"
-pattern_match = true
-valid_os      = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
-
-[sshd.0016a]
-category      = "openssh"
-check_name    = "SSH PermitRootLogin"
-check_subtype = "sshd"
-check_type    = "regex"
-file_ext      = ".conf"
-ignore_case   = true
-multi_line    = false
-pattern       = "^\\s*PermitRootLogin\\s+no"
-pattern_match = true
-valid_os      = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
-
-[sshd.0017a]
-category      = "openssh"
-check_name    = "SSH PermitUserEnvironment"
-check_subtype = "sshd"
-check_type    = "regex"
-file_ext      = ".conf"
-ignore_case   = true
-multi_line    = false
-pattern       = "^\\s*PermitUserEnvironment\\s+no"
-pattern_match = true
-valid_os      = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
-
-[sshd.0018a]
-category      = "openssh"
-check_name    = "SSH UsePAM"
+[sshd.0019a]
+category      = "sshd"
+check_name    = "pam enabled"
+check_skip    = false
 check_subtype = "sshd"
 check_type    = "regex"
 file_ext      = ".conf"
@@ -1938,9 +2139,62 @@ pattern       = "^\\s*UsePAM\\s+yes"
 pattern_match = true
 valid_os      = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 
-[sshd.0019a]
-category      = "openssh"
-check_name    = "SSH X11Forwarding"
+[sshd.0020a]
+category      = "sshd"
+check_name    = "permitemptypasswords disabled"
+check_skip    = false
+check_subtype = "sshd"
+check_type    = "regex"
+file_ext      = ".conf"
+ignore_case   = true
+multi_line    = false
+pattern       = "^\\s*PermitEmptyPasswords\\s+no"
+pattern_match = true
+valid_os      = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
+
+[sshd.0021a]
+category      = "sshd"
+check_name    = "permitrootlogin disabled"
+check_skip    = false
+check_subtype = "sshd"
+check_type    = "regex"
+file_ext      = ".conf"
+ignore_case   = true
+multi_line    = false
+pattern       = "^\\s*PermitRootLogin\\s+no"
+pattern_match = true
+valid_os      = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
+
+[sshd.0022a]
+category      = "sshd"
+check_name    = "permituserenvironment disabled"
+check_skip    = false
+check_subtype = "sshd"
+check_type    = "regex"
+file_ext      = ".conf"
+ignore_case   = true
+multi_line    = false
+pattern       = "^\\s*PermitUserEnvironment\\s+no"
+pattern_match = true
+valid_os      = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
+
+[sshd.0023a]
+category      = "sshd"
+check_name    = "warning banner configured"
+check_skip    = false
+check_subtype = "sshd"
+check_type    = "regex"
+file_ext      = ".conf"
+ignore_case   = true
+multi_line    = false
+pattern       = ""                                                         # TODO
+pattern_match = true
+valid_os      = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
+
+[sshd.0024a]
+category      = "sshd"
+check_name    = "x11 forwarding disabled"
+check_skip    = false
 check_subtype = "sshd"
 check_type    = "regex"
 file_ext      = ".conf"
@@ -1950,41 +2204,11 @@ pattern       = "^\\s*X11Forwarding\\s+no"
 pattern_match = true
 valid_os      = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 
-[sshd.0020a]
-category             = "openssh"
-check_name           = "SSH Private Keys"
-check_subtype        = "private"
-check_type           = "ssh-keys"
-expected_gid         = 0
-expected_permissions = 600
-expected_uid         = 0
-path                 = "/etc/ssh"
-valid_os             = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
-
-[sshd.0021a]
-category             = "openssh"
-check_name           = "SSH Public Keys"
-check_subtype        = "public"
-check_type           = "ssh-keys"
-expected_gid         = 0
-expected_permissions = 644
-expected_uid         = 0
-path                 = "/etc/ssh"
-valid_os             = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
-
-[sshd.0022a]
-category    = "openssh"
-check_name  = "/etc/ssh/sshd_config"
-check_type  = "path"
-path        = "/etc/ssh/sshd_config"
-path_exists = true
-permissions = [0, 0, 600]
-valid_os    = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
-
 [sudo]
 [sudo.0001a]
 category          = "sudo"
 check_name        = "sudo package"
+check_skip        = false
 check_type        = "package"
 package_installed = true
 package_name      = "sudo"
@@ -1993,17 +2217,19 @@ valid_os          = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 [sudo.0002a]
 category      = "sudo"
 check_name    = "auth timeout"
+check_skip    = false
 check_subtype = "sudo"
 check_type    = "regex"
 ignore_case   = true
 multi_line    = false
-pattern       = "^Defaults\\s+timestamp_timeout=15\\s*$"
+pattern       = "^Defaults\\s+timestamp_timeout=15\\s*$"                   # TODO Fix this
 pattern_match = true
 valid_os      = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 
 [sudo.0003a]
 category      = "sudo"
 check_name    = "log file"
+check_skip    = false
 check_subtype = "sudo"
 check_type    = "regex"
 ignore_case   = true
@@ -2014,18 +2240,8 @@ valid_os      = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 
 [sudo.0004a]
 category      = "sudo"
-check_name    = "use_pty"
-check_subtype = "sudo"
-check_type    = "regex"
-ignore_case   = true
-multi_line    = false
-pattern       = "^Defaults\\s+use_pty\\s*$"
-pattern_match = true
-valid_os      = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
-
-[sudo.0005a]
-category      = "sudo"
-check_name    = "global re-auth enabled"
+check_name    = "reauthentication globally enabled"
+check_skip    = false
 check_subtype = "sudo"
 check_type    = "regex"
 ignore_case   = true
@@ -2034,10 +2250,23 @@ pattern       = "^[^#]*!authenticate"
 pattern_match = true
 valid_os      = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 
+[sudo.0005a]
+category      = "sudo"
+check_name    = "use pty enabled"
+check_skip    = false
+check_subtype = "sudo"
+check_type    = "regex"
+ignore_case   = true
+multi_line    = false
+pattern       = "^Defaults\\s+use_pty\\s*$"
+pattern_match = true
+valid_os      = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
+
 [system]
 [system.0001a]
 category    = "system"
-check_name  = "/etc/group"
+check_name  = "/group file permissions"
+check_skip  = false
 check_type  = "path"
 path        = "/etc/group"
 path_exists = true
@@ -2046,7 +2275,8 @@ valid_os    = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 
 [system.0002a]
 category    = "system"
-check_name  = "/etc/group-"
+check_name  = "group- file permissions"
+check_skip  = false
 check_type  = "path"
 path        = "/etc/group-"
 path_exists = true
@@ -2055,7 +2285,8 @@ valid_os    = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 
 [system.0003a]
 category    = "system"
-check_name  = "/etc/gshadow"
+check_name  = "gshadow file permissions"
+check_skip  = false
 check_type  = "path"
 path        = "/etc/gshadow"
 path_exists = true
@@ -2064,7 +2295,8 @@ valid_os    = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 
 [system.0004a]
 category    = "system"
-check_name  = "/etc/gshadow-"
+check_name  = "gshadow- file permissions"
+check_skip  = false
 check_type  = "path"
 path        = "/etc/gshadow-"
 path_exists = true
@@ -2073,7 +2305,8 @@ valid_os    = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 
 [system.0005a]
 category    = "system"
-check_name  = "/etc/passwd"
+check_name  = "passwd file permissions"
+check_skip  = false
 check_type  = "path"
 path        = "/etc/passwd"
 path_exists = true
@@ -2082,7 +2315,8 @@ valid_os    = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 
 [system.0006a]
 category    = "system"
-check_name  = "/etc/passwd-"
+check_name  = "passwd- file permissions"
+check_skip  = false
 check_type  = "path"
 path        = "/etc/passwd-"
 path_exists = true
@@ -2091,7 +2325,8 @@ valid_os    = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 
 [system.0007a]
 category    = "system"
-check_name  = "/etc/shadow"
+check_name  = "shadow file permissions"
+check_skip  = false
 check_type  = "path"
 path        = "/etc/shadow"
 path_exists = true
@@ -2100,7 +2335,8 @@ valid_os    = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 
 [system.0008a]
 category    = "system"
-check_name  = "/etc/shadow-"
+check_name  = "shadow- file permissions"
+check_skip  = false
 check_type  = "path"
 path        = "/etc/shadow-"
 path_exists = true
@@ -2109,26 +2345,25 @@ valid_os    = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 
 [system.0009a]
 category   = "system"
-check_name = "unconfined services"
+check_name = "unconfined services"                         # TODO
+check_skip = false
 check_type = "unconfined-services"
 valid_os   = ["amzn-2023", "ubuntu-22.04", "ubuntu-24.04"]
 
 [system.0010a]
 category   = "system"
-check_name = "system reboot required"
+check_name = "system reboot required"                                   # TODO
+check_skip = false
 check_type = "command"
 command    = "needs-restarting -r"
-# command = "apt-get -s upgrade"
-# command = "wget"
-# command = "which"
-# command = "echo needs-restarting -r"
-pattern  = "^(?!.*0 upgraded).*"
-valid_os = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
+pattern    = "^(?!.*0 upgraded).*"
+valid_os   = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 
 [telnet]
 [telnet.0001a]
 category          = "telnet"
 check_name        = "telnet package"
+check_skip        = false
 check_type        = "package"
 package_installed = false
 package_name      = "telnet"
@@ -2137,6 +2372,7 @@ valid_os          = ["amzn-2023", "ubuntu-22.04"]
 [telnet.0002a]
 category          = "telnet"
 check_name        = "telnet-server package"
+check_skip        = false
 check_type        = "package"
 package_installed = false
 package_name      = "telnet-server"
@@ -2144,7 +2380,9 @@ valid_os          = ["amzn-2023", "ubuntu-22.04"]
 
 [vsftpd]
 [vsftpd.0001a]
+category          = "vsftpd"
 check_name        = "vsftpd package"
+check_skip        = false
 check_type        = "package"
 package_installed = false
 package_name      = "vsftpd"
@@ -2154,6 +2392,7 @@ valid_os          = ["amzn-2023", "ubuntu-22.04"]
 [x11.0001a]
 category          = "x11"
 check_name        = "xorg-x11-server-common package"
+check_skip        = false
 check_type        = "package"
 package_installed = false
 package_name      = "xorg-x11-server-common"

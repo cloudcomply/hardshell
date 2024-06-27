@@ -5,9 +5,11 @@ import re
 from dataclasses import dataclass, field
 from typing import List
 
+from distutils import log
 from src.hardshell.checks.base import BaseCheck
-from src.hardshell.common.common import get_config_mapping
-from src.hardshell.common.logging import logger
+from src.hardshell.common.common import get_config_mapping, log_and_print
+
+# from src.hardshell.common.logging import
 
 
 @dataclass
@@ -45,31 +47,31 @@ class RegexCheck(BaseCheck):
         if multi_line:
             flags |= re.MULTILINE
 
-        logger.info(f"Ignore Case Flag: {ignore_case}")
-        logger.info(f"Multi-line Flag: {multi_line}")
-        logger.info(f"Flags: {flags}")
+        log_and_print(f"Ignore Case Flag: {ignore_case}", log_only=True)
+        log_and_print(f"Multi-line Flag: {multi_line}", log_only=True)
+        log_and_print(f"Flags: {flags}", log_only=True)
 
         pattern = re.compile(pattern, flags)
 
         # Open and read the file
-        logger.info(f"Reading file: {file_path}")
+        log_and_print(f"Reading file: {file_path}", log_only=True)
         with open(file_path, "r") as file:
             content = file.read()
             if pattern.search(content):
                 pattern_found = True
 
-        logger.info(f"Pattern found: {pattern_found}")
+        log_and_print(f"Pattern found: {pattern_found}", log_only=True)
         return pattern_found
 
     def run_check(self, current_os, global_config):
         def search_file(file_path):
-            logger.info(f"Searching file: {file_path}")
+            log_and_print(f"Searching file: {file_path}", log_only=True)
             return self.find_pattern_in_file(
                 file_path, self.pattern, self.ignore_case, self.multi_line
             )
 
         def search_in_directory(directory_path):
-            logger.info(f"Searching directory: {directory_path}")
+            log_and_print(f"Searching directory: {directory_path}", log_only=True)
 
             all_files = glob.glob(
                 os.path.join(directory_path, "**", "*"), recursive=True
@@ -90,7 +92,7 @@ class RegexCheck(BaseCheck):
                     return True
             return False
 
-        logger.info(f"Running Regex Check: {self.check_name}")
+        log_and_print(f"Running Regex Check: {self.check_name}", log_only=True)
 
         # Log optional attributes if they exist
         for attribute, value in [
@@ -101,39 +103,46 @@ class RegexCheck(BaseCheck):
             ("Pattern Match", self.pattern_match),
         ]:
             if value:
-                logger.info(f"{attribute}: {value}")
+                log_and_print(f"{attribute}: {value}", log_only=True)
 
         pattern_found = False
         current_path = None
 
         if self.path is None and self.check_subtype is not None:
-            logger.info(
-                f"Path not specified, using path from config mapping in global_config: {self.check_subtype}"
+            log_and_print(
+                f"Path not specified, using path from config mapping in global_config: {self.check_subtype}",
+                log_only=True,
             )
             self.path = get_config_mapping(self.check_subtype, global_config)
-            logger.info(f"Global Config Path: {self.path}")
+            log_and_print(f"Global Config Path: {self.path}", log_only=True)
 
         paths = self.path if isinstance(self.path, list) else [self.path]
 
-        logger.info(f"Paths: {paths}")
+        log_and_print(f"Paths: {paths}", log_only=True)
 
         for path in paths:
-            logger.info(f"Path: {path}")
+            log_and_print(f"Path: {path}", log_only=True)
             current_path = path
             if os.path.isfile(path):
-                logger.info(f"File: {path} is a file {os.path.isfile(path)}")
+                log_and_print(
+                    f"File: {path} is a file {os.path.isfile(path)}",
+                    log_only=True,
+                )
                 if search_file(path):
-                    logger.info("search_file invoked")
+                    log_and_print("search_file invoked", log_only=True)
                     pattern_found = True
                     break
             elif os.path.isdir(path):
-                logger.info(f"Dir: {path} is a Dir {os.path.isdir(path)}")
+                log_and_print(
+                    f"Dir: {path} is a Dir {os.path.isdir(path)}",
+                    log_only=True,
+                )
                 if search_in_directory(path):
-                    logger.info("search_in_directory invoked")
+                    log_and_print("search_in_directory invoked")
                     pattern_found = True
                     break
             else:
-                logger.info(f"Path {path} is not a file or directory")
+                log_and_print(f"Path {path} is not a file or directory", log_only=True)
                 pattern_found = False
 
         found_status = "found" if pattern_found else "not found"
@@ -148,8 +157,9 @@ class RegexCheck(BaseCheck):
             # if isinstance(self.path, str) and os.path.isfile(self.path)
             # else "one of the files in the directory"
         )
-        logger.info(
-            f"Pattern: {self.pattern} {found_status} in file: {path_description} {match_status}"
+        log_and_print(
+            f"Pattern: {self.pattern} {found_status} in file: {path_description} {match_status}",
+            log_only=True,
         )
         result = "pass" if pattern_found == self.pattern_match else "fail"
         self.set_result(

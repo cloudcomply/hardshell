@@ -1,23 +1,14 @@
 [config_files]
-aide = [
-    "/etc/aide.conf",
-    "/etc/aide.conf.d/"
-]
-chrony = ["/etc/chrony.conf", "/etc/chrony.d",]
-coredump = [
-    "/etc/systemd/coredump.conf",
-    "/etc/systemd/coredump.conf.d",
-]
-crypto_policies = [
+aide = ["/etc/aide.conf", "/etc/aide.conf.d/"]
+chrony = ["/etc/chrony.conf", "/etc/chrony.d"]
+coredump = ["/etc/systemd/coredump.conf", "/etc/systemd/coredump.conf.d"]
+crypto = [
     "/etc/crypto-policies/config",
     "/etc/crypto-policies/local.d",
-    "/usr/share/crypto-policies/policies",
     "/etc/crypto-policies/policies",
+    "/usr/share/crypto-policies/policies",
 ]
-gpg = [
-    "/etc/dnf/dnf.conf",
-    "/etc/yum.repos.d",
-]
+gpg = ["/etc/dnf/dnf.conf", "/etc/yum.repos.d"]
 kernel = [
     "/etc/modprobe.d/*.conf",
     "/lib/modprobe.d/*.conf",
@@ -25,29 +16,15 @@ kernel = [
     "/usr/local/lib/modprobe.d/*.conf",
 ]
 selinux = ["/etc/selinux/config"]
-shell = ["/etc/profile", "/etc/profile.d", "/etc/bashrc"]
-sshd = ["/etc/ssh/test", "/etc/ssh/sshd_config", "/etc/ssh/sshd_config.d"]
+shell = ["/etc/bashrc", "/etc/profile", "/etc/profile.d"]
+sshd = ["/etc/ssh/sshd_config", "/etc/ssh/sshd_config.d", "/etc/ssh/test"]
 sudo = ["/etc/sudoers", "/etc/sudoers.d"]
 sysctl = [
-    "/run/sysctl.d/",
-    "/etc/sysctl.d/",
-    "/usr/local/lib/sysctl.d/",
-    "/usr/lib/sysctl.d/",
-    "/lib/sysctl.d/",
     "/etc/sysctl.conf",
+    "/etc/sysctl.d/",
+    "/lib/sysctl.d/",
+    "/run/sysctl.d/",
+    "/usr/lib/sysctl.d/",
+    "/usr/local/lib/sysctl.d/",
 ]
-umask = [
-    "/etc/bashrc",
-    "/etc/profile",
-    "/etc/profile.d",
-    "/etc/login.defs",
-]
-
-[pkgmgr]
-amzn = "dnf list installed"
-debian = ""
-fedora = ""
-kali = ""
-rhel = ""
-rocky = ""
-ubuntu = "dpkg-query -l"
+umask = ["/etc/bashrc", "/etc/login.defs", "/etc/profile", "/etc/profile.d"]

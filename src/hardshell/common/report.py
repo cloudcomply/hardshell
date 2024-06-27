@@ -1,19 +1,18 @@
+import click
 from dataclasses import dataclass, field
 from typing import List
-
-from src.hardshell.common.logging import logger
+from src.hardshell.common.common import log_status
 
 
 @dataclass
 class Report:
     title: str = None
     entries: List[int] = field(default_factory=list)
+    checks_passed: int = 0
+    checks_failed: int = 0
 
     def add_entry(self, result):
         self.entries.append(result)
-
-    def get_entries(self):
-        return self.entries
 
     def generate_summary(self):
         checks_passed = 0
@@ -26,21 +25,47 @@ class Report:
                 checks_failed += 1
 
             summary += (
-                f"Check Name: {str(entry.get('name'))}"
+                f"check name: {str(entry.get('name'))}"
                 + "\t"
-                + f"Check ID: {str(entry.get('id'))}"
+                + f"check id: {str(entry.get('id'))}"
                 + "\t"
-                + f"Check Type: {str(entry.get('type'))}"
+                + f"check type: {str(entry.get('type'))}"
                 + "\t"
-                + f"Check Subtype: {str(entry.get('subtype'))}"
+                + f"check subtype: {str(entry.get('subtype'))}"
                 + "\t"
-                + f"Check Result: {str(entry.get('result'))}"
+                + f"check result: {str(entry.get('result'))}"
                 + "\n"
             )
 
-        summary += f"\nChecks passed: {checks_passed}\nChecks failed: {checks_failed}\n"
+        summary += f"\nchecks passed: {checks_passed}\nchecks failed: {checks_failed}\n"
 
         return summary
+
+    def get_entries(self):
+        return self.entries
+
+    def get_check_results_total(self):
+        return self.checks_passed, self.checks_failed
+
+    def get_check_results_total_formatted(self):
+        for result in self.entries:
+            if result.get("result") == "pass":
+                self.checks_passed += 1
+            else:
+                self.checks_failed += 1
+        # log_status(
+        #     message=f"{result.get('id')} - {result.get('name')}",
+        #     message_color="yellow",
+        #     status=f"{result['result'].upper()}",
+        #     status_color=("green" if result["result"] == "pass" else "red"),
+        # )
+        click.echo(click.style("#" * 90 + "\n", fg="blue"))
+        click.echo(
+            click.style(
+                f"Checks passed: {self.checks_passed}, Checks failed: {self.checks_failed}",
+                fg="green",
+            )
+        )
 
     def export_to_txt(self, file_path):
         with open(file_path, "w") as file:

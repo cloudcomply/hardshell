@@ -7,185 +7,97 @@ from src.hardshell.checks.linux.regex import RegexCheck
 from src.hardshell.checks.linux.unit import UnitCheck
 from src.hardshell.common.common import log_and_print
 
+CHECK_CLASSES = {
+    "accounts": AccountsCheck,
+    "module": ModuleCheck,
+    "mount": MountCheck,
+    "package": PackageCheck,
+    "path": PathCheck,
+    "regex": RegexCheck,
+    "unit": UnitCheck,
+}
+
+
+def create_check_instance(check_type, params):
+    check_class = CHECK_CLASSES.get(check_type)
+    if check_class:
+        log_and_print(f"creating check: {params.get('check_name')}", log_only=True)
+        return check_class(**params)
+    return None
+
 
 def create_checks(config, current_os):
     checks = []
-    for system_check in config:
-        for check in config[system_check]:
-            if not config[system_check][check].get(
-                "check_skip"
-            ) and f"{current_os['id']}-{current_os['version_id']}" in config[
-                system_check
-            ][
-                check
-            ].get(
+    os_version = f"{current_os['id']}-{current_os['version_id']}"
+
+    for system_check in config.values():
+        for check, check_config in system_check.items():
+            if check_config.get("check_skip") or os_version not in check_config.get(
                 "valid_os", []
             ):
-                category = config[system_check][check].get("category")
-                check_id = (
-                    config[system_check][check].get("category", "custom") + "-" + check
-                )
-                check_name = config[system_check][check].get("check_name")
-                check_subtype = config[system_check][check].get("check_subtype", None)
-                check_type = config[system_check][check].get("check_type")
-                depends_on = config[system_check][check].get("depends_on")
-                valid_os = config[system_check][check].get("valid_os", [])
+                continue
 
-                if config[system_check][check].get("check_type") == "accounts":
-                    # log_and_print(
-                    #     f"creating check: {config[system_check][check].get('check_name')}",
-                    #     log_only=True,
-                    # )
-                    # new_check = AccountsCheck(
-                    #     category=category,
-                    #     check_id=check_id,
-                    #     check_name=check_name,
-                    #     check_subtype=check_subtype,
-                    #     check_type=check_type,
-                    #     depends_on=depends_on,
-                    #     valid_os=valid_os,
-                    # )
-                    # checks.append(new_check)
-                    pass
-                elif config[system_check][check].get("check_type") == "module":
-                    # log_and_print(
-                    #     f"creating check: {config[system_check][check].get('check_name')}",
-                    #     log_only=True,
-                    # )
-                    # new_check = ModuleCheck(
-                    #     category=category,
-                    #     check_id=check_id,
-                    #     check_name=check_name,
-                    #     check_subtype=check_subtype,
-                    #     check_type=check_type,
-                    #     depends_on=depends_on,
-                    #     module_denied=config[system_check][check].get("module_denied"),
-                    #     module_exists=config[system_check][check].get("module_exists"),
-                    #     module_loadable=config[system_check][check].get(
-                    #         "module_loadable"
-                    #     ),
-                    #     module_loaded=config[system_check][check].get("module_loaded"),
-                    #     module_name=config[system_check][check].get("module_name"),
-                    #     module_path=config[system_check][check].get("module_path"),
-                    #     valid_os=valid_os,
-                    # )
-                    # checks.append(new_check)
-                    pass
-                elif config[system_check][check].get("check_type") == "mount":
-                    # log_and_print(
-                    #     f"creating check: {config[system_check][check].get('check_name')}",
-                    #     log_only=True,
-                    # )
-                    # new_check = MountCheck(
-                    #     category=category,
-                    #     check_id=check_id,
-                    #     check_name=check_name,
-                    #     check_subtype=check_subtype,
-                    #     check_type=check_type,
-                    #     depends_on=depends_on,
-                    #     mount_boot=config[system_check][check].get("mount_boot"),
-                    #     mount_exists=config[system_check][check].get("mount_exists"),
-                    #     mount_options=config[system_check][check].get("mount_options"),
-                    #     path=config[system_check][check].get("path"),
-                    #     separate_partition=config[system_check][check].get(
-                    #         "separate_partition"
-                    #     ),
-                    #     valid_os=valid_os,
-                    # )
-                    # checks.append(new_check)
-                    pass
-                elif config[system_check][check].get("check_type") == "package":
-                    log_and_print(
-                        f"creating check: {config[system_check][check].get('check_name')}",
-                        log_only=True,
-                    )
-                    new_check = PackageCheck(
-                        category=category,
-                        check_id=check_id,
-                        check_name=check_name,
-                        check_subtype=check_subtype,
-                        check_type=check_type,
-                        depends_on=depends_on,
-                        package_name=config[system_check][check].get("package_name"),
-                        package_installed=config[system_check][check].get(
-                            "package_installed"
-                        ),
-                        valid_os=valid_os,
-                    )
-                    checks.append(new_check)
-                    pass
-                elif config[system_check][check].get("check_type") == "path":
-                    # log_and_print(
-                    #     f"creating check: {config[system_check][check].get('check_name')}",
-                    #     log_only=True,
-                    # )
-                    # new_check = PathCheck(
-                    #     category=category,
-                    #     check_id=check_id,
-                    #     check_name=check_name,
-                    #     check_subtype=check_subtype,
-                    #     check_type=check_type,
-                    #     depends_on=depends_on,
-                    #     path=config[system_check][check].get("path"),
-                    #     path_exists=config[system_check][check].get("path_exists"),
-                    #     permissions=config[system_check][check].get("permissions"),
-                    #     recursive=config[system_check][check].get("recursive", False),
-                    #     valid_os=valid_os,
-                    # )
-                    # checks.append(new_check)
-                    pass
-                elif config[system_check][check].get("check_type") == "regex":
-                    # log_and_print(
-                    #     f"creating check: {config[system_check][check].get('check_name')}",
-                    #     log_only=True,
-                    # )
-                    # new_check = RegexCheck(
-                    #     category=category,
-                    #     check_id=check_id,
-                    #     check_name=check_name,
-                    #     check_subtype=check_subtype,
-                    #     check_type=check_type,
-                    #     depends_on=depends_on,
-                    #     file_ext=config[system_check][check].get("file_ext", None),
-                    #     ignore_case=config[system_check][check].get(
-                    #         "ignore_case", False
-                    #     ),
-                    #     multi_line=config[system_check][check].get("multi_line", False),
-                    #     path=config[system_check][check].get("path"),
-                    #     pattern=config[system_check][check].get("pattern"),
-                    #     pattern_match=config[system_check][check].get(
-                    #         "pattern_match", False
-                    #     ),
-                    #     valid_os=valid_os,
-                    # )
-                    # checks.append(new_check)
-                    pass
-                elif config[system_check][check].get("check_type") == "unit":
-                    # log_and_print(
-                    #     f"creating check: {config[system_check][check].get('check_name')}",
-                    #     log_only=True,
-                    # )
-                    # new_check = UnitCheck(
-                    #     category=category,
-                    #     check_id=check_id,
-                    #     check_name=check_name,
-                    #     check_subtype=check_subtype,
-                    #     check_type=check_type,
-                    #     depends_on=depends_on,
-                    #     unit_active=config[system_check][check].get("unit_active"),
-                    #     unit_loaded=config[system_check][check].get("unit_loaded"),
-                    #     unit_name=config[system_check][check].get("unit_name"),
-                    #     unit_state=config[system_check][check].get("unit_state"),
-                    #     valid_os=valid_os,
-                    # )
-                    # checks.append(new_check)
-                    pass
-                else:
-                    pass
-            else:
-                # log_and_print(
-                #     f"creating check: {config[system_check][check].get('check_name')}",
-                #     log_only=True,
-                # )
-                pass
+            common_params = {
+                "category": check_config.get("category"),
+                "check_id": f"{check_config.get('category', 'custom')}-{check}",
+                "check_name": check_config.get("check_name"),
+                "check_subtype": check_config.get("check_subtype", None),
+                "check_type": check_config.get("check_type"),
+                "depends_on": check_config.get("depends_on", []),
+                "valid_os": check_config.get("valid_os", []),
+            }
+
+            specific_params = {}
+            if check_config["check_type"] == "module":
+                specific_params = {
+                    "module_denied": check_config.get("module_denied"),
+                    "module_exists": check_config.get("module_exists"),
+                    "module_loadable": check_config.get("module_loadable"),
+                    "module_loaded": check_config.get("module_loaded"),
+                    "module_name": check_config.get("module_name"),
+                    "module_path": check_config.get("module_path"),
+                }
+            elif check_config["check_type"] == "mount":
+                specific_params = {
+                    "mount_boot": check_config.get("mount_boot"),
+                    "mount_exists": check_config.get("mount_exists"),
+                    "mount_options": check_config.get("mount_options"),
+                    "path": check_config.get("path"),
+                    "separate_partition": check_config.get("separate_partition"),
+                }
+            elif check_config["check_type"] == "package":
+                specific_params = {
+                    "package_name": check_config.get("package_name"),
+                    "package_installed": check_config.get("package_installed"),
+                }
+            elif check_config["check_type"] == "path":
+                specific_params = {
+                    "path": check_config.get("path"),
+                    "path_exists": check_config.get("path_exists"),
+                    "permissions": check_config.get("permissions"),
+                    "recursive": check_config.get("recursive", False),
+                }
+            elif check_config["check_type"] == "regex":
+                specific_params = {
+                    "file_ext": check_config.get("file_ext", None),
+                    "ignore_case": check_config.get("ignore_case", False),
+                    "multi_line": check_config.get("multi_line", False),
+                    "path": check_config.get("path"),
+                    "pattern": check_config.get("pattern"),
+                    "pattern_match": check_config.get("pattern_match", False),
+                }
+            elif check_config["check_type"] == "unit":
+                specific_params = {
+                    "unit_active": check_config.get("unit_active"),
+                    "unit_loaded": check_config.get("unit_loaded"),
+                    "unit_name": check_config.get("unit_name"),
+                    "unit_state": check_config.get("unit_state"),
+                }
+
+            check_instance = create_check_instance(
+                check_config["check_type"], {**common_params, **specific_params}
+            )
+            if check_instance:
+                checks.append(check_instance)
+
     return checks

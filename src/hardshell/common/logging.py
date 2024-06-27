@@ -1,3 +1,4 @@
+import click
 import logging
 
 # Configure logging

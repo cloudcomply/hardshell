@@ -1,3 +1,4 @@
+import click
 import ctypes
 import glob
 import os
@@ -162,6 +163,51 @@ def log_and_print(message, level="info", log_only=False):
     getattr(logger, level)(message)
 
 
+def log_status(
+    message,
+    message_color="white",
+    status=None,
+    status_color="white",
+    max_line=90,
+    log_level="info",
+    log_only=False,
+):
+    max_length = max_line  # Max Line Length
+
+    # If no status is provided, just print and log the message
+    if status is None:
+        if log_only == False:
+            click.echo(click.style(message, fg=message_color))
+        getattr(logger, log_level)(message)
+        return
+
+    # Split the message and status into lines
+    message_lines = message.splitlines()
+    status_lines = status.splitlines()
+
+    # Get the maximum number of lines between message and status
+    max_lines = max(len(message_lines), len(status_lines))
+
+    # If status has fewer lines than message, pad it with empty strings
+    status_lines += [""] * (max_lines - len(status_lines))
+
+    for message_line, status_line in zip(message_lines, status_lines):
+        unstyled_status = f"[{status_line}]"
+        num_spaces = max_length - len(message_line) - len(unstyled_status)
+
+        # Ensure num_spaces is not negative
+        num_spaces = max(0, num_spaces)
+
+        styled_message = click.style(f"{message_line}", fg=message_color)
+        styled_status = click.style(unstyled_status, fg=status_color)
+
+        if log_only == False:
+            click.echo(f"{styled_message}{' ' * num_spaces}{styled_status}")
+
+    # Log the original message with the specified log level
+    getattr(logger, log_level)(message.strip())
+
+
 def path_exists(path):
     return os.path.exists(path)
 
@@ -170,7 +216,7 @@ def shutdown_banner():
     pass
 
 
-def startup_banner():
+def startup_banner(current_os=None):
     """
     Gets the startup banner.
 
@@ -182,21 +228,26 @@ def startup_banner():
         print(banner)  # Prints startup banner
     """
     banner = []
-    banner.append(" " * 2 + "#" * 90)
-    banner.append(" " * 2 + f"# {__name__} {__version__}")
-    banner.append(" " * 2 + "# " + "-" * 15)
+    banner.append("#" * 90)
+    banner.append(f"# {__name__} {__version__}")
+    banner.append("# " + "-" * 15)
     banner.append(
-        " " * 2
-        + f"# {__name__} comes with ABSOLUTELY NO WARRANTY. This is free software, and"
+        f"# {__name__} comes with ABSOLUTELY NO WARRANTY. This is free software, and"
     )
     banner.append(
-        " " * 2
-        + "# you are welcome to redistribute it under the terms of the MIT License."
+        "# you are welcome to redistribute it under the terms of the MIT License."
     )
-    banner.append(
-        " " * 2 + "# See the LICENSE file for details about using this software."
-    )
-    banner.append(" " * 2 + "#" * 90 + "\n")
+    banner.append("# See the LICENSE file for details about using this software.")
+    banner.append("#" * 90 + "\n")
+
+    banner.append("#" * 90)
+    banner.append(f"# Operating System Details")
+    banner.append("# " + "-" * 15)
+    banner.append(f"# Full Name: {current_os['pretty_name']}")
+    banner.append(f"# Short Name: {current_os['name']}")
+    banner.append(f"# Distro ID: {current_os['id']}")
+    banner.append(f"# Distro Like: {current_os['id_like']}")
+    banner.append("#" * 90 + "\n")
     return banner
 
 
@@ -207,9 +258,10 @@ def strip_non_alphabetical(s):
 
 
 config_mapping = {
+    "aide": "config_files.aide",
     "chrony": "config_files.chrony",
     "coredump": "config_files.coredump",
-    "crypto-policies": "config_files.crypto_policies",
+    "crypto": "config_files.crypto",
     "gpg": "config_files.gpg",
     "kernel": "config_files.kernel",
     "selinux": "config_files.selinux",

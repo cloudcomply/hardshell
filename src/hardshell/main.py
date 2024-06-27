@@ -26,7 +26,7 @@ def system_cli():
 # Audit Command
 @system_cli.command()
 def audit():
-    print("System Audit")
+    click.echo(click.style("System Audit", fg="blue"))
     start_scanner()
 
 
