@@ -1,7 +1,10 @@
 #########################################################################################
 # Imports
 #########################################################################################
+import platform
+
 import click
+
 from src.hardshell.common.checks import create_checks
 from src.hardshell.common.common import (
     detect_admin,

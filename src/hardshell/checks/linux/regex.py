@@ -3,9 +3,9 @@ import glob
 import os
 import re
 from dataclasses import dataclass, field
+from distutils import log
 from typing import List
 
-from distutils import log
 from src.hardshell.checks.base import BaseCheck
 from src.hardshell.common.common import get_config_mapping, log_and_print
 

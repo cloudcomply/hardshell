@@ -1,4 +1,3 @@
-import click
 import ctypes
 import glob
 import os
@@ -6,6 +5,8 @@ import platform
 import re
 from pathlib import Path
 from typing import Callable, Dict, Union
+
+import click
 
 from src.hardshell import __name__, __version__
 from src.hardshell.common.logging import logger

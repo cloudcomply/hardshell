@@ -1,6 +1,8 @@
-import click
 from dataclasses import dataclass, field
 from typing import List
+
+import click
+
 from src.hardshell.common.common import log_status
 
 
@@ -62,7 +64,7 @@ class Report:
         click.echo(click.style("#" * 90 + "\n", fg="blue"))
         click.echo(
             click.style(
-                f"Checks passed: {self.checks_passed}, Checks failed: {self.checks_failed}",
+                f"checks passed: {self.checks_passed}, checks failed: {self.checks_failed}",
                 fg="green",
             )
         )

@@ -1,9 +1,11 @@
 import os
+import platform
 from dataclasses import dataclass, field
 from typing import List
 
-import pystemd
-from pystemd.systemd1 import Manager, Unit
+if platform.system() == "Linux":
+    import pystemd
+    from pystemd.systemd1 import Manager, Unit
 
 from src.hardshell.checks.base import BaseCheck
 from src.hardshell.common.common import log_and_print
@@ -83,16 +85,19 @@ class UnitCheck(BaseCheck):
 
         except AttributeError as e:
             log_and_print(
-                f"unit {self.unit_name} does not exist", level="error", log_only=True
+                f"unit {self.unit_name} does not exist: {e}",
+                level="error",
+                log_only=True,
             )
-            logger.error(e)
         except pystemd.dbusexc.DBusFileNotFoundError as e:
             log_and_print(
-                f"unit {self.unit_name} does not exist", level="error", log_only=True
+                f"unit {self.unit_name} does not exist: {e}",
+                level="error",
+                log_only=True,
             )
-            logger.error(e)
         except pystemd.dbusexc.DBusNoSuchUnitError as e:
             log_and_print(
-                f"unit {self.unit_name} does not exist", level="error", log_only=True
+                f"unit {self.unit_name} does not exist: {e}",
+                level="error",
+                log_only=True,
             )
-            logger.error(e)

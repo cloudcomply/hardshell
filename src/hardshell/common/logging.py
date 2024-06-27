@@ -1,5 +1,6 @@
-import click
 import logging
+
+import click
 
 # Configure logging
 logging.basicConfig(

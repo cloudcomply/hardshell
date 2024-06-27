@@ -1,10 +1,12 @@
 import os
-import psutil
 import subprocess
 from dataclasses import dataclass, field
+from typing import List
+
+import psutil
+
 from src.hardshell.checks.base import BaseCheck
 from src.hardshell.common.common import log_and_print
-from typing import List
 
 
 @dataclass
