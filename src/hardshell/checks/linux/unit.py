@@ -87,9 +87,9 @@ class UnitCheck(BaseCheck):
                     self.unit_name, self.unit_state, unit_file_state, "UnitFileState"
                 )
 
-                print(active_state == active_status)
-                print(load_state == loaded_status)
-                print(unit_file_state == unit_file_status)
+                # print(active_status)
+                # print(loaded_status)
+                # print(unit_file_status)
 
                 # self.set_result_and_log_status(
                 #     self.check_id,
@@ -119,17 +119,17 @@ class UnitCheck(BaseCheck):
             log_and_print(
                 f"unit {self.unit_name} does not exist: {e}",
                 level="error",
-                log_only=True,
+                # log_only=True,
             )
         except pystemd.dbusexc.DBusFileNotFoundError as e:
             log_and_print(
                 f"unit {self.unit_name} does not exist: {e}",
                 level="error",
-                log_only=True,
+                # log_only=True,
             )
         except pystemd.dbusexc.DBusNoSuchUnitError as e:
             log_and_print(
                 f"unit {self.unit_name} does not exist: {e}",
                 level="error",
-                log_only=True,
+                # log_only=True,
             )
