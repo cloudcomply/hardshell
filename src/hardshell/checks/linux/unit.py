@@ -76,6 +76,10 @@ class UnitCheck(BaseCheck):
                 load_state = unit.LoadState.decode("utf-8")
                 unit_file_state = unit.UnitFileState.decode("utf-8")
 
+                print(f"active state: {active_state}")
+                print(f"load state: {load_state}")
+                print(f"unit file state: {unit_file_state}")
+
                 if load_state == "not-found":
                     log_and_print(
                         f"unit {self.unit_name} does not exist.",
