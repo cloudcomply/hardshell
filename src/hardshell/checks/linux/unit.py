@@ -42,19 +42,20 @@ class UnitCheck(BaseCheck):
 
     def run_check_systemd(self):
         log_and_print(
-            "running unit check for systemd",
+            f"running unit check for systemd for {self.unit_name}",
             #   log_only=True
         )
         try:
             manager = Manager()
             manager.load()
-            log_and_print(
-                f"loaded manager: {manager.Id.decode('utf-8')}",
-                # log_only=True
-            )
+
+            print(manager)
 
             unit_exists = manager.GetUnit(self.unit_name.encode("utf-8"))
             unit_exists_decoded = unit_exists.decode("utf-8")
+
+            print(f"unit exists: {unit_exists}")
+            print(f"unit exists decoded: {unit_exists_decoded}")
 
             log_and_print(
                 f"unit exists: {unit_exists_decoded}",
