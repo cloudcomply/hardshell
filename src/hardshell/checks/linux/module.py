@@ -16,9 +16,6 @@ class ModuleCheck(BaseCheck):
     module_loaded: bool = None
 
     def check_bin_true_entries(self, modprobe_dir, module_name):
-        # log_and_print(
-        #     f"checking for /bin/true entries for module {module_name}", log_only=True
-        # )
         self.set_result_and_log_status(
             log_message=f"checking for /bin/true entries for module {module_name}",
             log_only=True,
@@ -34,10 +31,6 @@ class ModuleCheck(BaseCheck):
                             f"install {module_name} /bin/true" in line
                             and line.startswith("#") == False
                         ):
-                            # log_and_print(
-                            #     f"found /bin/true entry in {filepath}",
-                            #     log_only=True,
-                            # )
                             self.set_result_and_log_status(
                                 log_message=f"found /bin/true entry in {filepath}",
                                 log_only=True,
@@ -57,9 +50,6 @@ class ModuleCheck(BaseCheck):
         return bin_true
 
     def check_bin_false_entries(self, modprobe_dir, module_name):
-        # log_and_print(
-        #     f"checking if module {module_name} has a /bin/false entry", log_only=True
-        # )
         self.set_result_and_log_status(
             log_message=f"checking if module {module_name} has a /bin/false entry",
             log_only=True,
@@ -75,10 +65,6 @@ class ModuleCheck(BaseCheck):
                             f"install {module_name} /bin/false" in line
                             and line.startswith("#") == False
                         ):
-                            # log_and_print(
-                            #     f"found /bin/false entry in {filepath}",
-                            #     log_only=True,
-                            # )
                             self.set_result_and_log_status(
                                 log_message=f"found /bin/false entry in {filepath}",
                                 log_only=True,
@@ -98,7 +84,6 @@ class ModuleCheck(BaseCheck):
         return bin_false
 
     def check_deny_listed(self, modprobe_dir, module_name):
-        # log_and_print(f"checking if module {module_name} is deny listed", log_only=True)
         self.set_result_and_log_status(
             log_message=f"checking if module {module_name} is deny listed",
             log_only=True,
@@ -133,7 +118,6 @@ class ModuleCheck(BaseCheck):
         return deny_listed
 
     def is_module_available(self, module_name, module_path):
-        # log_and_print(f"checking if module {module_name} is available", log_only=True)
         self.set_result_and_log_status(
             log_message=f"checking if module {module_name} is available", log_only=True
         )
@@ -142,24 +126,18 @@ class ModuleCheck(BaseCheck):
             if f"{module_name}.ko" in files:
                 available = True
                 break
-        # log_and_print(f"module {module_name} is available: {available}", log_only=True)
         self.set_result_and_log_status(
             log_message=f"module {module_name} is available: {available}", log_only=True
         )
         return available
 
     def is_module_loaded(self, module_name):
-        # log_and_print(f"checking if module {module_name} is loaded", log_only=True)
         self.set_result_and_log_status(
             log_message=f"checking if module {module_name} is loaded", log_only=True
         )
         try:
             lsmod_output = subprocess.check_output(["lsmod"], text=True)
             is_module_in_lsmod = module_name in lsmod_output
-            # log_and_print(
-            #     f"module {module_name} is {'loaded' if is_module_in_lsmod else 'not loaded'}",
-            #     log_only=True,
-            # )
             self.set_result_and_log_status(
                 check_id=self.check_id,
                 check_message="module loaded",
@@ -175,7 +153,6 @@ class ModuleCheck(BaseCheck):
             return False
 
     def is_module_precompiled(self, boot_config_path, module_name):
-        # log_and_print(f"checking if module {module_name} is precompiled", log_only=True)
         self.set_result_and_log_status(
             log_message=f"checking if module {module_name} is precompiled",
             log_only=True,
@@ -185,18 +162,12 @@ class ModuleCheck(BaseCheck):
                 lines = file.readlines()
                 for line in lines:
                     if line.startswith(f"CONFIG_{module_name.upper()}=y"):
-                        # log_and_print(
-                        #     f"module {module_name} is precompiled", log_only=True
-                        # )
                         self.set_result_and_log_status(
                             log_message=f"module {module_name} is precompiled",
                             log_only=True,
                         )
                         return True
                     else:
-                        # log_and_print(
-                        #     f"module {module_name} is not precompiled", log_only=True
-                        # )
                         self.set_result_and_log_status(
                             log_message=f"module {module_name} is not precompiled",
                             log_only=True,
@@ -204,7 +175,6 @@ class ModuleCheck(BaseCheck):
                         return False
 
     def run_check(self, current_os, global_config):
-        # log_and_print(f"checking module {self.module_name}", log_only=True)
         self.set_result_and_log_status(
             log_message=f"checking module {self.module_name}", log_only=True
         )
@@ -237,3 +207,22 @@ class ModuleCheck(BaseCheck):
 
                 # check if module has /bin/false entries
                 self.check_bin_false_entries(modprobe_dir, self.module_name)
+            else:
+                self.set_result_and_log_status(
+                    check_id=self.check_id,
+                    check_message="module not available",
+                    check_name=self.check_name,
+                    check_result="skip",
+                    check_type=self.check_type,
+                    log_message=f"module {self.module_name} is not available, skipping checks",
+                )
+
+        else:
+            self.set_result_and_log_status(
+                check_id=self.check_id,
+                check_message="module precompiled",
+                check_name=self.check_name,
+                check_result="skip",
+                check_type=self.check_type,
+                log_message=f"module {self.module_name} is precompiled, skipping checks",
+            )
