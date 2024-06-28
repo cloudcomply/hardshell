@@ -1,15 +1,11 @@
-import fnmatch
 import glob
 import os
 import re
 from dataclasses import dataclass, field
-from distutils import log
 from typing import List
 
 from src.hardshell.checks.base import BaseCheck
 from src.hardshell.common.common import get_config_mapping, log_and_print
-
-# from src.hardshell.common.logging import
 
 
 @dataclass
@@ -162,6 +158,6 @@ class RegexCheck(BaseCheck):
             log_only=True,
         )
         result = "pass" if pattern_found == self.pattern_match else "fail"
-        self.set_result(
+        self.set_result_and_log_status(
             self.check_id, self.check_name, result, "regex", self.check_type
         )

@@ -57,7 +57,7 @@ class PackageCheck(BaseCheck):
                 "pass" if installed and self.package_installed else "fail"
             )
 
-            self.set_result(
+            self.set_result_and_log_status(
                 self.check_id,
                 self.check_name,
                 installed_result,
@@ -67,7 +67,7 @@ class PackageCheck(BaseCheck):
 
             upgrade_result = "pass" if not upgradeable else "fail"
 
-            self.set_result(
+            self.set_result_and_log_status(
                 self.check_id,
                 self.check_name,
                 upgrade_result,
@@ -130,7 +130,7 @@ class PackageCheck(BaseCheck):
                         )
                         installed_result = "fail"
 
-            self.set_result(
+            self.set_result_and_log_status(
                 self.check_id,
                 self.check_name,
                 installed_result,

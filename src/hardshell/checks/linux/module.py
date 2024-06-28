@@ -38,7 +38,7 @@ class ModuleCheck(BaseCheck):
                             break
             if bin_true:
                 break
-        self.set_result(
+        self.set_result_and_log_status(
             self.check_id,
             self.check_name,
             "pass" if bin_true == self.module_loadable else "fail",
@@ -70,7 +70,7 @@ class ModuleCheck(BaseCheck):
                             break
             if bin_false:
                 break
-        self.set_result(
+        self.set_result_and_log_status(
             self.check_id,
             self.check_name,
             "pass" if bin_false == self.module_loadable else "fail",
@@ -100,7 +100,7 @@ class ModuleCheck(BaseCheck):
                             break
             if deny_listed:
                 break
-        self.set_result(
+        self.set_result_and_log_status(
             self.check_id,
             self.check_name,
             "pass" if deny_listed == self.module_denied else "fail",

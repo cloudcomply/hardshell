@@ -19,9 +19,15 @@ class BaseCheck:
     depends_on: List[str] = field(default_factory=list)
     valid_os: List[str] = field(default_factory=list)
 
-    def set_result(
+    def set_result_and_log_status(
         self, check_id, check_name, check_result, check_subtype, check_type
     ) -> None:
+        log_status(
+            message=f"{check_id} - {check_name} - {check_subtype} - {check_type}",
+            message_color="yellow",
+            status=check_result.upper(),
+            status_color="green" if check_result == "pass" else "red",
+        )
         self.check_results.append(
             {
                 "id": check_id,
@@ -31,14 +37,3 @@ class BaseCheck:
                 "type": check_type,
             }
         )
-
-        # click.echo(click.style("#" * 90, fg="blue"))
-        # click.echo(click.style(f"# {self.category}", fg="blue"))
-
-        for result in self.check_results:
-            log_status(
-                message=f"{result.get('id')} - {result.get('name')}",
-                message_color="yellow",
-                status=f"{result['result'].upper()}",
-                status_color=("green" if result["result"] == "pass" else "red"),
-            )

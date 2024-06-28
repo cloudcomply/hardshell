@@ -82,7 +82,7 @@ class MountCheck(BaseCheck):
         # check if a mount point exists
         mount_exists = self.check_mount_exists(self.path)
         log_and_print(f"mount {self.path} exists: {mount_exists}", log_only=True)
-        self.set_result(
+        self.set_result_and_log_status(
             self.check_id,
             self.check_name,
             "pass" if mount_exists == self.mount_exists else "fail",
@@ -94,7 +94,7 @@ class MountCheck(BaseCheck):
             # check if the mount is mounted
             is_mounted = self.is_mounted(self.path)
             log_and_print(f"mount {self.path} is mounted: {is_mounted}", log_only=True)
-            self.set_result(
+            self.set_result_and_log_status(
                 self.check_id,
                 self.check_name,
                 "pass" if is_mounted else "fail",
@@ -109,7 +109,7 @@ class MountCheck(BaseCheck):
                     f"mount {self.path} options configured: {mount_options}",
                     log_only=True,
                 )
-                self.set_result(
+                self.set_result_and_log_status(
                     self.check_id,
                     self.check_name,
                     "pass" if mount_options else "fail",
@@ -126,7 +126,7 @@ class MountCheck(BaseCheck):
                     f"mount {self.path} is separate partition: {separate_partition}",
                     log_only=True,
                 )
-                self.set_result(
+                self.set_result_and_log_status(
                     self.check_id,
                     self.check_name,
                     "pass" if separate_partition == self.separate_partition else "fail",
@@ -141,7 +141,7 @@ class MountCheck(BaseCheck):
                     f"mount {self.path} is mounted at boot: {mount_boot}",
                     log_only=True,
                 )
-                self.set_result(
+                self.set_result_and_log_status(
                     self.check_id,
                     self.check_name,
                     "pass" if mount_boot == self.mount_boot else "fail",

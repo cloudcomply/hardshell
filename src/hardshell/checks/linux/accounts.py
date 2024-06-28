@@ -3,7 +3,7 @@ import pwd
 from dataclasses import dataclass
 
 from src.hardshell.checks.base import BaseCheck
-from src.hardshell.common.common import log_and_print
+from src.hardshell.common.common import log_and_print, log_status
 
 
 @dataclass
@@ -116,6 +116,7 @@ class AccountsCheck(BaseCheck):
         return users
 
     def run_check(self, current_os, global_config):
+        print("checking accounts")
         log_and_print(f"checking local groups and users", log_only=True)
 
         # get groups and users
@@ -132,9 +133,9 @@ class AccountsCheck(BaseCheck):
         # check root user
         root_gid_status, root_uids = self.check_root(users)
 
-        # Set Results
+        # Set Results and Log Status
         # Duplicate Groups
-        self.set_result(
+        self.set_result_and_log_status(
             self.check_id,
             self.check_name,
             "pass" if dupe_gids < 1 and dupe_names < 1 else "fail",
@@ -143,7 +144,7 @@ class AccountsCheck(BaseCheck):
         )
 
         # Duplicate Users
-        self.set_result(
+        self.set_result_and_log_status(
             self.check_id,
             self.check_name,
             "pass" if dupe_names < 1 and dupe_uids < 1 else "fail",
@@ -152,7 +153,7 @@ class AccountsCheck(BaseCheck):
         )
 
         # Shadowed Passwords
-        self.set_result(
+        self.set_result_and_log_status(
             self.check_id,
             self.check_name,
             "pass" if shadowed_password < 1 else "fail",
@@ -161,7 +162,7 @@ class AccountsCheck(BaseCheck):
         )
 
         # Group Exists
-        self.set_result(
+        self.set_result_and_log_status(
             self.check_id,
             self.check_name,
             "pass" if group_exists < 1 else "fail",
@@ -170,14 +171,14 @@ class AccountsCheck(BaseCheck):
         )
 
         # Root User
-        self.set_result(
+        self.set_result_and_log_status(
             self.check_id,
             self.check_name,
             "pass" if root_gid_status else "fail",
             "root user gid 0",
             self.check_type,
         )
-        self.set_result(
+        self.set_result_and_log_status(
             self.check_id,
             self.check_name,
             "pass" if len(root_uids) == 1 else "fail",

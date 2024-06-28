@@ -4,7 +4,7 @@ from dataclasses import dataclass, field
 from typing import List
 
 from src.hardshell.checks.base import BaseCheck
-from src.hardshell.common.logging import logger
+from src.hardshell.common.common import log_and_print, log_status
 
 
 @dataclass
@@ -15,20 +15,24 @@ class PathCheck(BaseCheck):
     recursive: bool = False
 
     def check_path(self, path):
-        logger.info(f"Checking path: {path}")
+        log_and_print(f"Checking path: {path}", log_only=True)
         stats = self.get_permissions(path)
         current_permissions = (stats.st_uid, stats.st_gid, int(oct(stats.st_mode)[-3:]))
 
         if current_permissions == self.permissions:
-            logger.info(f"Path {path} has the expected permissions: {self.permissions}")
+            log_and_print(
+                f"Path {path} has the expected permissions: {self.permissions}",
+                log_only=True,
+            )
             result = "pass"
         else:
-            logger.warning(
-                f"Path {path} does not have the expected permissions: {self.permissions}"
+            log_and_print(
+                f"Path {path} does not have the expected permissions: {self.permissions}",
+                log_only=True,
             )
             result = "fail"
 
-        self.set_result(
+        self.set_result_and_log_status(
             self.check_id, self.check_name, result, "permissions", self.check_type
         )
 
@@ -36,21 +40,23 @@ class PathCheck(BaseCheck):
         return os.stat(path)
 
     def run_check(self, current_os, global_config):
-        logger.info(f"Checking path: {self.path}")
+        log_and_print(f"Checking path: {self.path}", log_only=True)
         path_exists = os.path.exists(self.path)
 
         if path_exists:
-            logger.info(
-                f"Path {self.path} exists and is expected to exist: {self.path_exists}"
+            log_and_print(
+                f"Path {self.path} exists and is expected to exist: {self.path_exists}",
+                log_only=True,
             )
             result = "pass" if self.path_exists else "fail"
         else:
-            logger.info(
-                f"Path {self.path} does not exist and is expected to exist: {self.path_exists}"
+            log_and_print(
+                f"Path {self.path} does not exist and is expected to exist: {self.path_exists}",
+                log_only=True,
             )
             result = "pass" if not self.path_exists else "fail"
 
-        self.set_result(
+        self.set_result_and_log_status(
             self.check_id, self.check_name, result, "exists", self.check_type
         )
 
