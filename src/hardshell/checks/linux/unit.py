@@ -87,6 +87,10 @@ class UnitCheck(BaseCheck):
                     self.unit_name, self.unit_state, unit_file_state, "UnitFileState"
                 )
 
+                print(active_state == active_status)
+                print(load_state == loaded_status)
+                print(unit_file_state == unit_file_status)
+
                 self.set_result_and_log_status(
                     self.check_id,
                     self.check_name,
