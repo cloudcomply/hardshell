@@ -87,21 +87,6 @@ class UnitCheck(BaseCheck):
                     self.unit_name, self.unit_state, unit_file_state, "UnitFileState"
                 )
 
-                # print(active_status)
-                # print(loaded_status)
-                # print(unit_file_status)
-
-                # self.set_result_and_log_status(
-                #     self.check_id,
-                #     self.check_name,
-                #     "pass"
-                #     if active_state == active_status
-                #     and load_state == loaded_status
-                #     and unit_file_state == unit_file_status
-                #     else "fail",
-                #     "service status",
-                #     self.check_type,
-                # )
             else:
                 log_and_print(f"unit {self.unit_name} does not exist", log_only=True)
 
@@ -121,15 +106,42 @@ class UnitCheck(BaseCheck):
                 level="error",
                 # log_only=True,
             )
+            self.set_result_and_log_status(
+                self.check_id,
+                self.check_name,
+                "pass"
+                if self.unit_active == False and self.unit_loaded == False
+                else "fail",
+                "service status",
+                self.check_type,
+            )
         except pystemd.dbusexc.DBusFileNotFoundError as e:
             log_and_print(
                 f"unit {self.unit_name} does not exist: {e}",
                 level="error",
                 # log_only=True,
             )
+            self.set_result_and_log_status(
+                self.check_id,
+                self.check_name,
+                "pass"
+                if self.unit_active == False and self.unit_loaded == False
+                else "fail",
+                "service status",
+                self.check_type,
+            )
         except pystemd.dbusexc.DBusNoSuchUnitError as e:
             log_and_print(
                 f"unit {self.unit_name} does not exist: {e}",
                 level="error",
                 # log_only=True,
+            )
+            self.set_result_and_log_status(
+                self.check_id,
+                self.check_name,
+                "pass"
+                if self.unit_active == False and self.unit_loaded == False
+                else "fail",
+                "service status",
+                self.check_type,
             )
