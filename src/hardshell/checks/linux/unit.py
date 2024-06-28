@@ -9,7 +9,6 @@ if platform.system() == "Linux":
 
 from src.hardshell.checks.base import BaseCheck
 from src.hardshell.common.common import log_and_print
-from src.hardshell.common.logging import logger
 
 
 @dataclass
@@ -23,23 +22,29 @@ class UnitCheck(BaseCheck):
         if actual_state == expected_state:
             log_and_print(
                 f"Unit {unit_name} is {actual_state} and supposed to be {expected_state}.",
-                log_only=True,
+                # log_only=True,
             )
             return True
         else:
             log_and_print(
                 f"Unit {unit_name} is {actual_state} and supposed to be {expected_state}.",
                 level="error",
-                log_only=True,
+                # log_only=True,
             )
             return False
 
     def run_check(self, current_os, global_config):
-        log_and_print("running unit check", log_only=True)
+        log_and_print(
+            "running unit check",
+            #   log_only=True
+        )
         self.run_check_systemd()
 
     def run_check_systemd(self):
-        log_and_print("running unit check for systemd", log_only=True)
+        log_and_print(
+            "running unit check for systemd",
+            #   log_only=True
+        )
         try:
             manager = Manager()
             manager.load()
@@ -51,12 +56,18 @@ class UnitCheck(BaseCheck):
             unit_exists = manager.GetUnit(self.unit_name.encode("utf-8"))
             unit_exists_decoded = unit_exists.decode("utf-8")
 
-            log_and_print(f"unit exists: {unit_exists_decoded}", log_only=True)
+            log_and_print(
+                f"unit exists: {unit_exists_decoded}",
+                #   log_only=True
+            )
 
             if unit_exists and os.path.exists(
                 f"/usr/lib/systemd/system/{self.unit_name}"
             ):
-                log_and_print(f"unit {self.unit_name} exists")
+                log_and_print(
+                    f"unit {self.unit_name} exists",
+                    # log_only=True
+                )
 
                 unit = Unit(self.unit_name.encode("utf-8"))
                 unit.load()
@@ -67,7 +78,9 @@ class UnitCheck(BaseCheck):
 
                 if load_state == "not-found":
                     log_and_print(
-                        f"unit {self.unit_name} does not exist.", level="error"
+                        f"unit {self.unit_name} does not exist.",
+                        level="error",
+                        # log_only=True
                     )
                     return
 
@@ -86,6 +99,11 @@ class UnitCheck(BaseCheck):
                 file_status = self.check_unit_state(
                     self.unit_name, self.unit_state, unit_file_state, "UnitFileState"
                 )
+
+                print(f"active status: {active_status}")
+                print(f"loaded status: {loaded_status}")
+                print(f"file status: {file_status}")
+
                 self.set_result_and_log_status(
                     self.check_id,
                     self.check_name,
@@ -96,23 +114,26 @@ class UnitCheck(BaseCheck):
                     self.check_type,
                 )
             else:
-                log_and_print(f"unit {self.unit_name} does not exist", log_only=True)
+                log_and_print(
+                    f"unit {self.unit_name} does not exist",
+                    # log_only=True
+                )
 
         except AttributeError as e:
             log_and_print(
                 f"unit {self.unit_name} does not exist: {e}",
                 level="error",
-                log_only=True,
+                # log_only=True,
             )
         except pystemd.dbusexc.DBusFileNotFoundError as e:
             log_and_print(
                 f"unit {self.unit_name} does not exist: {e}",
                 level="error",
-                log_only=True,
+                # log_only=True,
             )
         except pystemd.dbusexc.DBusNoSuchUnitError as e:
             log_and_print(
                 f"unit {self.unit_name} does not exist: {e}",
                 level="error",
-                log_only=True,
+                # log_only=True,
             )
