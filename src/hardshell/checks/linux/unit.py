@@ -25,12 +25,14 @@ class UnitCheck(BaseCheck):
                 f"Unit {unit_name} is {actual_state} and supposed to be {expected_state}.",
                 log_only=True,
             )
+            return True
         else:
             log_and_print(
                 f"Unit {unit_name} is {actual_state} and supposed to be {expected_state}.",
                 level="error",
                 log_only=True,
             )
+            return False
 
     def run_check(self, current_os, global_config):
         log_and_print("running unit check", log_only=True)
@@ -41,6 +43,10 @@ class UnitCheck(BaseCheck):
         try:
             manager = Manager()
             manager.load()
+            log_and_print(
+                f"loaded manager: {manager.Id.decode('utf-8')}",
+                # log_only=True
+            )
 
             unit_exists = manager.GetUnit(self.unit_name.encode("utf-8"))
             unit_exists_decoded = unit_exists.decode("utf-8")
@@ -65,20 +71,29 @@ class UnitCheck(BaseCheck):
                     )
                     return
 
-                self.check_unit_state(
+                active_status = self.check_unit_state(
                     self.unit_name,
                     "active" if self.unit_active else "inactive",
                     active_state,
                     "ActiveState",
                 )
-                self.check_unit_state(
+                loaded_status = self.check_unit_state(
                     self.unit_name,
                     "loaded" if self.unit_loaded else "not loaded",
                     load_state,
                     "LoadState",
                 )
-                self.check_unit_state(
+                file_status = self.check_unit_state(
                     self.unit_name, self.unit_state, unit_file_state, "UnitFileState"
+                )
+                self.set_result_and_log_status(
+                    self.check_id,
+                    self.check_name,
+                    "pass"
+                    if active_status and loaded_status and file_status
+                    else "fail",
+                    "service status",
+                    self.check_type,
                 )
             else:
                 log_and_print(f"unit {self.unit_name} does not exist", log_only=True)

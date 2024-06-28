@@ -116,7 +116,6 @@ class AccountsCheck(BaseCheck):
         return users
 
     def run_check(self, current_os, global_config):
-        print("checking accounts")
         log_and_print(f"checking local groups and users", log_only=True)
 
         # get groups and users

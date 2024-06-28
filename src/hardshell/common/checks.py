@@ -8,12 +8,12 @@ from src.hardshell.checks.linux.unit import UnitCheck
 from src.hardshell.common.common import log_and_print
 
 CHECK_CLASSES = {
-    "accounts": AccountsCheck,
-    "module": ModuleCheck,
-    "mount": MountCheck,
-    "package": PackageCheck,
-    "path": PathCheck,
-    "regex": RegexCheck,
+    # "accounts": AccountsCheck,
+    # "module": ModuleCheck,
+    # "mount": MountCheck,
+    # "package": PackageCheck,
+    # "path": PathCheck,
+    # "regex": RegexCheck,
     "unit": UnitCheck,
 }
 
@@ -94,6 +94,7 @@ def create_checks(config, current_os):
                     "unit_state": check_config.get("unit_state"),
                 }
 
+            # print(f"Check: {check_config.get('check_name')}")
             check_instance = create_check_instance(
                 check_config["check_type"], {**common_params, **specific_params}
             )
