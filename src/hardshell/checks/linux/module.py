@@ -128,7 +128,7 @@ class ModuleCheck(BaseCheck):
                 f"module {module_name} is {'loaded' if is_module_in_lsmod else 'not loaded'}",
                 log_only=True,
             )
-            self.set_result(
+            self.set_result_and_log_status(
                 self.check_id,
                 self.check_name,
                 ("pass" if is_module_in_lsmod == self.module_loaded else "fail"),
