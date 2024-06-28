@@ -8,12 +8,12 @@ from src.hardshell.checks.linux.unit import UnitCheck
 from src.hardshell.common.common import log_and_print
 
 CHECK_CLASSES = {
-    # "accounts": AccountsCheck,
-    # "module": ModuleCheck,
-    # "mount": MountCheck,
-    # "package": PackageCheck,
-    # "path": PathCheck,
-    # "regex": RegexCheck,
+    "accounts": AccountsCheck,
+    "module": ModuleCheck,
+    "mount": MountCheck,
+    "package": PackageCheck,
+    "path": PathCheck,
+    "regex": RegexCheck,
     "unit": UnitCheck,
 }
 

@@ -1289,15 +1289,17 @@ package_name      = "nfs-utils"
 valid_os          = ["amzn-2023", "ubuntu-22.04"]
 
 [nfs.0002a]
-category        = "nfs"
-check_name      = "nfs server service"
-check_skip      = false
-check_type      = "unit"
-service_active  = false
-service_enabled = false
-service_masked  = true
-service_name    = "nfs-server.service"
-valid_os        = ["amzn-2023", "ubuntu-22.04"]
+category   = "nfs"
+check_name = "nfs server service"
+check_skip = false
+check_type = "unit"
+# service_active  = false
+# service_enabled = false
+# service_masked  = true
+service_name = "nfs-server.service"
+unit_active  = false
+unit_loaded  = false
+valid_os     = ["amzn-2023", "ubuntu-22.04"]
 
 [nfs.0003a]
 category    = "nfs"
@@ -1691,15 +1693,14 @@ package_name      = "rsync-daemon"
 valid_os          = ["amzn-2023", "ubuntu-22.04"]
 
 [rsync.0002a]
-category        = "rsync"
-check_name      = "rsyncd service"
-check_skip      = false
-check_type      = "unit"
-service_active  = false
-service_enabled = false
-service_masked  = true
-service_name    = "rsyncd"
-valid_os        = ["amzn-2023", "ubuntu-22.04"]
+category     = "rsync"
+check_name   = "rsyncd service"
+check_skip   = false
+check_type   = "unit"
+service_name = "rsyncd"
+unit_active  = false
+unit_loaded  = false
+valid_os     = ["amzn-2023", "ubuntu-22.04"]
 
 [rsync.0003a]
 category    = "rsync"
