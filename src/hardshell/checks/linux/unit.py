@@ -22,14 +22,14 @@ class UnitCheck(BaseCheck):
         if actual_state == expected_state:
             log_and_print(
                 f"Unit {unit_name} is {actual_state} and supposed to be {expected_state}.",
-                # log_only=True,
+                log_only=True,
             )
             return True
         else:
             log_and_print(
                 f"Unit {unit_name} is {actual_state} and supposed to be {expected_state}.",
                 level="error",
-                # log_only=True,
+                log_only=True,
             )
             return False
 
@@ -104,7 +104,7 @@ class UnitCheck(BaseCheck):
             log_and_print(
                 f"unit {self.unit_name} does not exist: {e}",
                 level="error",
-                # log_only=True,
+                log_only=True,
             )
             self.set_result_and_log_status(
                 self.check_id,
@@ -119,7 +119,7 @@ class UnitCheck(BaseCheck):
             log_and_print(
                 f"unit {self.unit_name} does not exist: {e}",
                 level="error",
-                # log_only=True,
+                log_only=True,
             )
             self.set_result_and_log_status(
                 self.check_id,
@@ -134,7 +134,7 @@ class UnitCheck(BaseCheck):
             log_and_print(
                 f"unit {self.unit_name} does not exist: {e}",
                 level="error",
-                # log_only=True,
+                log_only=True,
             )
             self.set_result_and_log_status(
                 self.check_id,
