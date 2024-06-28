@@ -64,7 +64,7 @@ class UnitCheck(BaseCheck):
 
                 if load_state == "not-found":
                     log_and_print(
-                        f"unit {self.unit_name} does not exist.",
+                        f"unit {self.unit_name} not found.",
                         level="error",
                         log_only=True,
                     )
@@ -78,7 +78,8 @@ class UnitCheck(BaseCheck):
                 )
                 loaded_status = self.check_unit_state(
                     self.unit_name,
-                    "loaded" if self.unit_loaded else "not loaded",
+                    # "loaded" if self.unit_loaded else "not loaded",
+                    "loaded" if self.unit_loaded else "masked",
                     load_state,
                     "LoadState",
                 )
@@ -86,17 +87,17 @@ class UnitCheck(BaseCheck):
                     self.unit_name, self.unit_state, unit_file_state, "UnitFileState"
                 )
 
-                # self.set_result_and_log_status(
-                #     self.check_id,
-                #     self.check_name,
-                #     "pass"
-                #     if active_state == active_status
-                #     and load_state == loaded_status
-                #     and unit_file_state == unit_file_status
-                #     else "fail",
-                #     "service status",
-                #     self.check_type,
-                # )
+                self.set_result_and_log_status(
+                    self.check_id,
+                    self.check_name,
+                    "pass"
+                    if active_state == active_status
+                    and load_state == loaded_status
+                    and unit_file_state == unit_file_status
+                    else "fail",
+                    "service status",
+                    self.check_type,
+                )
             else:
                 log_and_print(f"unit {self.unit_name} does not exist", log_only=True)
 
