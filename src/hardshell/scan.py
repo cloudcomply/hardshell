@@ -37,7 +37,7 @@ def start_scanner():
             checks = create_checks(checks_config, current_os=detected_os)
 
             # Create Report
-            report = Report("hardshell report")
+            report = Report(title="hardshell report")
 
             click.echo(click.style("#" * 90, fg="blue"))
             click.echo(click.style("# Checks", fg="blue"))

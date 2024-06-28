@@ -8,22 +8,26 @@ from src.hardshell.common.common import log_status
 
 @dataclass
 class Report:
-    title: str = None
-    entries: List[int] = field(default_factory=list)
-    checks_passed: int = 0
     checks_failed: int = 0
+    checks_passed: int = 0
+    checks_skipped: int = 0
+    entries: List[int] = field(default_factory=list)
+    title: str = "hardshell report"
 
     def add_entry(self, result):
         self.entries.append(result)
 
     def generate_summary(self):
-        checks_passed = 0
         checks_failed = 0
+        checks_passed = 0
+        checks_skipped = 0
         summary = f"{self.title}\n" + "=" * len(self.title) + "\n"
         for entry in self.entries:
             if entry.get("result") == "pass":
                 checks_passed += 1
-            else:
+            elif entry.get("result") == "skip":
+                checks_skipped += 1
+            elif entry.get("result") == "fail":
                 checks_failed += 1
 
             summary += (
@@ -39,7 +43,7 @@ class Report:
                 + "\n"
             )
 
-        summary += f"\nchecks passed: {checks_passed}\nchecks failed: {checks_failed}\n"
+        summary += f"\nchecks passed: {checks_passed}\nchecks failed: {checks_failed}\nchecks skipped: {checks_skipped}\n"
 
         return summary
 
@@ -47,24 +51,21 @@ class Report:
         return self.entries
 
     def get_check_results_total(self):
-        return self.checks_passed, self.checks_failed
+        return self.checks_passed, self.checks_failed, self.checks_skipped
 
     def get_check_results_total_formatted(self):
         for result in self.entries:
             if result.get("result") == "pass":
                 self.checks_passed += 1
-            else:
+            elif result.get("result") == "skip":
+                self.checks_skipped += 1
+            elif result.get("result") == "fail":
                 self.checks_failed += 1
-        # log_status(
-        #     message=f"{result.get('id')} - {result.get('name')}",
-        #     message_color="yellow",
-        #     status=f"{result['result'].upper()}",
-        #     status_color=("green" if result["result"] == "pass" else "red"),
-        # )
+
         click.echo(click.style("#" * 90 + "\n", fg="blue"))
         click.echo(
             click.style(
-                f"checks passed: {self.checks_passed}, checks failed: {self.checks_failed}",
+                f"checks passed: {str(self.checks_passed)}, checks failed: {str(self.checks_failed)}, checks skipped: {str(self.checks_skipped)}",
                 fg="green",
             )
         )

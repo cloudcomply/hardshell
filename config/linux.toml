@@ -1360,8 +1360,8 @@ package_installed = true
 package_name      = "openldap-clients"
 valid_os          = ["amzn-2023", "ubuntu-22.04"]
 
-[parameters]
-[parameters.0001a]
+[parameter]
+[parameter.0001a]
 category      = "parameter"
 check_name    = "address space layout randomization enabled"
 check_skip    = false
@@ -1375,7 +1375,7 @@ pattern       = "^kernel\\.randomize_va_space\\s*=\\s*2\\s*$"
 pattern_match = true
 valid_os      = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 
-[parameters.0002a]
+[parameter.0002a]
 category      = "parameter"
 check_name    = "ptrace_scope restricted"
 check_skip    = false

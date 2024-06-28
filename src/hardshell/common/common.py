@@ -165,26 +165,34 @@ def log_and_print(message, level="info", log_only=False):
 
 
 def log_status(
-    message,
+    log_level="info",
+    log_message=None,
+    log_only=False,
+    max_line=90,
+    message=None,
     message_color="white",
     status=None,
     status_color="white",
-    max_line=90,
-    log_level="info",
-    log_only=False,
 ):
     max_length = max_line  # Max Line Length
+
+    if log_only:
+        getattr(logger, log_level)(log_message)
+        return
+    else:
+        # Log the original message with the specified log level
+        getattr(logger, log_level)(log_message)
 
     # If no status is provided, just print and log the message
     if status is None:
         if log_only == False:
             click.echo(click.style(message, fg=message_color))
-        getattr(logger, log_level)(message)
+        getattr(logger, log_level)(message.strip())
         return
 
     # Split the message and status into lines
     message_lines = message.splitlines()
-    status_lines = status.splitlines()
+    status_lines = status.upper().splitlines()
 
     # Get the maximum number of lines between message and status
     max_lines = max(len(message_lines), len(status_lines))
@@ -202,11 +210,8 @@ def log_status(
         styled_message = click.style(f"{message_line}", fg=message_color)
         styled_status = click.style(unstyled_status, fg=status_color)
 
-        if log_only == False:
-            click.echo(f"{styled_message}{' ' * num_spaces}{styled_status}")
-
-    # Log the original message with the specified log level
-    getattr(logger, log_level)(message.strip())
+        # if log_only == False:
+        click.echo(f"{styled_message}{' ' * num_spaces}{styled_status}")
 
 
 def path_exists(path):

@@ -6,7 +6,6 @@ from typing import List
 import psutil
 
 from src.hardshell.checks.base import BaseCheck
-from src.hardshell.common.common import log_and_print
 
 
 @dataclass
@@ -33,6 +32,7 @@ class MountCheck(BaseCheck):
         """Check if a mount point exists."""
         return os.path.ismount(mount_point)
 
+    # TODO Fix this
     def check_mount_options(self, mount_point, options):
         """Check if specific mount options are set for the mount point."""
         try:
@@ -77,74 +77,104 @@ class MountCheck(BaseCheck):
             return False
 
     def run_check(self, current_os, global_config):
-        log_and_print(f"checking mount {self.path}", log_only=True)
+        self.set_result_and_log_status(
+            log_message=f"checking mount {self.path}", log_only=True
+        )
 
         # check if a mount point exists
         mount_exists = self.check_mount_exists(self.path)
-        log_and_print(f"mount {self.path} exists: {mount_exists}", log_only=True)
         self.set_result_and_log_status(
-            self.check_id,
-            self.check_name,
-            "pass" if mount_exists == self.mount_exists else "fail",
-            "mount exists",
-            self.check_type,
+            check_id=self.check_id,
+            check_message="mount exists",
+            check_name=self.check_name,
+            check_result="pass" if mount_exists == self.mount_exists else "fail",
+            check_type=self.check_type,
+            log_message=f"mount {self.path} exists: {mount_exists}",
         )
 
         if mount_exists:
             # check if the mount is mounted
             is_mounted = self.is_mounted(self.path)
-            log_and_print(f"mount {self.path} is mounted: {is_mounted}", log_only=True)
             self.set_result_and_log_status(
-                self.check_id,
-                self.check_name,
-                "pass" if is_mounted else "fail",
-                "mount is mounted",
-                self.check_type,
+                check_id=self.check_id,
+                check_message="mount is mounted",
+                check_name=self.check_name,
+                check_result="pass" if is_mounted else "fail",
+                check_type=self.check_type,
+                log_message=f"mount {self.path} is mounted: {is_mounted}",
             )
             if is_mounted:
                 # check mount options
-                log_and_print(f"checking mount {self.path} options", log_only=True)
                 mount_options = self.check_mount_options(self.path, self.mount_options)
-                log_and_print(
-                    f"mount {self.path} options configured: {mount_options}",
-                    log_only=True,
-                )
                 self.set_result_and_log_status(
-                    self.check_id,
-                    self.check_name,
-                    "pass" if mount_options else "fail",
-                    "mount options",
-                    self.check_type,
+                    check_id=self.check_id,
+                    check_message="mount options",
+                    check_name=self.check_name,
+                    check_result="pass" if mount_options else "fail",
+                    check_type=self.check_type,
+                    log_message=f"mount {self.path} options configured: {mount_options}",
                 )
 
                 # check if the mount is a separate partition
-                log_and_print(
-                    f"checking mount {self.path} separate partition", log_only=True
-                )
                 separate_partition = self.check_mount_partition(self.path)
-                log_and_print(
-                    f"mount {self.path} is separate partition: {separate_partition}",
-                    log_only=True,
-                )
                 self.set_result_and_log_status(
-                    self.check_id,
-                    self.check_name,
-                    "pass" if separate_partition == self.separate_partition else "fail",
-                    "mount is separate partition",
-                    self.check_type,
+                    check_id=self.check_id,
+                    check_message="mount is separate partition",
+                    check_name=self.check_name,
+                    check_result="pass"
+                    if separate_partition == self.separate_partition
+                    else "fail",
+                    check_type=self.check_type,
+                    log_message=f"mount {self.path} is separate partition: {separate_partition}",
                 )
 
                 # check if the mount is mounted at boot
-                log_and_print(f"checking mount {self.path} boot", log_only=True)
                 mount_boot = self.check_mount_boot(self.path)
-                log_and_print(
-                    f"mount {self.path} is mounted at boot: {mount_boot}",
-                    log_only=True,
-                )
                 self.set_result_and_log_status(
-                    self.check_id,
-                    self.check_name,
-                    "pass" if mount_boot == self.mount_boot else "fail",
-                    "mount is mounted at boot",
-                    self.check_type,
+                    check_id=self.check_id,
+                    check_message="mount is mounted at boot",
+                    check_name=self.check_name,
+                    check_result="pass" if mount_boot == self.mount_boot else "fail",
+                    check_type=self.check_type,
+                    log_message=f"mount {self.path} is mounted at boot: {mount_boot}",
                 )
+        else:
+            # Mount is Mounted
+            self.set_result_and_log_status(
+                check_id=self.check_id,
+                check_message="mount is mounted",
+                check_name=self.check_name,
+                check_result="skip",
+                check_type=self.check_type,
+                log_message=f"mount {self.path} is mounted check skipped",
+            )
+
+            # Mount Options
+            self.set_result_and_log_status(
+                check_id=self.check_id,
+                check_message="mount options",
+                check_name=self.check_name,
+                check_result="skip",
+                check_type=self.check_type,
+                log_message=f"mount {self.path} options check skipped",
+            )
+
+            # Separate Partition
+            self.set_result_and_log_status(
+                check_id=self.check_id,
+                check_message="mount separate partition",
+                check_name=self.check_name,
+                check_result="skip",
+                check_type=self.check_type,
+                log_message=f"mount {self.path} separate partition check skipped",
+            )
+
+            # Mount at Boot
+            self.set_result_and_log_status(
+                check_id=self.check_id,
+                check_message="mount is mounted at boot",
+                check_name=self.check_name,
+                check_result="skip",
+                check_type=self.check_type,
+                log_message=f"mount {self.path} is mounted at boot check skipped",
+            )
