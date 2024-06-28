@@ -196,26 +196,24 @@ package_name      = "avahi"
 valid_os          = ["amzn-2023", "ubuntu-22.04"]
 
 [avahi.0002a]
-category        = "avahi"
-check_name      = "avahi daemon service"
-check_skip      = false
-check_type      = "service"
-service_active  = false
-service_enabled = false
-service_masked  = false
-service_name    = "avahi-daemon.service"
-valid_os        = ["amzn-2023", "ubuntu-22.04"]
+category     = "avahi"
+check_name   = "avahi daemon service"
+check_skip   = false
+check_type   = "unit"
+service_name = "avahi-daemon.service"
+unit_active  = false
+unit_loaded  = false
+valid_os     = ["amzn-2023", "ubuntu-22.04"]
 
 [avahi.0003a]
-category        = "avahi"
-check_name      = "avahi daemon socket"
-check_skip      = false
-check_type      = "service"
-service_active  = false
-service_enabled = false
-service_masked  = false
-service_name    = "avahi-daemon.socket"
-valid_os        = ["amzn-2023", "ubuntu-22.04"]
+category     = "avahi"
+check_name   = "avahi daemon socket"
+check_skip   = false
+check_type   = "unit"
+service_name = "avahi-daemon.socket"
+unit_active  = false
+unit_loaded  = false
+valid_os     = ["amzn-2023", "ubuntu-22.04"]
 
 [avahi.0004a]
 category    = "avahi"
@@ -1641,26 +1639,24 @@ package_name      = "rpcbind"
 valid_os          = ["amzn-2023", "ubuntu-22.04"]
 
 [rpcbind.0002a]
-category        = "rpcbind"
-check_name      = "rpcbind service"
-check_skip      = false
-check_type      = "service"
-service_active  = false
-service_enabled = false
-service_masked  = true
-service_name    = "rpcbind.service"
-valid_os        = ["amzn-2023", "ubuntu-22.04"]
+category     = "rpcbind"
+check_name   = "rpcbind service"
+check_skip   = false
+check_type   = "unit"
+service_name = "rpcbind.service"
+unit_active  = false
+unit_loaded  = false
+valid_os     = ["amzn-2023", "ubuntu-22.04"]
 
 [rpcbind.0003a]
-category        = "rpcbind"
-check_name      = "rpcbind socket"
-check_skip      = false
-check_type      = "service"
-service_active  = false
-service_enabled = false
-service_masked  = true
-service_name    = "rpcbind.socket"
-valid_os        = ["amzn-2023", "ubuntu-22.04"]
+category     = "rpcbind"
+check_name   = "rpcbind socket"
+check_skip   = false
+check_type   = "unit"
+service_name = "rpcbind.socket"
+unit_active  = false
+unit_loaded  = false
+valid_os     = ["amzn-2023", "ubuntu-22.04"]
 
 [rpcbind.0004a]
 category    = "rpcbind"
@@ -1866,15 +1862,14 @@ package_name      = "net-snmp"
 valid_os          = ["amzn-2023", "ubuntu-22.04"]
 
 [snmp.0002a]
-category        = "snmp"
-check_name      = "snmpd"
-check_skip      = false
-check_type      = "service"
-service_active  = false
-service_enabled = false
-service_masked  = true
-service_name    = "snmpd"
-valid_os        = ["ubuntu-22.04"]
+category     = "snmp"
+check_name   = "snmpd"
+check_skip   = false
+check_type   = "unit"
+service_name = "snmpd"
+unit_active  = false
+unit_loaded  = false
+valid_os     = ["ubuntu-22.04"]
 
 [snmp.0003a]
 category    = "snmp"
