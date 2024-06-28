@@ -45,13 +45,8 @@ class UnitCheck(BaseCheck):
             manager = Manager()
             manager.load()
 
-            # print(manager)
-
             unit_exists = manager.GetUnit(self.unit_name.encode("utf-8"))
             unit_exists_decoded = unit_exists.decode("utf-8")
-
-            # print(f"unit exists: {unit_exists}")
-            # print(f"unit exists decoded: {unit_exists_decoded}")
 
             log_and_print(f"unit exists: {unit_exists_decoded}", log_only=True)
 
@@ -66,10 +61,6 @@ class UnitCheck(BaseCheck):
                 active_state = unit.ActiveState.decode("utf-8")
                 load_state = unit.LoadState.decode("utf-8")
                 unit_file_state = unit.UnitFileState.decode("utf-8")
-
-                # print(f"active state: {active_state}")
-                # print(f"load state: {load_state}")
-                # print(f"unit file state: {unit_file_state}")
 
                 if load_state == "not-found":
                     log_and_print(
@@ -91,25 +82,35 @@ class UnitCheck(BaseCheck):
                     load_state,
                     "LoadState",
                 )
-                file_status = self.check_unit_state(
+                unit_file_status = self.check_unit_state(
                     self.unit_name, self.unit_state, unit_file_state, "UnitFileState"
                 )
 
-                # print(f"active status: {active_status}")
-                # print(f"loaded status: {loaded_status}")
-                # print(f"file status: {file_status}")
-
-                self.set_result_and_log_status(
-                    self.check_id,
-                    self.check_name,
-                    "pass"
-                    if active_status and loaded_status and file_status
-                    else "fail",
-                    "service status",
-                    self.check_type,
-                )
+                # self.set_result_and_log_status(
+                #     self.check_id,
+                #     self.check_name,
+                #     "pass"
+                #     if active_state == active_status
+                #     and load_state == loaded_status
+                #     and unit_file_state == unit_file_status
+                #     else "fail",
+                #     "service status",
+                #     self.check_type,
+                # )
             else:
                 log_and_print(f"unit {self.unit_name} does not exist", log_only=True)
+
+            self.set_result_and_log_status(
+                self.check_id,
+                self.check_name,
+                "pass"
+                if active_state == active_status
+                and load_state == loaded_status
+                and unit_file_state == unit_file_status
+                else "fail",
+                "service status",
+                self.check_type,
+            )
 
         except AttributeError as e:
             log_and_print(
