@@ -22,14 +22,14 @@ class UnitCheck(BaseCheck):
         if actual_state == expected_state:
             log_and_print(
                 f"Unit {unit_name} is {actual_state} and supposed to be {expected_state}.",
-                log_only=True,
+                # log_only=True,
             )
             return True
         else:
             log_and_print(
                 f"Unit {unit_name} is {actual_state} and supposed to be {expected_state}.",
                 level="error",
-                log_only=True,
+                # log_only=True,
             )
             return False
 
@@ -91,17 +91,17 @@ class UnitCheck(BaseCheck):
                 print(load_state == loaded_status)
                 print(unit_file_state == unit_file_status)
 
-                self.set_result_and_log_status(
-                    self.check_id,
-                    self.check_name,
-                    "pass"
-                    if active_state == active_status
-                    and load_state == loaded_status
-                    and unit_file_state == unit_file_status
-                    else "fail",
-                    "service status",
-                    self.check_type,
-                )
+                # self.set_result_and_log_status(
+                #     self.check_id,
+                #     self.check_name,
+                #     "pass"
+                #     if active_state == active_status
+                #     and load_state == loaded_status
+                #     and unit_file_state == unit_file_status
+                #     else "fail",
+                #     "service status",
+                #     self.check_type,
+                # )
             else:
                 log_and_print(f"unit {self.unit_name} does not exist", log_only=True)
 
@@ -109,9 +109,7 @@ class UnitCheck(BaseCheck):
                 self.check_id,
                 self.check_name,
                 "pass"
-                if active_state == active_status
-                and load_state == loaded_status
-                and unit_file_state == unit_file_status
+                if active_status and loaded_status and unit_file_status
                 else "fail",
                 "service status",
                 self.check_type,
