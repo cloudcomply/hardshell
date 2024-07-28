@@ -1142,30 +1142,6 @@ module_name        = "usb-storage"
 module_path        = "drivers/usb/storage"
 valid_os           = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
 
-[module.001333333333333a]
-category           = "module"
-check_name         = "xt_CT (TESTING)"
-check_type         = "module"
-module_blacklisted = true
-module_denied      = true
-module_loadable    = false
-module_loaded      = false
-module_name        = "xt_CT"
-module_path        = "net/netfilter"
-valid_os           = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
-
-[module.001333333333333b]
-category           = "module"
-check_name         = "amd76x_edac (TESTING)"
-check_type         = "module"
-module_blacklisted = true
-module_denied      = true
-module_loadable    = false
-module_loaded      = false
-module_name        = "amd76x_edac"
-module_path        = "net/netfilter"
-valid_os           = ["amzn-2023", "fedora-40", "ubuntu-22.04", "ubuntu-24.04"]
-
 [mount]
 [mount.0001a]
 category           = "mount"

@@ -3,7 +3,6 @@ import subprocess
 from dataclasses import dataclass
 
 from src.hardshell.checks.base import BaseCheck
-from src.hardshell.common.common import log_and_print
 
 
 @dataclass
@@ -14,40 +13,6 @@ class ModuleCheck(BaseCheck):
     module_exists: bool = None
     module_loadable: bool = None
     module_loaded: bool = None
-
-    def check_bin_true_entries(self, modprobe_dir, module_name):
-        self.set_result_and_log_status(
-            log_message=f"checking for /bin/true entries for module {module_name}",
-            log_only=True,
-        )
-        bin_true = False
-        for filename in os.listdir(modprobe_dir):
-            filepath = os.path.join(modprobe_dir, filename)
-            if os.path.isfile(filepath):
-                with open(filepath, "r") as file:
-                    lines = file.readlines()
-                    for line in lines:
-                        if (
-                            f"install {module_name} /bin/true" in line
-                            and line.startswith("#") == False
-                        ):
-                            self.set_result_and_log_status(
-                                log_message=f"found /bin/true entry in {filepath}",
-                                log_only=True,
-                            )
-                            bin_true = True
-                            break
-            if bin_true:
-                break
-        self.set_result_and_log_status(
-            check_id=self.check_id,
-            check_message="module /bin/true entry",
-            check_name=self.check_name,
-            check_result="pass" if bin_true == self.module_loadable else "fail",
-            check_type=self.check_type,
-            log_message=f"module {module_name} has /bin/true entry: {bin_true}",
-        )
-        return bin_true
 
     def check_bin_false_entries(self, modprobe_dir, module_name):
         self.set_result_and_log_status(
@@ -73,6 +38,7 @@ class ModuleCheck(BaseCheck):
                             break
             if bin_false:
                 break
+
         self.set_result_and_log_status(
             check_id=self.check_id,
             check_message="module /bin/false entry",
@@ -82,6 +48,41 @@ class ModuleCheck(BaseCheck):
             log_message=f"module {module_name} has /bin/false entry: {bin_false}",
         )
         return bin_false
+
+    def check_bin_true_entries(self, modprobe_dir, module_name):
+        self.set_result_and_log_status(
+            log_message=f"checking for /bin/true entries for module {module_name}",
+            log_only=True,
+        )
+        bin_true = False
+        for filename in os.listdir(modprobe_dir):
+            filepath = os.path.join(modprobe_dir, filename)
+            if os.path.isfile(filepath):
+                with open(filepath, "r") as file:
+                    lines = file.readlines()
+                    for line in lines:
+                        if (
+                            f"install {module_name} /bin/true" in line
+                            and line.startswith("#") == False
+                        ):
+                            self.set_result_and_log_status(
+                                log_message=f"found /bin/true entry in {filepath}",
+                                log_only=True,
+                            )
+                            bin_true = True
+                            break
+            if bin_true:
+                break
+
+        self.set_result_and_log_status(
+            check_id=self.check_id,
+            check_message="module /bin/true entry",
+            check_name=self.check_name,
+            check_result="pass" if bin_true == self.module_loadable else "fail",
+            check_type=self.check_type,
+            log_message=f"module {module_name} has /bin/true entry: {bin_true}",
+        )
+        return bin_true
 
     def check_deny_listed(self, modprobe_dir, module_name):
         self.set_result_and_log_status(
@@ -107,6 +108,7 @@ class ModuleCheck(BaseCheck):
                             break
             if deny_listed:
                 break
+
         self.set_result_and_log_status(
             check_id=self.check_id,
             check_message="module deny listed",
@@ -138,6 +140,7 @@ class ModuleCheck(BaseCheck):
         try:
             lsmod_output = subprocess.check_output(["lsmod"], text=True)
             is_module_in_lsmod = module_name in lsmod_output
+
             self.set_result_and_log_status(
                 check_id=self.check_id,
                 check_message="module loaded",
@@ -196,6 +199,15 @@ class ModuleCheck(BaseCheck):
             available = self.is_module_available(self.module_name, module_path)
 
             if available:
+                #     self.set_result_and_log_status(
+                #         check_id=self.check_id,
+                #         check_message="module not available",
+                #         check_name=self.check_name,
+                #         check_result="skip",
+                #         check_type=self.check_type,
+                #         log_message=f"module {self.module_name} is not available, skipping checks",
+                #     )
+                # else:
                 # check if module is loaded
                 self.is_module_loaded(self.module_name)
 
@@ -207,22 +219,44 @@ class ModuleCheck(BaseCheck):
 
                 # check if module has /bin/false entries
                 self.check_bin_false_entries(modprobe_dir, self.module_name)
-            else:
-                self.set_result_and_log_status(
-                    check_id=self.check_id,
-                    check_message="module not available",
-                    check_name=self.check_name,
-                    check_result="skip",
-                    check_type=self.check_type,
-                    log_message=f"module {self.module_name} is not available, skipping checks",
-                )
 
         else:
+            # check /bin/false entry
             self.set_result_and_log_status(
                 check_id=self.check_id,
-                check_message="module precompiled",
+                check_message="module /bin/false entry",
                 check_name=self.check_name,
                 check_result="skip",
                 check_type=self.check_type,
-                log_message=f"module {self.module_name} is precompiled, skipping checks",
+                log_message=f"check module {self.module_name} /bin/false entry, skipping check",
+            )
+
+            # check /bin/true entry
+            self.set_result_and_log_status(
+                check_id=self.check_id,
+                check_message="module /bin/true entry",
+                check_name=self.check_name,
+                check_result="skip",
+                check_type=self.check_type,
+                log_message=f"check module {self.module_name} /bin/true entry, skipping check",
+            )
+
+            # check deny list
+            self.set_result_and_log_status(
+                check_id=self.check_id,
+                check_message="module deny listed",
+                check_name=self.check_name,
+                check_result="skip",
+                check_type=self.check_type,
+                log_message=f"check module {self.module_name} deny listed, skipping check",
+            )
+
+            # check module is loaded
+            self.set_result_and_log_status(
+                check_id=self.check_id,
+                check_message="module loaded",
+                check_name=self.check_name,
+                check_result=("skip"),
+                check_type=self.check_type,
+                log_message=f"check module {self.module_name} loaded, skipping check",
             )

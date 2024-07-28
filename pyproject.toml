@@ -1,38 +1,38 @@
 [tool.poetry]
-name = "hardshell"
-version = "0.5.0"
-description = "Harden your operating system against vulnerabilities"
-license = "MIT"
 authors = ["Tom Burge <tom@tomburge.org>"]
-readme = "README.md"
-homepage = "https://github.com/tomburge/hardshell"
-repository = "https://github.com/tomburge/hardshell"
-documentation = "https://github.com/tomburge/hardshell"
 classifiers = [
     "License :: OSI Approved :: MIT License",
-    "Programming Language :: Python",
     "Programming Language :: Python :: 3",
+    "Programming Language :: Python",
 ]
-keywords = ["hardshell", "harden", "os", "security"]
+description = "Harden your operating system against vulnerabilities"
+documentation = "https://github.com/cloudstuffio/hardshell"
+homepage = "https://github.com/cloudstuffio/hardshell"
+keywords = ["harden", "hardshell", "os", "security"]
+license = "MIT"
+name = "hardshell"
+readme = "README.md"
+repository = "https://github.com/cloudstuffio/hardshell"
+version = "0.5.0"
 
 [tool.black]
 line-length = 88
 
 [tool.isort]
-atomic = true
-profile = "black"
+atomic         = true
+profile        = "black"
 skip_gitignore = true
 
 [tool.poetry.scripts]
 hardshell = "src.hardshell.main:main"
 
 [tool.poetry.dependencies]
-python = ">=3.8,<3.13"
-click = "^8.1.7"
-toml = "^0.10.2"
+click   = "^8.1.7"
+distro  = "^1.9.0"
+psutil  = "^6.0.0"
 pystemd = "^0.13.2"
-distro = "^1.9.0"
-psutil = "^6.0.0"
+python  = ">=3.8,<3.13"
+toml    = "^0.10.2"
 
 [tool.poetry.group.exe.dependencies]
 pyinstaller = "^6.8.0"
@@ -42,21 +42,21 @@ black = "^23.9.1"
 isort = "^5.12.0"
 
 [tool.poetry.group.test.dependencies]
-pytest = "^7.4"
-pytest-cov = "^4.1.0"
+pytest          = "^7.4"
+pytest-cov      = "^4.1.0"
 pytest-randomly = "^3.15.0"
-tox = "^4.15.1"
+tox             = "^4.15.1"
 
 [tool.poetry_bumpversion.file."src/hardshell/__init__.py"]
-search = '__version__ = "{current_version}"'
 replace = '__version__ = "{new_version}"'
+search  = '__version__ = "{current_version}"'
 
 [tool.poetry_bumpversion.file."tests/test_hardshell.py"]
-search = 'assert __version__ == "{current_version}"'
 replace = 'assert __version__ == "{new_version}"'
+search  = 'assert __version__ == "{current_version}"'
 
 [tool.pytest.ini_options]
 
 [build-system]
-requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+requires      = ["poetry-core"]
